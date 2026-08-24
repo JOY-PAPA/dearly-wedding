@@ -20,13 +20,13 @@ export const metadata: Metadata = {
     description,
     type: "website",
     url: "https://dearly-wedding.yihyeon-papa.chatgpt.site",
-    images: [{ url: "/og-noto.png", width: 1731, height: 909, alt: "DEARLY WEDDING — 결혼 준비가, 우리답게." }],
+    images: [{ url: "/og-noto-palette.png", width: 1731, height: 909, alt: "DEARLY WEDDING — 결혼 준비가, 우리답게." }],
   },
   twitter: {
     card: "summary_large_image",
     title,
     description,
-    images: ["/og-noto.png"],
+    images: ["/og-noto-palette.png"],
   },
 };
 
