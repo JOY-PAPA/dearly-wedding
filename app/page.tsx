@@ -80,13 +80,13 @@ export default function Home() {
     <main className="site-shell">
       <aside className="intro-rail" aria-label="디어리 웨딩 소개">
         <div className="intro-inner">
-          <div className="brand-lockup">
+          <a className="brand-lockup" href="#reviews" aria-label="실제 진행 후기 보기">
             <span className="brand-mark">D</span>
-            <span>한 사람의 취향을 깊이 듣는<br />퍼스널 웨딩 플래닝</span>
-          </div>
+            <span>한분 한분 정성 플래닝<br />실제 진행 후기</span>
+          </a>
           <p className="eyebrow">WEDDING, MADE PERSONAL</p>
-          <h1>베리굿 웨딩<br /><em>김다애 플래너 입니다.</em></h1>
-          <p className="intro-copy">처음 만나는 날부터 예식이 끝나는 순간까지<br />김다온 플래너가 두 분 곁에서 함께합니다.</p>
+          <h1><span className="planner-company">베리굿 웨딩</span><em className="planner-name">김다애 플래너</em></h1>
+          <p className="intro-copy">처음 만나는 날부터 예식이 끝나는 순간까지<br />김다애 플래너가 두 분 곁에서 함께합니다.</p>
           <a className="rail-cta" href="#consult">무료 상담 시작하기 <span>↗</span></a>
           <div className="rail-foot"><span>DEARLY WEDDING</span><span>SEOUL · KOREA</span></div>
         </div>
@@ -119,19 +119,19 @@ export default function Home() {
 
         <section className="about-section" id="about">
           <div className="about-photo-wrap">
-            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1000&q=88" alt="김다온 웨딩플래너 프로필" />
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1000&q=88" alt="김다애 웨딩플래너 프로필" />
             <span>12 YEARS<br />WITH COUPLES</span>
           </div>
           <div className="about-copy">
             <p className="section-kicker">ABOUT THE PLANNER</p>
-            <h2>안녕하세요,<br />김다온 플래너입니다.</h2>
+            <h2>안녕하세요,<br />김다애 플래너입니다.</h2>
             <blockquote>“좋은 결혼 준비는 더 많은 선택이 아니라,<br />두 사람에게 꼭 맞는 선택을 남기는 일이라고 믿어요.”</blockquote>
             <p>정해진 패키지보다 두 분의 생활 방식과 취향을 먼저 듣습니다. 예산과 일정은 현실적으로, 중요한 장면은 두 분답게 지켜낼 수 있도록 처음부터 본식까지 한 사람이 책임지고 동행합니다.</p>
             <div className="about-tags"><span>#1:1전담</span><span>#예산설계</span><span>#취향큐레이션</span><span>#본식동행</span></div>
             <div className="availability-pill" aria-live="polite">
               <span>이번 달</span><strong>상담 가능일</strong><b>{availableDays === null ? "확인 중" : `${availableDays}일 남음`}</b>
             </div>
-            <a className="line-link" href="#consult">김다온 플래너와 상담하기 <span>↗</span></a>
+            <a className="line-link" href="#consult">김다애 플래너와 상담하기 <span>↗</span></a>
           </div>
         </section>
 
@@ -214,7 +214,7 @@ export default function Home() {
         </section>
 
         <footer>
-          <a className="footer-brand" href="#home">DEARLY</a><p>김다온 플래너와 시작하는 1:1 퍼스널 웨딩 플래닝</p>
+          <a className="footer-brand" href="#home">DEARLY</a><p>김다애 플래너와 시작하는 1:1 퍼스널 웨딩 플래닝</p>
           <div><a href="#about">플래너 소개</a><a href="#reviews">실제 진행 후기</a><a href="#instagram">인스타그램</a><a href="#consult">상담 문의</a></div>
           <small>© 2026 DEARLY WEDDING. ALL RIGHTS RESERVED.</small>
         </footer>

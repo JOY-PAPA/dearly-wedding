@@ -9,7 +9,7 @@ const notoSans = Noto_Sans_KR({
 });
 
 const title = "디어리 웨딩 | 우리다운 결혼 준비";
-const description = "김다온 웨딩플래너가 상담부터 본식까지 함께하는 1:1 퍼스널 웨딩 플래닝";
+const description = "김다애 웨딩플래너가 상담부터 본식까지 함께하는 1:1 퍼스널 웨딩 플래닝";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://dearly-wedding.yihyeon-papa.chatgpt.site"),
