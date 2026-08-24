@@ -3,62 +3,51 @@
 import { FormEvent, useEffect, useState } from "react";
 
 const navItems = [
-  { label: "홈", href: "#home" },
-  { label: "웨딩홀", href: "#웨딩홀" },
-  { label: "스드메", href: "#스드메" },
-  { label: "박람회", href: "#박람회" },
-  { label: "플래너", href: "#플래너" },
+  { label: "플래너 소개", href: "#about" },
+  { label: "진행 사례", href: "#portfolio" },
+  { label: "실제 후기", href: "#reviews" },
+  { label: "인스타그램", href: "#instagram" },
+  { label: "상담 문의", href: "#consult" },
 ];
 
-const services = [
-  { icon: "V", title: "웨딩홀", copy: "지역·예산별 베뉴 찾기", href: "#웨딩홀" },
-  { icon: "S", title: "스드메", copy: "무드별 스타일 큐레이션", href: "#스드메" },
-  { icon: "P", title: "플래너", copy: "나와 맞는 전문가 매칭", href: "#플래너" },
-  { icon: "F", title: "웨딩페어", copy: "이번 달 단독 혜택", href: "#박람회" },
+const facts = [
+  { value: "286", unit: "건", label: "누적 웨딩 진행" },
+  { value: "12", unit: "년", label: "웨딩 플래닝 경력" },
+  { value: "4.9", unit: "/ 5", label: "평균 상담 만족도" },
+  { value: "1:1", unit: "", label: "처음부터 끝까지 전담" },
 ];
 
-const venues = [
-  {
-    name: "더 리버 챕터",
-    area: "서울 · 한남",
-    mood: "RIVER VIEW",
-    image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1000&q=85",
-  },
-  {
-    name: "가든 온",
-    area: "경기 · 분당",
-    mood: "GARDEN",
-    image: "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=85",
-  },
-  {
-    name: "메종 드 블랑",
-    area: "서울 · 청담",
-    mood: "CLASSIC",
-    image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=85",
-  },
+const process = [
+  { step: "01", title: "취향 발견", copy: "두 분의 이야기와 우선순위를 충분히 듣고 원하는 결혼의 방향을 함께 찾습니다." },
+  { step: "02", title: "맞춤 큐레이션", copy: "예산 안에서 웨딩홀, 스드메, 본식 스타일링을 꼭 맞는 선택지로 정리합니다." },
+  { step: "03", title: "일정 동행", copy: "계약부터 투어, 촬영, 본식까지 놓치기 쉬운 일정을 한 걸음 먼저 챙깁니다." },
+  { step: "04", title: "본식 케어", copy: "마지막 순간까지 현장을 세심하게 확인해 두 분은 설렘에만 집중할 수 있게 합니다." },
 ];
 
-const styles = [
+const portfolios = [
   {
-    tab: "내추럴",
-    title: "빛과 결이 살아 있는\n내추럴 웨딩",
-    copy: "꾸미지 않은 듯 섬세한 채광과 부드러운 실루엣",
-    image: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=1100&q=88",
-    tags: ["#소프트메이크업", "#실크드레스", "#필름무드"],
+    title: "한남 리버뷰 웨딩",
+    style: "MODERN · INTIMATE",
+    note: "차분한 아이보리와 와인 컬러로 완성한 120인 예식",
+    image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1200&q=88",
   },
   {
-    tab: "클래식",
-    title: "시간이 지나도 우아한\n클래식 웨딩",
-    copy: "정교한 드레스 라인과 깊이 있는 스튜디오 무드",
-    image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1100&q=88",
-    tags: ["#로열클래식", "#새틴드레스", "#시그니처베일"],
+    title: "분당 가든 웨딩",
+    style: "NATURAL · GARDEN",
+    note: "초여름의 빛과 그리너리를 살린 야외 예식",
+    image: "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1200&q=88",
   },
   {
-    tab: "모던",
-    title: "선명하고 감각적인\n모던 웨딩",
-    copy: "미니멀한 공간과 도시적인 스타일링의 조화",
-    image: "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1100&q=88",
-    tags: ["#시티웨딩", "#미니멀드레스", "#글로우메이크업"],
+    title: "청담 클래식 웨딩",
+    style: "CLASSIC · ELEGANT",
+    note: "새틴 드레스와 촛불 장식으로 깊이를 더한 저녁 예식",
+    image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=88",
+  },
+  {
+    title: "제주 스몰 웨딩",
+    style: "RELAXED · DESTINATION",
+    note: "가족과 가까운 친구만 함께한 따뜻한 데스티네이션 웨딩",
+    image: "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1200&q=88",
   },
 ];
 
@@ -66,25 +55,39 @@ const reviews = [
   {
     initials: "SH",
     name: "서하은 신부",
-    meta: "김다온 플래너 · 2026.05",
-    text: "취향을 먼저 알아봐 주고 선택지는 명확하게 정리해 줘서 준비 과정이 즐거웠어요. 특히 드레스 투어 날의 세심한 동행이 오래 기억에 남을 것 같아요.",
+    meta: "2026.05 · 한남 리버뷰 웨딩",
+    text: "무조건 비싼 선택보다 저희가 중요하게 생각하는 장면에 예산을 집중해 주셨어요. 선택지는 늘 명확했고, 드레스 투어 날의 세심한 동행이 오래 기억에 남을 것 같아요.",
   },
   {
     initials: "JM",
     name: "정민우 신랑",
-    meta: "윤서진 플래너 · 2026.04",
-    text: "예산이 막막했는데 항목별 우선순위를 함께 잡아주셔서 부담 없이 결정할 수 있었습니다. 둘의 의견이 다를 때도 자연스럽게 균형을 찾아주셨어요.",
+    meta: "2026.04 · 분당 가든 웨딩",
+    text: "둘의 의견이 다를 때 어느 한쪽을 설득하기보다 공통점을 찾아주셔서 준비가 즐거웠습니다. 일정과 비용도 늘 한눈에 정리해 주셔서 안심할 수 있었어요.",
   },
   {
     initials: "YR",
     name: "이유리 신부",
-    meta: "한유진 플래너 · 2026.03",
-    text: "원하던 차분한 무드를 정확히 이해하고 스튜디오와 드레스를 연결해 주셨어요. 예상보다 훨씬 우리다운 사진과 예식을 완성했습니다.",
+    meta: "2026.03 · 청담 클래식 웨딩",
+    text: "제가 설명하지 못한 차분한 무드까지 먼저 알아봐 주셨어요. 추천해 주신 스튜디오와 드레스의 결이 자연스럽게 이어져 정말 우리다운 사진과 예식이 완성됐습니다.",
   },
 ];
 
+const instagramPosts = [
+  { image: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=700&q=86", alt: "실크 웨딩드레스 디테일", tag: "DRESS TOUR" },
+  { image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=700&q=86", alt: "웨딩데이 신랑 신부", tag: "WEDDING DAY" },
+  { image: "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=700&q=86", alt: "가든 웨딩 세리머니", tag: "CEREMONY" },
+  { image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=700&q=86", alt: "웨딩 테이블 스타일링", tag: "TABLE STYLING" },
+  { image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=700&q=86", alt: "결혼식에서 마주 보는 부부", tag: "REAL WEDDING" },
+  { image: "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=700&q=86", alt: "웨딩 링과 부케", tag: "DETAILS" },
+];
+
+const faqs = [
+  { question: "상담은 어떤 방식으로 진행되나요?", answer: "간단한 사전 질문지를 받은 뒤 40분 내외의 1:1 상담으로 진행합니다. 두 분의 예산, 일정, 취향을 듣고 준비 순서와 우선순위를 함께 정리해 드려요." },
+  { question: "예식 날짜가 아직 없어도 괜찮나요?", answer: "네. 시기와 지역만 대략 정해져 있어도 충분합니다. 원하는 계절과 하객 규모를 바탕으로 웨딩홀 탐색부터 차근차근 도와드려요." },
+  { question: "준비 중간부터 플래닝을 받을 수도 있나요?", answer: "가능합니다. 현재 계약과 진행 상황을 먼저 점검한 뒤 남은 항목에 맞춰 필요한 범위로 플래닝을 안내해 드립니다." },
+];
+
 export default function Home() {
-  const [activeStyle, setActiveStyle] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [availableDays, setAvailableDays] = useState<number | null>(null);
 
@@ -104,19 +107,13 @@ export default function Home() {
         <div className="intro-inner">
           <div className="brand-lockup">
             <span className="brand-mark">D</span>
-            <span>조금 더 우리다운 결혼 준비<br />감각적인 웨딩 큐레이션</span>
+            <span>한 사람의 취향을 깊이 듣는<br />퍼스널 웨딩 플래닝</span>
           </div>
           <p className="eyebrow">WEDDING, MADE PERSONAL</p>
           <h1>결혼 준비가,<br /><em>우리답게.</em></h1>
-          <p className="intro-copy">
-            웨딩홀부터 스드메, 예산과 일정까지<br />
-            취향을 이해하는 플래너와 시작하세요.
-          </p>
+          <p className="intro-copy">처음 만나는 날부터 예식이 끝나는 순간까지<br />김다온 플래너가 두 분 곁에서 함께합니다.</p>
           <a className="rail-cta" href="#consult">무료 상담 시작하기 <span>↗</span></a>
-          <div className="rail-foot">
-            <span>DEARLY WEDDING</span>
-            <span>SEOUL · KOREA</span>
-          </div>
+          <div className="rail-foot"><span>DEARLY WEDDING</span><span>SEOUL · KOREA</span></div>
         </div>
       </aside>
 
@@ -124,9 +121,7 @@ export default function Home() {
         <header className="topbar">
           <a className="wordmark" href="#home" aria-label="디어리 웨딩 홈">DEARLY</a>
           <nav aria-label="주요 메뉴">
-            {navItems.map((item, index) => (
-              <a key={item.label} className={index === 0 ? "active" : ""} href={item.href}>{item.label}</a>
-            ))}
+            {navItems.map((item) => <a key={item.label} href={item.href}>{item.label}</a>)}
           </nav>
         </header>
 
@@ -134,158 +129,115 @@ export default function Home() {
           <div className="hero-photo" role="img" aria-label="햇살 아래 서로 마주 보는 신랑 신부" />
           <div className="hero-shade" />
           <div className="hero-content">
-            <p>FOR THE DAY YOU&apos;LL ALWAYS REMEMBER</p>
-            <h2>설레는 시작부터<br />완벽한 그날까지</h2>
-            <a href="#consult">나의 웨딩 찾기 <span>→</span></a>
+            <p>YOUR PERSONAL WEDDING PLANNER</p>
+            <h2>둘의 취향을 듣고<br />한 편의 결혼을 만듭니다</h2>
+            <a href="#about">플래너 만나보기 <span>→</span></a>
           </div>
-          <div className="hero-index"><b>01</b><span /><small>04</small></div>
+          <div className="hero-index"><b>DAON KIM</b><span /><small>WEDDING PLANNER</small></div>
         </section>
 
-        <section className="service-grid" aria-label="웨딩 서비스 바로가기">
-          {services.map((service) => (
-            <a href={service.href} key={service.title}>
-              <span className="service-icon">{service.icon}</span>
-              <b>{service.title}</b>
-              <small>{service.copy}</small>
-              <i>→</i>
-            </a>
+        <section className="fact-grid" aria-label="플래너 주요 경력">
+          {facts.map((fact) => (
+            <div key={fact.label}><p><b>{fact.value}</b><span>{fact.unit}</span></p><small>{fact.label}</small></div>
           ))}
         </section>
 
-        <section className="fair-banner" id="박람회">
-          <div className="fair-copy">
-            <p>DEARLY SIGNATURE FAIR</p>
-            <h2>둘의 취향이<br />하나의 장면이 되는 곳</h2>
-            <span>9.12 SAT — 9.13 SUN · 서울 코엑스</span>
-            <a href="#consult">초대권 신청 <b>→</b></a>
+        <section className="about-section" id="about">
+          <div className="about-photo-wrap">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1000&q=88" alt="김다온 웨딩플래너 프로필" />
+            <span>12 YEARS<br />WITH COUPLES</span>
           </div>
-          <div className="fair-photo" role="img" aria-label="우아하게 장식된 웨딩 테이블" />
+          <div className="about-copy">
+            <p className="section-kicker">ABOUT THE PLANNER</p>
+            <h2>안녕하세요,<br />김다온 플래너입니다.</h2>
+            <blockquote>“좋은 결혼 준비는 더 많은 선택이 아니라,<br />두 사람에게 꼭 맞는 선택을 남기는 일이라고 믿어요.”</blockquote>
+            <p>정해진 패키지보다 두 분의 생활 방식과 취향을 먼저 듣습니다. 예산과 일정은 현실적으로, 중요한 장면은 두 분답게 지켜낼 수 있도록 처음부터 본식까지 한 사람이 책임지고 동행합니다.</p>
+            <div className="about-tags"><span>#1:1전담</span><span>#예산설계</span><span>#취향큐레이션</span><span>#본식동행</span></div>
+            <div className="availability-pill" aria-live="polite">
+              <span>이번 달</span><strong>상담 가능일</strong><b>{availableDays === null ? "확인 중" : `${availableDays}일 남음`}</b>
+            </div>
+            <a className="line-link" href="#consult">김다온 플래너와 상담하기 <span>↗</span></a>
+          </div>
         </section>
 
-        <section className="section venue-section" id="웨딩홀">
-          <div className="section-head">
-            <div>
-              <p>VENUE CURATION</p>
-              <h2>마음에 오래 남을<br />단 하나의 공간</h2>
-            </div>
-            <a href="#consult">전체보기 <span>↗</span></a>
+        <section className="process-section" id="process">
+          <div className="section-title center">
+            <p>HOW WE WORK TOGETHER</p>
+            <h2>둘만의 기준을 찾는<br />네 번의 동행</h2>
           </div>
-          <div className="venue-list">
-            {venues.map((venue, index) => (
-              <article className="venue-card" key={venue.name}>
-                <div className="venue-image" style={{ backgroundImage: `url(${venue.image})` }}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <button type="button" aria-label={`${venue.name} 찜하기`}>♡</button>
-                </div>
-                <div className="venue-info">
-                  <p>{venue.mood}</p>
-                  <h3>{venue.name}</h3>
-                  <span>{venue.area}</span>
-                </div>
+          <div className="process-list">
+            {process.map((item) => (
+              <article key={item.step}><span>{item.step}</span><div><h3>{item.title}</h3><p>{item.copy}</p></div></article>
+            ))}
+          </div>
+        </section>
+
+        <section className="portfolio-section" id="portfolio">
+          <div className="section-title split">
+            <div><p>SELECTED WEDDINGS</p><h2>두 사람의 취향으로<br />완성한 장면들</h2></div>
+            <span>최근 진행한 웨딩 중<br />서로 다른 무드의 사례를 소개합니다.</span>
+          </div>
+          <div className="portfolio-grid">
+            {portfolios.map((item, index) => (
+              <article key={item.title}>
+                <div className="portfolio-image"><img src={item.image} alt={item.title} /><span>{String(index + 1).padStart(2, "0")}</span></div>
+                <p>{item.style}</p><h3>{item.title}</h3><small>{item.note}</small>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="style-section" id="스드메">
-          <div className="style-topline">
-            <p>MY WEDDING STYLE</p>
-            <div className="style-tabs" role="tablist" aria-label="웨딩 스타일 선택">
-              {styles.map((style, index) => (
-                <button
-                  key={style.tab}
-                  type="button"
-                  role="tab"
-                  aria-selected={activeStyle === index}
-                  className={activeStyle === index ? "selected" : ""}
-                  onClick={() => setActiveStyle(index)}
-                >
-                  {style.tab}
-                </button>
-              ))}
-            </div>
-          </div>
-          <div className="style-visual" role="tabpanel">
-            <img src={styles[activeStyle].image} alt={`${styles[activeStyle].tab} 웨딩 스타일`} />
-            <span className="style-number">0{activeStyle + 1}</span>
-          </div>
-          <div className="style-copy">
-            <h2>{styles[activeStyle].title.split("\n").map((line) => <span key={line}>{line}</span>)}</h2>
-            <p>{styles[activeStyle].copy}</p>
-            <div className="tag-row">
-              {styles[activeStyle].tags.map((tag) => <span key={tag}>{tag}</span>)}
-            </div>
-            <a href="#consult">이 스타일로 상담받기 <b>→</b></a>
-          </div>
-        </section>
-
-        <section className="planner-section" id="플래너">
-          <p>PERSONAL WEDDING PARTNER</p>
-          <span className="planner-monogram">D</span>
-          <h2>잘 맞는 플래너가<br />준비의 온도를 바꿉니다</h2>
-          <p className="planner-copy">
-            7가지 취향 질문에 답하면 예산, 일정, 무드가 맞는<br />
-            디어리 플래너를 추천해 드려요.
-          </p>
-          <div className="availability-pill" aria-live="polite">
-            <span>이번 달</span>
-            <strong>상담 가능일</strong>
-            <b>{availableDays === null ? "확인 중" : `${availableDays}일 남음`}</b>
-          </div>
-          <a href="#consult">1분 취향 테스트 <span>↗</span></a>
-          <div className="planner-stats">
-            <div><b>12+</b><span>YEARS<br />EXPERIENCE</span></div>
-            <div><b>4.9</b><span>AVERAGE<br />RATING</span></div>
-            <div><b>8,420</b><span>HAPPY<br />COUPLES</span></div>
-          </div>
-        </section>
-
-        <section className="section review-section">
-          <div className="section-head">
-            <div>
-              <p>REAL STORIES</p>
-              <h2>먼저 준비해 본<br />두 사람의 이야기</h2>
-            </div>
-            <span className="review-rating"><b>4.9</b> / 5.0</span>
+        <section className="review-section" id="reviews">
+          <div className="section-title split light">
+            <div><p>REAL STORIES</p><h2>먼저 함께한<br />두 사람의 이야기</h2></div>
+            <div className="rating-lockup"><b>4.9</b><span>★★★★★<small>평균 상담 만족도</small></span></div>
           </div>
           <div className="review-list">
             {reviews.map((review) => (
               <article key={review.name}>
-                <div className="reviewer">
-                  <span>{review.initials}</span>
-                  <div><b>{review.name}</b><small>{review.meta}</small></div>
-                </div>
-                <div className="stars" aria-label="별점 5점">★★★★★</div>
+                <div className="quote-mark">“</div>
                 <p>{review.text}</p>
+                <div className="reviewer"><span>{review.initials}</span><div><b>{review.name}</b><small>{review.meta}</small></div></div>
               </article>
             ))}
+          </div>
+        </section>
+
+        <section className="instagram-section" id="instagram">
+          <div className="section-title split">
+            <div><p>PLANNER&apos;S INSTAGRAM</p><h2>준비의 순간을<br />가장 가까이에서</h2></div>
+            <a className="instagram-handle" href="https://www.instagram.com/" target="_blank" rel="noreferrer">@dearly_planner <span>↗</span></a>
+          </div>
+          <div className="instagram-grid">
+            {instagramPosts.map((post) => (
+              <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" key={post.tag} aria-label={`${post.alt} 인스타그램에서 보기`}>
+                <img src={post.image} alt={post.alt} /><span>{post.tag}</span>
+              </a>
+            ))}
+          </div>
+          <p className="instagram-note">드레스 투어, 현장 셋업, 본식 케어까지 매주 새로운 이야기를 기록합니다.</p>
+        </section>
+
+        <section className="faq-section" id="faq">
+          <div className="section-title"><p>BEFORE WE MEET</p><h2>상담 전 자주 묻는 질문</h2></div>
+          <div className="faq-list">
+            {faqs.map((faq) => <details key={faq.question}><summary>{faq.question}<span>＋</span></summary><p>{faq.answer}</p></details>)}
           </div>
         </section>
 
         <section className="consult-section" id="consult">
           <div className="consult-intro">
-            <p>BEGIN YOUR STORY</p>
-            <h2>두 분의 이야기를<br />들려주세요</h2>
-            <span>상담 신청 후 영업일 기준 1일 내 안내드립니다.</span>
+            <p>BEGIN YOUR STORY</p><h2>두 분의 이야기를<br />들려주세요</h2><span>상담 신청 후 영업일 기준 1일 내 안내드립니다.</span>
           </div>
           {submitted ? (
-            <div className="success-message" role="status">
-              <span>✓</span>
-              <h3>상담 신청이 준비되었습니다</h3>
-              <p>이 데모에서는 정보가 외부로 전송되지 않습니다.<br />실제 운영 시 상담 시스템을 연결할 수 있어요.</p>
-              <button type="button" onClick={() => setSubmitted(false)}>다시 작성하기</button>
-            </div>
+            <div className="success-message" role="status"><span>✓</span><h3>상담 신청이 준비되었습니다</h3><p>이 데모에서는 정보가 외부로 전송되지 않습니다.<br />실제 운영 시 상담 시스템을 연결할 수 있어요.</p><button type="button" onClick={() => setSubmitted(false)}>다시 작성하기</button></div>
           ) : (
             <form onSubmit={submitConsultation}>
               <label>이름<input name="name" type="text" placeholder="성함을 입력해 주세요" required /></label>
               <label>연락처<input name="phone" type="tel" placeholder="010-0000-0000" required /></label>
-              <label>예식 예정일<input name="date" type="month" /></label>
-              <label>관심 서비스
-                <select name="service" defaultValue="">
-                  <option value="" disabled>선택해 주세요</option>
-                  <option>웨딩홀</option><option>스드메</option><option>플래너</option><option>웨딩페어</option>
-                </select>
-              </label>
+              <label>예식 예정 시기<input name="date" type="month" /></label>
+              <label>현재 준비 단계<select name="stage" defaultValue=""><option value="" disabled>선택해 주세요</option><option>이제 막 알아보는 중</option><option>웨딩홀 탐색 중</option><option>스드메 탐색 중</option><option>일부 계약 완료</option></select></label>
+              <label className="message-label">남기실 말씀<textarea name="message" placeholder="원하는 예식 지역, 하객 수, 궁금한 점을 자유롭게 적어 주세요." /></label>
               <label className="consent"><input type="checkbox" required /> 개인정보 수집 및 상담 안내에 동의합니다.</label>
               <button className="submit-button" type="submit">무료 상담 신청 <span>→</span></button>
             </form>
@@ -293,18 +245,15 @@ export default function Home() {
         </section>
 
         <footer>
-          <a className="footer-brand" href="#home">DEARLY</a>
-          <p>두 사람의 취향에서 시작하는 웨딩 큐레이션</p>
-          <div><a href="#home">이용약관</a><a href="#home">개인정보처리방침</a><a href="#consult">고객센터</a></div>
+          <a className="footer-brand" href="#home">DEARLY</a><p>김다온 플래너와 시작하는 1:1 퍼스널 웨딩 플래닝</p>
+          <div><a href="#about">플래너 소개</a><a href="#reviews">실제 후기</a><a href="#instagram">인스타그램</a><a href="#consult">상담 문의</a></div>
           <small>© 2026 DEARLY WEDDING. ALL RIGHTS RESERVED.</small>
         </footer>
 
         <a className="chat-button" href="#consult" aria-label="빠른 상담 신청">♡<span>빠른상담</span></a>
         <nav className="bottom-nav" aria-label="모바일 하단 메뉴">
-          {navItems.slice(0, 4).map((item, index) => (
-            <a key={item.label} href={item.href} className={index === 0 ? "active" : ""}>
-              <span>{["⌂", "◇", "D", "♧"][index]}</span>{item.label}
-            </a>
+          {[{ label: "홈", href: "#home", icon: "⌂" }, { label: "소개", href: "#about", icon: "D" }, { label: "후기", href: "#reviews", icon: "♡" }, { label: "상담", href: "#consult", icon: "✦" }].map((item, index) => (
+            <a key={item.label} href={item.href} className={index === 0 ? "active" : ""}><span>{item.icon}</span>{item.label}</a>
           ))}
         </nav>
       </section>
