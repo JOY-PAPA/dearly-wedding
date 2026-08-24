@@ -4,8 +4,7 @@ import { FormEvent, useEffect, useState } from "react";
 
 const navItems = [
   { label: "플래너 소개", href: "#about" },
-  { label: "진행 사례", href: "#portfolio" },
-  { label: "실제 후기", href: "#reviews" },
+  { label: "네이버 후기", href: "#reviews" },
   { label: "인스타그램", href: "#instagram" },
   { label: "상담 문의", href: "#consult" },
 ];
@@ -24,51 +23,27 @@ const process = [
   { step: "04", title: "본식 케어", copy: "마지막 순간까지 현장을 세심하게 확인해 두 분은 설렘에만 집중할 수 있게 합니다." },
 ];
 
-const portfolios = [
+const blogReviews = [
   {
-    title: "한남 리버뷰 웨딩",
-    style: "MODERN · INTIMATE",
-    note: "차분한 아이보리와 와인 컬러로 완성한 120인 예식",
-    image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1200&q=88",
+    category: "REAL WEDDING",
+    title: "한남 리버뷰 웨딩, 두 사람의 취향을 담은 하루",
+    date: "2026.05",
+    excerpt: "예산의 우선순위부터 드레스 투어와 본식 동행까지, 차분한 아이보리 무드로 완성한 결혼 준비 이야기를 소개합니다.",
+    image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=900&q=88",
   },
   {
-    title: "분당 가든 웨딩",
-    style: "NATURAL · GARDEN",
-    note: "초여름의 빛과 그리너리를 살린 야외 예식",
-    image: "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1200&q=88",
+    category: "GARDEN WEDDING",
+    title: "초여름의 빛을 살린 분당 가든 웨딩",
+    date: "2026.04",
+    excerpt: "서로 다른 의견에서 공통의 취향을 찾아가는 과정과 야외 예식 일정, 비용을 안정적으로 정리한 실제 사례입니다.",
+    image: "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=900&q=88",
   },
   {
-    title: "청담 클래식 웨딩",
-    style: "CLASSIC · ELEGANT",
-    note: "새틴 드레스와 촛불 장식으로 깊이를 더한 저녁 예식",
-    image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=88",
-  },
-  {
-    title: "제주 스몰 웨딩",
-    style: "RELAXED · DESTINATION",
-    note: "가족과 가까운 친구만 함께한 따뜻한 데스티네이션 웨딩",
-    image: "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1200&q=88",
-  },
-];
-
-const reviews = [
-  {
-    initials: "SH",
-    name: "서하은 신부",
-    meta: "2026.05 · 한남 리버뷰 웨딩",
-    text: "무조건 비싼 선택보다 저희가 중요하게 생각하는 장면에 예산을 집중해 주셨어요. 선택지는 늘 명확했고, 드레스 투어 날의 세심한 동행이 오래 기억에 남을 것 같아요.",
-  },
-  {
-    initials: "JM",
-    name: "정민우 신랑",
-    meta: "2026.04 · 분당 가든 웨딩",
-    text: "둘의 의견이 다를 때 어느 한쪽을 설득하기보다 공통점을 찾아주셔서 준비가 즐거웠습니다. 일정과 비용도 늘 한눈에 정리해 주셔서 안심할 수 있었어요.",
-  },
-  {
-    initials: "YR",
-    name: "이유리 신부",
-    meta: "2026.03 · 청담 클래식 웨딩",
-    text: "제가 설명하지 못한 차분한 무드까지 먼저 알아봐 주셨어요. 추천해 주신 스튜디오와 드레스의 결이 자연스럽게 이어져 정말 우리다운 사진과 예식이 완성됐습니다.",
+    category: "CLASSIC WEDDING",
+    title: "스튜디오부터 드레스까지 이어진 클래식 웨딩",
+    date: "2026.03",
+    excerpt: "말로 설명하기 어려웠던 차분한 무드를 발견하고 스튜디오, 드레스, 본식 스타일링을 하나의 결로 연결한 기록입니다.",
+    image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=88",
   },
 ];
 
@@ -172,32 +147,21 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="portfolio-section" id="portfolio">
-          <div className="section-title split">
-            <div><p>SELECTED WEDDINGS</p><h2>두 사람의 취향으로<br />완성한 장면들</h2></div>
-            <span>최근 진행한 웨딩 중<br />서로 다른 무드의 사례를 소개합니다.</span>
-          </div>
-          <div className="portfolio-grid">
-            {portfolios.map((item, index) => (
-              <article key={item.title}>
-                <div className="portfolio-image"><img src={item.image} alt={item.title} /><span>{String(index + 1).padStart(2, "0")}</span></div>
-                <p>{item.style}</p><h3>{item.title}</h3><small>{item.note}</small>
-              </article>
-            ))}
-          </div>
-        </section>
-
         <section className="review-section" id="reviews">
           <div className="section-title split light">
-            <div><p>REAL STORIES</p><h2>먼저 함께한<br />두 사람의 이야기</h2></div>
-            <div className="rating-lockup"><b>4.9</b><span>★★★★★<small>평균 상담 만족도</small></span></div>
+            <div><p>NAVER BLOG STORIES</p><h2>네이버 블로그에서 만나는<br />실제 웨딩 후기</h2></div>
+            <div className="naver-blog-lockup"><b>N</b><span>NAVER BLOG<small>실제 후기 사례 모음</small></span></div>
           </div>
           <div className="review-list">
-            {reviews.map((review) => (
-              <article key={review.name}>
-                <div className="quote-mark">“</div>
-                <p>{review.text}</p>
-                <div className="reviewer"><span>{review.initials}</span><div><b>{review.name}</b><small>{review.meta}</small></div></div>
+            {blogReviews.map((review) => (
+              <article key={review.title}>
+                <img src={review.image} alt={review.title} />
+                <div className="blog-card-copy">
+                  <p className="blog-meta"><span>{review.category}</span>{review.date}</p>
+                  <h3>{review.title}</h3>
+                  <p>{review.excerpt}</p>
+                  <div className="blog-card-footer"><b>베리굿 웨딩 김다애 플래너</b><span>블로그 링크 연결 예정</span></div>
+                </div>
               </article>
             ))}
           </div>
@@ -246,7 +210,7 @@ export default function Home() {
 
         <footer>
           <a className="footer-brand" href="#home">DEARLY</a><p>김다온 플래너와 시작하는 1:1 퍼스널 웨딩 플래닝</p>
-          <div><a href="#about">플래너 소개</a><a href="#reviews">실제 후기</a><a href="#instagram">인스타그램</a><a href="#consult">상담 문의</a></div>
+          <div><a href="#about">플래너 소개</a><a href="#reviews">네이버 후기</a><a href="#instagram">인스타그램</a><a href="#consult">상담 문의</a></div>
           <small>© 2026 DEARLY WEDDING. ALL RIGHTS RESERVED.</small>
         </footer>
 

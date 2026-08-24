@@ -36,7 +36,7 @@ img { display: block; max-width: 100%; }
 .app-frame { position: relative; min-width: 0; min-height: 100vh; background: var(--paper); box-shadow: 0 0 40px rgba(43,34,31,.06); overflow: clip; }
 .topbar { position: sticky; top: 0; z-index: 30; height: 112px; padding: 28px 26px 0; background: rgba(255,252,251,.95); border-bottom: 1px solid rgba(50,24,71,.08); backdrop-filter: blur(14px); }
 .wordmark { display: block; text-align: center; color: var(--red); font-size: 18px; line-height: 1; font-weight: 700; letter-spacing: .32em; padding-left: .32em; }
-.topbar nav { height: 66px; display: grid; grid-template-columns: repeat(5, 1fr); align-items: end; }
+.topbar nav { height: 66px; display: grid; grid-template-columns: repeat(4, 1fr); align-items: end; }
 .topbar nav a { position: relative; padding: 0 2px 18px; text-align: center; font-size: 11px; font-weight: 700; color: #514a53; white-space: nowrap; }
 .topbar nav a::after { content: ""; position: absolute; left: 50%; right: 50%; bottom: 0; height: 2px; background: var(--red); transition: left .2s, right .2s; }
 .topbar nav a:hover { color: var(--red); }
@@ -91,33 +91,24 @@ img { display: block; max-width: 100%; }
 .process-list h3 { margin: 0 0 9px; color: var(--violet); font-size: 19px; letter-spacing: -.03em; }
 .process-list p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.8; }
 
-.portfolio-section { padding: 88px 38px 96px; background: var(--lavender); }
-.portfolio-grid { margin-top: 42px; display: grid; grid-template-columns: 1fr 1fr; gap: 36px 16px; }
-.portfolio-grid article:nth-child(even) { padding-top: 50px; }
-.portfolio-image { position: relative; overflow: hidden; }
-.portfolio-image img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; transition: transform .5s ease; }
-.portfolio-grid article:hover img { transform: scale(1.035); }
-.portfolio-image span { position: absolute; left: 13px; top: 13px; width: 31px; height: 31px; display: grid; place-items: center; background: rgba(255,255,255,.86); color: var(--red); font-size: 9px; font-weight: 700; }
-.portfolio-grid article > p { margin: 16px 0 6px; color: var(--red); font-size: 8px; font-weight: 700; letter-spacing: .13em; }
-.portfolio-grid h3 { margin: 0 0 7px; font-size: 18px; letter-spacing: -.03em; }
-.portfolio-grid small { color: var(--muted); font-size: 9px; line-height: 1.6; }
-
 .review-section { padding: 88px 38px 94px; background: var(--violet); color: white; }
 .section-title.light h2 { color: white; }
 .section-title.light > div > p { color: #ffb9ba; }
-.rating-lockup { display: flex; align-items: center; gap: 10px; padding-bottom: 2px; }
-.rating-lockup > b { font-size: 36px; line-height: 1; font-weight: 500; }
-.rating-lockup > span { color: var(--red); font-size: 9px; letter-spacing: .12em; }
-.rating-lockup small { display: block; margin-top: 5px; color: #cbbdd1; font-size: 7px; letter-spacing: 0; }
+.naver-blog-lockup { display: flex; align-items: center; gap: 10px; padding-bottom: 3px; }
+.naver-blog-lockup > b { width: 34px; height: 34px; display: grid; place-items: center; background: #03c75a; color: white; font-size: 19px; line-height: 1; }
+.naver-blog-lockup > span { color: white; font-size: 8px; font-weight: 700; letter-spacing: .09em; }
+.naver-blog-lockup small { display: block; margin-top: 5px; color: #cbbdd1; font-size: 7px; font-weight: 400; letter-spacing: 0; }
 .review-list { margin-top: 42px; display: grid; gap: 12px; }
-.review-list article { padding: 28px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.16); }
-.quote-mark { height: 25px; color: var(--red); font-size: 38px; line-height: 1; }
-.review-list article > p { margin: 14px 0 25px; color: #eee5f1; font-size: 11px; line-height: 1.9; }
-.reviewer { display: flex; align-items: center; gap: 12px; }
-.reviewer > span { width: 39px; height: 39px; display: grid; place-items: center; border-radius: 50%; background: var(--red); color: white; font-size: 11px; font-weight: 700; }
-.reviewer div { display: flex; flex-direction: column; gap: 4px; }
-.reviewer b { font-size: 11px; }
-.reviewer small { color: #bcaec3; font-size: 8px; }
+.review-list article { min-height: 178px; display: grid; grid-template-columns: 175px 1fr; overflow: hidden; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); }
+.review-list article > img { width: 100%; height: 100%; object-fit: cover; }
+.blog-card-copy { padding: 22px 24px 19px; display: flex; flex-direction: column; }
+.blog-meta { margin: 0 0 9px; display: flex; align-items: center; gap: 9px; color: #bcaec3; font-size: 7px; letter-spacing: .08em; }
+.blog-meta span { color: #ffb9ba; font-weight: 700; }
+.blog-card-copy h3 { margin: 0 0 9px; color: white; font-size: 16px; line-height: 1.45; letter-spacing: -.025em; }
+.blog-card-copy > p:not(.blog-meta) { margin: 0; color: #ded3e3; font-size: 9px; line-height: 1.75; }
+.blog-card-footer { margin-top: auto; padding-top: 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid rgba(255,255,255,.12); }
+.blog-card-footer b { font-size: 8px; }
+.blog-card-footer span { color: #a99caf; font-size: 7px; }
 
 .instagram-section { padding: 88px 38px 90px; background: var(--paper); }
 .instagram-handle { flex: 0 0 auto; padding-bottom: 7px; border-bottom: 1px solid var(--red); color: var(--red); font-size: 10px; font-weight: 700; }
@@ -208,15 +199,13 @@ footer > small { color: #6e6175; font-size: 8px; letter-spacing: .08em; }
   .about-photo-wrap > span { right: -20px; }
   .about-copy h2, .section-title h2 { font-size: 30px; }
   .about-copy blockquote br { display: none; }
-  .process-section, .portfolio-section, .review-section, .instagram-section, .faq-section { padding: 70px 26px 76px; }
+  .process-section, .review-section, .instagram-section, .faq-section { padding: 70px 26px 76px; }
   .process-list article { grid-template-columns: 46px 1fr; }
   .section-title.split { align-items: flex-start; flex-direction: column; }
-  .portfolio-grid { gap: 30px 10px; }
-  .portfolio-grid article:nth-child(even) { padding-top: 34px; }
-  .portfolio-grid h3 { font-size: 15px; }
-  .portfolio-grid small { display: none; }
-  .rating-lockup { margin-top: 3px; }
-  .review-list article { padding: 24px; }
+  .naver-blog-lockup { margin-top: 3px; }
+  .review-list article { grid-template-columns: 1fr; }
+  .review-list article > img { height: 210px; }
+  .blog-card-copy { min-height: 205px; }
   .instagram-grid { gap: 3px; }
   .instagram-grid span { display: none; }
   .faq-list summary { font-size: 11px; }
