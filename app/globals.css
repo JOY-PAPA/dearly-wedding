@@ -109,6 +109,10 @@ img { display: block; max-width: 100%; }
 .blog-card-footer { margin-top: auto; padding-top: 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid rgba(255,255,255,.12); }
 .blog-card-footer b { font-size: 8px; }
 .blog-card-footer span { color: #a99caf; font-size: 7px; }
+.review-pagination { margin: 36px auto 0; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.review-pagination a, .review-pagination .page-number { width: 34px; height: 34px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.24); color: #d8cddd; font-size: 9px; }
+.review-pagination a { border-color: var(--red); background: var(--red); color: white; font-weight: 700; }
+.review-pagination .page-ellipsis { width: 26px; color: #a99caf; text-align: center; font-size: 12px; letter-spacing: .1em; }
 
 .instagram-section { padding: 88px 38px 90px; background: var(--paper); }
 .instagram-handle { flex: 0 0 auto; padding-bottom: 7px; border-bottom: 1px solid var(--red); color: var(--red); font-size: 10px; font-weight: 700; }

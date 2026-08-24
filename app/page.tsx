@@ -4,7 +4,7 @@ import { FormEvent, useEffect, useState } from "react";
 
 const navItems = [
   { label: "플래너 소개", href: "#about" },
-  { label: "네이버 후기", href: "#reviews" },
+  { label: "실제 진행 후기", href: "#reviews" },
   { label: "인스타그램", href: "#instagram" },
   { label: "상담 문의", href: "#consult" },
 ];
@@ -149,7 +149,7 @@ export default function Home() {
 
         <section className="review-section" id="reviews">
           <div className="section-title split light">
-            <div><p>NAVER BLOG STORIES</p><h2>네이버 블로그에서 만나는<br />실제 웨딩 후기</h2></div>
+            <div><p>NAVER BLOG STORIES</p><h2>한분 한분 정성 플래닝<br />실제 진행 후기</h2></div>
             <div className="naver-blog-lockup"><b>N</b><span>NAVER BLOG<small>실제 후기 사례 모음</small></span></div>
           </div>
           <div className="review-list">
@@ -165,6 +165,11 @@ export default function Home() {
               </article>
             ))}
           </div>
+          <nav className="review-pagination" aria-label="실제 진행 후기 페이지">
+            <a href="#reviews" aria-current="page">1</a>
+            {[2, 3, 4, 5].map((page) => <span className="page-number" key={page}>{page}</span>)}
+            <span className="page-ellipsis" aria-hidden="true">…</span>
+          </nav>
         </section>
 
         <section className="instagram-section" id="instagram">
@@ -210,7 +215,7 @@ export default function Home() {
 
         <footer>
           <a className="footer-brand" href="#home">DEARLY</a><p>김다온 플래너와 시작하는 1:1 퍼스널 웨딩 플래닝</p>
-          <div><a href="#about">플래너 소개</a><a href="#reviews">네이버 후기</a><a href="#instagram">인스타그램</a><a href="#consult">상담 문의</a></div>
+          <div><a href="#about">플래너 소개</a><a href="#reviews">실제 진행 후기</a><a href="#instagram">인스타그램</a><a href="#consult">상담 문의</a></div>
           <small>© 2026 DEARLY WEDDING. ALL RIGHTS RESERVED.</small>
         </footer>
 
