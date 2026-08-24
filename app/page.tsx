@@ -110,7 +110,7 @@ export default function Home() {
             <span>한 사람의 취향을 깊이 듣는<br />퍼스널 웨딩 플래닝</span>
           </div>
           <p className="eyebrow">WEDDING, MADE PERSONAL</p>
-          <h1>결혼 준비가,<br /><em>우리답게.</em></h1>
+          <h1>베리굿 웨딩<br /><em>김다애 플래너 입니다.</em></h1>
           <p className="intro-copy">처음 만나는 날부터 예식이 끝나는 순간까지<br />김다온 플래너가 두 분 곁에서 함께합니다.</p>
           <a className="rail-cta" href="#consult">무료 상담 시작하기 <span>↗</span></a>
           <div className="rail-foot"><span>DEARLY WEDDING</span><span>SEOUL · KOREA</span></div>
