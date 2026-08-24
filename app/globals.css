@@ -111,6 +111,10 @@ img { display: block; max-width: 100%; }
 .planner-monogram { width: 64px; height: 64px; margin: 30px auto 28px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.5); border-radius: 50%; font: italic 500 30px/1 var(--font-noto-sans-kr), sans-serif; }
 .planner-section h2 { margin: 0; font: 400 37px/1.38 var(--font-noto-sans-kr), sans-serif; letter-spacing: -.05em; }
 .planner-copy { margin: 22px 0 30px; color: #e1d6e7; font-size: 12px; line-height: 1.9; }
+.availability-pill { width: fit-content; margin: 0 auto 24px; padding: 10px 16px; display: flex; align-items: center; gap: 9px; border: 1px solid var(--wine); border-radius: 999px; background: white; color: var(--wine-dark); font-size: 10px; }
+.availability-pill span { color: #766d7d; }
+.availability-pill strong { font-weight: 700; }
+.availability-pill b { color: var(--wine); font-size: 11px; }
 .planner-section > a { display: inline-flex; gap: 40px; padding: 15px 20px; border: 1px solid rgba(255,255,255,.65); font-size: 12px; }
 .planner-section > a:hover { background: white; color: var(--wine-dark); }
 .planner-stats { margin-top: 66px; padding-top: 26px; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid rgba(255,255,255,.18); }

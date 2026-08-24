@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 const navItems = [
   { label: "홈", href: "#home" },
@@ -86,6 +86,12 @@ const reviews = [
 export default function Home() {
   const [activeStyle, setActiveStyle] = useState(0);
   const [submitted, setSubmitted] = useState(false);
+  const [availableDays, setAvailableDays] = useState<number | null>(null);
+
+  useEffect(() => {
+    const randomValue = crypto.getRandomValues(new Uint32Array(1))[0];
+    setAvailableDays((randomValue % 12) + 1);
+  }, []);
 
   function submitConsultation(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -221,6 +227,11 @@ export default function Home() {
             7가지 취향 질문에 답하면 예산, 일정, 무드가 맞는<br />
             디어리 플래너를 추천해 드려요.
           </p>
+          <div className="availability-pill" aria-live="polite">
+            <span>이번 달</span>
+            <strong>상담 가능일</strong>
+            <b>{availableDays === null ? "확인 중" : `${availableDays}일 남음`}</b>
+          </div>
           <a href="#consult">1분 취향 테스트 <span>↗</span></a>
           <div className="planner-stats">
             <div><b>12+</b><span>YEARS<br />EXPERIENCE</span></div>
