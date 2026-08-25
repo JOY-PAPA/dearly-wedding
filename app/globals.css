@@ -45,7 +45,7 @@ img { display: block; max-width: 100%; }
 .topbar nav a:hover::after { left: 26%; right: 26%; }
 
 .hero { position: relative; height: calc(100vh - 112px); min-height: 590px; isolation: isolate; }
-.hero-photo { position: absolute; inset: 0; z-index: -2; background: #4d5235 url("/hero-meadow-v3.png") center 48%/cover no-repeat; transform: scale(1.01); }
+.hero-photo { position: absolute; inset: 0; z-index: -2; background: #4d5235 url("/hero-meadow-v4.png") center 48%/cover no-repeat; transform: scale(1.01); }
 .hero-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(23,14,12,.02) 28%, rgba(24,13,12,.78) 100%); }
 .hero-content { position: absolute; left: 48px; right: 48px; bottom: 106px; color: white; }
 .hero-content p { margin: 0 0 16px; font-size: 9px; letter-spacing: .18em; }
