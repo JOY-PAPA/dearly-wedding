@@ -48,12 +48,12 @@ const blogReviews = [
 ];
 
 const instagramPosts = [
-  { image: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=700&q=86", alt: "실크 웨딩드레스 디테일", tag: "DRESS TOUR" },
-  { image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=700&q=86", alt: "웨딩데이 신랑 신부", tag: "WEDDING DAY" },
-  { image: "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=700&q=86", alt: "가든 웨딩 세리머니", tag: "CEREMONY" },
-  { image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=700&q=86", alt: "웨딩 테이블 스타일링", tag: "TABLE STYLING" },
-  { image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=700&q=86", alt: "결혼식에서 마주 보는 부부", tag: "REAL WEDDING" },
-  { image: "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=700&q=86", alt: "웨딩 링과 부케", tag: "DETAILS" },
+  { image: "/instagram/daae-gi-01.jpg", href: "https://www.instagram.com/daae_gi/reel/DcLmbn0I7x_/", alt: "김다애 플래너 인스타그램 릴스 썸네일", tag: "REELS" },
+  { image: "/instagram/daae-gi-02.jpg", href: "https://www.instagram.com/daae_gi/p/DcJUDGen-Sn/", alt: "김다애 플래너 인스타그램 게시물 썸네일", tag: "INSTAGRAM" },
+  { image: "/instagram/daae-gi-03.jpg", href: "https://www.instagram.com/daae_gi/p/DcJS6YWH5CD/", alt: "김다애 플래너 인스타그램 게시물 썸네일", tag: "INSTAGRAM" },
+  { image: "/instagram/daae-gi-04.jpg", href: "https://www.instagram.com/daae_gi/p/DcJSu10n34S/", alt: "김다애 플래너 인스타그램 게시물 썸네일", tag: "INSTAGRAM" },
+  { image: "/instagram/daae-gi-05.jpg", href: "https://www.instagram.com/daae_gi/p/DcBnWHvn7OL/", alt: "김다애 플래너 인스타그램 게시물 썸네일", tag: "INSTAGRAM" },
+  { image: "/instagram/daae-gi-06.jpg", href: "https://www.instagram.com/daae_gi/p/DcBmZ4Ho4hn/", alt: "김다애 플래너 인스타그램 게시물 썸네일", tag: "INSTAGRAM" },
 ];
 
 const instagramUrl = "https://www.instagram.com/daae_gi?igsi=djN6ZDVycWMxeTh2";
@@ -181,7 +181,7 @@ export default function Home() {
           </div>
           <div className="instagram-grid">
             {instagramPosts.map((post) => (
-              <a href={instagramUrl} target="_blank" rel="noreferrer" key={post.tag} aria-label={`${post.alt} 인스타그램에서 보기`}>
+              <a href={post.href} target="_blank" rel="noreferrer" key={post.href} aria-label={`${post.alt} 인스타그램에서 보기`}>
                 <img src={post.image} alt={post.alt} /><span>{post.tag}</span>
               </a>
             ))}
