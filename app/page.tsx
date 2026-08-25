@@ -101,7 +101,7 @@ export default function Home() {
         </header>
 
         <section className="hero" id="home">
-          <div className="hero-photo" role="img" aria-label="햇살 아래 서로 마주 보는 신랑 신부" />
+          <div className="hero-photo" role="img" aria-label="넓은 초원에서 손을 잡고 걷는 신랑 신부의 항공 사진" />
           <div className="hero-shade" />
           <div className="hero-content">
             <p>YOUR PERSONAL WEDDING PLANNER</p>
