@@ -56,6 +56,8 @@ const instagramPosts = [
   { image: "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=700&q=86", alt: "웨딩 링과 부케", tag: "DETAILS" },
 ];
 
+const instagramUrl = "https://www.instagram.com/daae_gi?igsi=djN6ZDVycWMxeTh2";
+
 const faqs = [
   { question: "상담은 어떤 방식으로 진행되나요?", answer: "간단한 사전 질문지를 받은 뒤 40분 내외의 1:1 상담으로 진행합니다. 두 분의 예산, 일정, 취향을 듣고 준비 순서와 우선순위를 함께 정리해 드려요." },
   { question: "예식 날짜가 아직 없어도 괜찮나요?", answer: "네. 시기와 지역만 대략 정해져 있어도 충분합니다. 원하는 계절과 하객 규모를 바탕으로 웨딩홀 탐색부터 차근차근 도와드려요." },
@@ -175,11 +177,11 @@ export default function Home() {
         <section className="instagram-section" id="instagram">
           <div className="section-title split">
             <div><p>PLANNER&apos;S INSTAGRAM</p><h2>준비의 순간을<br />가장 가까이에서</h2></div>
-            <a className="instagram-handle" href="https://www.instagram.com/" target="_blank" rel="noreferrer">@dearly_planner <span>↗</span></a>
+            <a className="instagram-handle" href={instagramUrl} target="_blank" rel="noreferrer">@daae_gi <span>↗</span></a>
           </div>
           <div className="instagram-grid">
             {instagramPosts.map((post) => (
-              <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" key={post.tag} aria-label={`${post.alt} 인스타그램에서 보기`}>
+              <a href={instagramUrl} target="_blank" rel="noreferrer" key={post.tag} aria-label={`${post.alt} 인스타그램에서 보기`}>
                 <img src={post.image} alt={post.alt} /><span>{post.tag}</span>
               </a>
             ))}
