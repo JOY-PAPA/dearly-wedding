@@ -6,8 +6,8 @@ import path from "node:path";
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const outputDir = path.resolve(projectRoot, "github-pages-dist");
 const clientDir = path.resolve(projectRoot, "dist", "client");
-const basePath = "/dearly-wedding";
-const siteUrl = "https://joy-papa.github.io/dearly-wedding";
+const basePath = "";
+const siteUrl = "https://www.kimdaae.com";
 const localUrl = "http://127.0.0.1:4317/";
 
 if (!outputDir.startsWith(`${projectRoot}${path.sep}`)) {
