@@ -11,9 +11,9 @@ const navItems = [
 ];
 
 const facts = [
-  { value: "286", unit: "건", label: "누적 웨딩 진행" },
+  { value: "2,300+", unit: "건", label: "누적 웨딩 진행" },
   { value: "11", unit: "년", label: "웨딩 플래닝 경력" },
-  { value: "4.9", unit: "/ 5", label: "평균 상담 만족도" },
+  { value: "89", unit: "%", label: "지인 소개율" },
   { value: "1:1", unit: "", label: "처음부터 끝까지 전담" },
 ];
 
@@ -132,7 +132,7 @@ export default function Home() {
             <h2>둘의 취향을 듣고<br />한 편의 결혼을 만듭니다</h2>
             <a href="#about">플래너 만나보기 <span>→</span></a>
           </div>
-          <div className="hero-index"><b>DAON KIM</b><span /><small>WEDDING PLANNER</small></div>
+          <div className="hero-index"><b>DAAE KIM</b><span /><small>WEDDING PLANNER</small></div>
         </section>
 
         <section className="fact-grid" aria-label="플래너 주요 경력">
