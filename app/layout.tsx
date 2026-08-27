@@ -9,7 +9,7 @@ const notoSans = Noto_Sans_KR({
 });
 
 const siteUrl = "https://www.kimdaae.com";
-const title = "김다애 플래너";
+const title = "김다애 플래너│한분 한분 정성 플래닝";
 const description = "김다애 웨딩플래너가 상담부터 본식까지 함께하는 1:1 퍼스널 웨딩 플래닝";
 
 export const metadata: Metadata = {
