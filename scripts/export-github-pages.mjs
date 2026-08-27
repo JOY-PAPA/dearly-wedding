@@ -264,17 +264,6 @@ try {
 
           const available = document.querySelector(".availability-pill b");
           if (available) available.textContent = Math.floor(Math.random() * 12 + 1) + "일 남음";
-
-          const form = document.querySelector(".consult-section form");
-          form?.addEventListener("submit", (event) => {
-            event.preventDefault();
-            const success = document.createElement("div");
-            success.className = "success-message";
-            success.setAttribute("role", "status");
-            success.innerHTML = '<span>✓</span><h3>상담 신청이 준비되었습니다</h3><p>현재는 안내용 화면이며 정보가 외부로 전송되지 않습니다.<br>실제 운영 시 상담 시스템을 연결할 수 있어요.</p><button type="button">다시 작성하기</button>';
-            form.replaceWith(success);
-            success.querySelector("button")?.addEventListener("click", () => location.reload());
-          });
         })();
       </script></body>`,
     );

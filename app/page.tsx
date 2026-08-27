@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { blogReviews, type BlogReview } from "./blog-reviews.generated";
 
 const navItems = [
@@ -34,6 +34,7 @@ const instagramPosts = [
 ];
 
 const instagramUrl = "https://www.instagram.com/daae_gi?igsi=djN6ZDVycWMxeTh2";
+const kakaoChatUrl = "https://open.kakao.com/o/srQ6Fdah";
 
 const faqs = [
   { question: "상담은 어떤 방식으로 진행되나요?", answer: "간단한 사전 질문지를 받은 뒤 40분 내외의 1:1 상담으로 진행합니다. 두 분의 예산, 일정, 취향을 듣고 준비 순서와 우선순위를 함께 정리해 드려요." },
@@ -53,7 +54,6 @@ function getNaverEmbedUrl(href: string) {
 }
 
 export default function Home() {
-  const [submitted, setSubmitted] = useState(false);
   const [availableDays, setAvailableDays] = useState<number | null>(null);
   const [reviewPage, setReviewPage] = useState(1);
   const [selectedReview, setSelectedReview] = useState<BlogReview | null>(null);
@@ -94,11 +94,6 @@ export default function Home() {
     };
   }, [selectedReview]);
 
-  function submitConsultation(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setSubmitted(true);
-  }
-
   function changeReviewPage(page: number) {
     setReviewPage(Math.min(Math.max(page, 1), totalReviewPages));
   }
@@ -125,7 +120,7 @@ export default function Home() {
           <p className="eyebrow">WEDDING, MADE PERSONAL</p>
           <h1><span className="planner-company">베리굿 웨딩</span><em className="planner-name">김다애 플래너</em></h1>
           <p className="intro-copy">처음 만나는 날부터 예식이 끝나는 순간까지<br />김다애 플래너가 두 분 곁에서 함께합니다.</p>
-          <a className="rail-cta" href="#consult">무료 상담 시작하기 <span>↗</span></a>
+          <a className="rail-cta" href={kakaoChatUrl} target="_blank" rel="noreferrer">무료 상담 시작하기 <span>↗</span></a>
           <div className="rail-foot"><span>DEARLY WEDDING</span><span>SEOUL · KOREA</span></div>
         </div>
       </aside>
@@ -271,21 +266,19 @@ export default function Home() {
 
         <section className="consult-section" id="consult">
           <div className="consult-intro">
-            <p>BEGIN YOUR STORY</p><h2>두 분의 이야기를<br />들려주세요</h2><span>상담 신청 후 영업일 기준 1일 내 안내드립니다.</span>
+            <p>KAKAO OPEN CHAT</p><h2>두 분의 이야기를<br />카카오톡으로 들려주세요</h2><span>복잡한 양식 없이 오픈채팅에서 편하게 상담을 시작할 수 있습니다.</span>
           </div>
-          {submitted ? (
-            <div className="success-message" role="status"><span>✓</span><h3>상담 신청이 준비되었습니다</h3><p>이 데모에서는 정보가 외부로 전송되지 않습니다.<br />실제 운영 시 상담 시스템을 연결할 수 있어요.</p><button type="button" onClick={() => setSubmitted(false)}>다시 작성하기</button></div>
-          ) : (
-            <form onSubmit={submitConsultation}>
-              <label>이름<input name="name" type="text" placeholder="성함을 입력해 주세요" required /></label>
-              <label>연락처<input name="phone" type="tel" placeholder="010-0000-0000" required /></label>
-              <label>예식 예정 시기<input name="date" type="month" /></label>
-              <label>현재 준비 단계<select name="stage" defaultValue=""><option value="" disabled>선택해 주세요</option><option>이제 막 알아보는 중</option><option>웨딩홀 탐색 중</option><option>스드메 탐색 중</option><option>일부 계약 완료</option></select></label>
-              <label className="message-label">남기실 말씀<textarea name="message" placeholder="원하는 예식 지역, 하객 수, 궁금한 점을 자유롭게 적어 주세요." /></label>
-              <label className="consent"><input type="checkbox" required /> 개인정보 수집 및 상담 안내에 동의합니다.</label>
-              <button className="submit-button" type="submit">무료 상담 신청 <span>→</span></button>
-            </form>
-          )}
+          <div className="kakao-consult-card">
+            <div className="kakao-chat-mark" aria-hidden="true"><span>•••</span></div>
+            <div className="kakao-consult-copy">
+              <span>1:1 WEDDING CONSULTATION</span>
+              <h3>궁금한 점을 바로 남겨주세요</h3>
+              <p>예식 예정 시기, 준비 단계, 원하는 분위기를 간단히 알려주시면<br />김다애 플래너가 확인 후 차근차근 안내해 드립니다.</p>
+              <div className="kakao-consult-points"><span>✓ 부담 없는 첫 상담</span><span>✓ 1:1 맞춤 답변</span><span>✓ 모바일로 간편하게</span></div>
+            </div>
+            <a className="kakao-consult-button" href={kakaoChatUrl} target="_blank" rel="noreferrer">카카오톡 오픈채팅 상담 시작하기 <span>↗</span></a>
+            <small>버튼을 누르면 카카오톡 오픈채팅으로 이동합니다.</small>
+          </div>
         </section>
 
         <footer>
@@ -294,7 +287,7 @@ export default function Home() {
           <small>© 2026 DEARLY WEDDING. ALL RIGHTS RESERVED.</small>
         </footer>
 
-        <a className="chat-button" href="#consult" aria-label="빠른 상담 신청">♡<span>빠른상담</span></a>
+        <a className="chat-button" href={kakaoChatUrl} target="_blank" rel="noreferrer" aria-label="카카오톡 오픈채팅 상담">•••<span>톡상담</span></a>
         <nav className="bottom-nav" aria-label="모바일 하단 메뉴">
           {[{ label: "홈", href: "#home", icon: "⌂" }, { label: "소개", href: "#about", icon: "D" }, { label: "후기", href: "#reviews", icon: "♡" }, { label: "상담", href: "#consult", icon: "✦" }].map((item, index) => (
             <a key={item.label} href={item.href} className={index === 0 ? "active" : ""}><span>{item.icon}</span>{item.label}</a>

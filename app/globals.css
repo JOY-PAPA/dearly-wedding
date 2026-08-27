@@ -171,23 +171,20 @@ img { display: block; max-width: 100%; }
 .consult-intro { margin-bottom: 36px; }
 .consult-intro h2 { margin: 0 0 15px; font-size: 36px; line-height: 1.35; letter-spacing: -.05em; font-weight: 400; }
 .consult-intro > span { color: var(--muted); font-size: 10px; }
-.consult-section form { display: grid; grid-template-columns: 1fr 1fr; gap: 23px 14px; }
-.consult-section label { color: #564c58; font-size: 10px; font-weight: 700; }
-.consult-section input:not([type="checkbox"]), .consult-section select, .consult-section textarea { width: 100%; margin-top: 7px; padding: 0 13px; border: 0; border-bottom: 1px solid #a99ca9; border-radius: 0; background: rgba(255,255,255,.43); color: var(--ink); outline: none; font-size: 11px; }
-.consult-section input:not([type="checkbox"]), .consult-section select { height: 48px; }
-.consult-section textarea { min-height: 94px; padding-top: 13px; resize: vertical; }
-.consult-section input:focus, .consult-section select:focus, .consult-section textarea:focus { border-color: var(--red); box-shadow: 0 2px 0 -1px var(--red); }
-.message-label, .consent, .submit-button { grid-column: 1 / -1; }
-.consent { display: flex; align-items: center; gap: 8px; font-weight: 400 !important; }
-.consent input { accent-color: var(--red); }
-.submit-button { height: 54px; border: 0; background: var(--red); color: white; font-size: 12px; font-weight: 700; cursor: pointer; transition: background .2s; }
-.submit-button span { margin-left: 28px; }
-.submit-button:hover { background: var(--violet); }
-.success-message { padding: 48px 24px; background: rgba(255,255,255,.48); text-align: center; }
-.success-message > span { width: 48px; height: 48px; margin: 0 auto 18px; display: grid; place-items: center; border-radius: 50%; background: var(--red); color: white; }
-.success-message h3 { margin: 0 0 12px; font-size: 24px; line-height: 1.3; font-weight: 400; }
-.success-message p { color: var(--muted); font-size: 10px; line-height: 1.8; }
-.success-message button { margin-top: 10px; padding: 10px 18px; border: 1px solid var(--red); background: transparent; color: var(--red); font-size: 10px; cursor: pointer; }
+.kakao-consult-card { position: relative; padding: 34px; display: grid; grid-template-columns: 58px 1fr; gap: 0 22px; overflow: hidden; background: #fee500; color: #261f21; box-shadow: 0 20px 52px rgba(50,24,71,.12); }
+.kakao-consult-card::after { content: "KAKAO"; position: absolute; right: -10px; top: -17px; color: rgba(38,31,33,.055); font-size: 76px; line-height: 1; font-weight: 900; letter-spacing: -.06em; }
+.kakao-chat-mark { position: relative; z-index: 1; width: 58px; height: 52px; display: grid; place-items: center; border-radius: 50%; background: #261f21; color: #fee500; font-size: 15px; letter-spacing: .08em; }
+.kakao-chat-mark::after { content: ""; position: absolute; left: 7px; bottom: -5px; width: 13px; height: 13px; background: #261f21; transform: rotate(28deg); }
+.kakao-chat-mark span { position: relative; z-index: 1; transform: translateY(-3px); }
+.kakao-consult-copy { position: relative; z-index: 1; }
+.kakao-consult-copy > span { font-size: 8px; font-weight: 800; letter-spacing: .14em; }
+.kakao-consult-copy h3 { margin: 8px 0 10px; font-size: 25px; line-height: 1.35; letter-spacing: -.04em; }
+.kakao-consult-copy p { margin: 0; color: rgba(38,31,33,.7); font-size: 10px; line-height: 1.8; }
+.kakao-consult-points { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 7px; }
+.kakao-consult-points span { padding: 7px 9px; border: 1px solid rgba(38,31,33,.18); border-radius: 999px; font-size: 8px; font-weight: 700; }
+.kakao-consult-button { position: relative; z-index: 1; grid-column: 1 / -1; min-height: 54px; margin-top: 28px; padding: 0 19px; display: flex; align-items: center; justify-content: space-between; background: #261f21; color: white; font-size: 12px; font-weight: 700; transition: transform .2s, background .2s; }
+.kakao-consult-button:hover { background: var(--violet); transform: translateY(-2px); }
+.kakao-consult-card > small { position: relative; z-index: 1; grid-column: 1 / -1; margin-top: 10px; color: rgba(38,31,33,.56); font-size: 8px; text-align: center; }
 
 footer { padding: 54px 38px 118px; background: #251130; color: #d2c6d8; }
 .footer-brand { color: white; font-size: 18px; line-height: 1; font-weight: 700; letter-spacing: .28em; }
@@ -195,7 +192,7 @@ footer > p { margin: 15px 0 28px; color: #91859a; font-size: 10px; }
 footer > div { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 22px; font-size: 9px; }
 footer > small { color: #6e6175; font-size: 8px; letter-spacing: .08em; }
 
-.chat-button { position: fixed; z-index: 25; right: calc(17vw + 20px); bottom: 28px; width: 58px; height: 58px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 50%; background: var(--red); color: white; box-shadow: 0 8px 26px rgba(50,24,71,.28); font-size: 17px; }
+.chat-button { position: fixed; z-index: 25; right: calc(17vw + 20px); bottom: 28px; width: 58px; height: 58px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 50%; background: #fee500; color: #261f21; box-shadow: 0 8px 26px rgba(50,24,71,.28); font-size: 15px; font-weight: 800; letter-spacing: .06em; }
 .chat-button span { margin-top: 1px; font-size: 8px; }
 .bottom-nav { display: none; }
 
@@ -234,13 +231,23 @@ footer > small { color: #6e6175; font-size: 8px; letter-spacing: .08em; }
   .about-photo-wrap > span { right: -20px; }
   .about-copy h2, .section-title h2 { font-size: 30px; }
   .about-copy blockquote br { display: none; }
-  .process-section, .review-section, .instagram-section, .faq-section { padding: 70px 26px 76px; }
+  .process-section, .instagram-section, .faq-section { padding: 70px 26px 76px; }
+  .review-section { padding: 70px 16px 76px; }
   .process-list article { grid-template-columns: 46px 1fr; }
   .section-title.split { align-items: flex-start; flex-direction: column; }
   .naver-blog-lockup { margin-top: 3px; }
-  .review-card { grid-template-columns: 1fr; }
-  .review-card > img { height: 210px; }
-  .blog-card-copy { min-height: 205px; }
+  .review-list { margin-top: 30px; gap: 10px; }
+  .review-card { min-height: 146px; grid-template-columns: 116px minmax(0, 1fr); }
+  .review-card > img { height: 100%; min-height: 146px; }
+  .blog-card-copy { min-width: 0; min-height: 0; padding: 14px 13px 12px; }
+  .blog-meta { margin-bottom: 7px; gap: 6px; font-size: 6px; }
+  .blog-card-copy h3 { margin-bottom: 7px; display: -webkit-box; overflow: hidden; font-size: 13px; line-height: 1.45; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+  .blog-card-copy > p:not(.blog-meta) { display: -webkit-box; overflow: hidden; font-size: 8px; line-height: 1.6; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+  .blog-card-footer { margin-top: 9px; padding-top: 8px; }
+  .blog-card-footer b { display: none; }
+  .blog-card-footer span { margin-left: auto; color: #d8cddd; font-size: 7px; }
+  .review-pagination { margin-top: 28px; gap: 5px; }
+  .review-pagination button { width: 31px; height: 31px; }
   .review-modal-backdrop { padding: 0; }
   .review-modal-panel { width: 100%; height: 100svh; }
   .review-modal-header { padding: 20px 62px 14px 18px; }
@@ -252,8 +259,14 @@ footer > small { color: #6e6175; font-size: 8px; letter-spacing: .08em; }
   .instagram-grid span { display: none; }
   .faq-list summary { font-size: 11px; }
   .consult-section { padding: 72px 26px 88px; }
-  .consult-section form { grid-template-columns: 1fr; }
-  .message-label, .consent, .submit-button { grid-column: auto; }
+  .kakao-consult-card { padding: 26px 20px; grid-template-columns: 48px 1fr; gap: 0 15px; }
+  .kakao-consult-card::after { font-size: 57px; }
+  .kakao-chat-mark { width: 48px; height: 44px; font-size: 12px; }
+  .kakao-consult-copy h3 { margin-top: 6px; font-size: 20px; }
+  .kakao-consult-copy p br { display: none; }
+  .kakao-consult-points { grid-column: 1 / -1; gap: 5px; }
+  .kakao-consult-points span { padding: 6px 7px; }
+  .kakao-consult-button { margin-top: 22px; font-size: 11px; }
   footer { padding-inline: 26px; }
 }
 
