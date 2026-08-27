@@ -12,7 +12,7 @@ const navItems = [
 
 const facts = [
   { value: "286", unit: "건", label: "누적 웨딩 진행" },
-  { value: "12", unit: "년", label: "웨딩 플래닝 경력" },
+  { value: "11", unit: "년", label: "웨딩 플래닝 경력" },
   { value: "4.9", unit: "/ 5", label: "평균 상담 만족도" },
   { value: "1:1", unit: "", label: "처음부터 끝까지 전담" },
 ];
@@ -54,7 +54,6 @@ function getNaverEmbedUrl(href: string) {
 }
 
 export default function Home() {
-  const [availableDays, setAvailableDays] = useState<number | null>(null);
   const [reviewPage, setReviewPage] = useState(1);
   const [selectedReview, setSelectedReview] = useState<BlogReview | null>(null);
   const reviewsPerPage = 3;
@@ -62,14 +61,6 @@ export default function Home() {
   const reviewPageStart = Math.min(Math.max(reviewPage - 2, 1), Math.max(totalReviewPages - 4, 1));
   const visibleReviewPages = Array.from({ length: Math.min(5, totalReviewPages) }, (_, index) => reviewPageStart + index);
   const visibleReviews = blogReviews.slice((reviewPage - 1) * reviewsPerPage, reviewPage * reviewsPerPage);
-
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      const randomValue = crypto.getRandomValues(new Uint32Array(1))[0];
-      setAvailableDays((randomValue % 12) + 1);
-    }, 0);
-    return () => window.clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     if (!selectedReview) return;
@@ -152,8 +143,8 @@ export default function Home() {
 
         <section className="about-section" id="about">
           <div className="about-photo-wrap">
-            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1000&q=88" alt="김다애 웨딩플래너 프로필" />
-            <span>12 YEARS<br />WITH COUPLES</span>
+            <img src="/kim-daae-planner.jpg" alt="김다애 웨딩플래너 프로필" />
+            <span>11 YEARS<br />WITH COUPLES</span>
           </div>
           <div className="about-copy">
             <p className="section-kicker">ABOUT THE PLANNER</p>
@@ -161,9 +152,6 @@ export default function Home() {
             <blockquote>“좋은 결혼 준비는 더 많은 선택이 아니라,<br />두 사람에게 꼭 맞는 선택을 남기는 일이라고 믿어요.”</blockquote>
             <p>정해진 패키지보다 두 분의 생활 방식과 취향을 먼저 듣습니다. 예산과 일정은 현실적으로, 중요한 장면은 두 분답게 지켜낼 수 있도록 처음부터 본식까지 한 사람이 책임지고 동행합니다.</p>
             <div className="about-tags"><span>#1:1전담</span><span>#예산설계</span><span>#취향큐레이션</span><span>#본식동행</span></div>
-            <div className="availability-pill" aria-live="polite">
-              <span>이번 달</span><strong>상담 가능일</strong><b>{availableDays === null ? "확인 중" : `${availableDays}일 남음`}</b>
-            </div>
             <a className="line-link" href="#consult">김다애 플래너와 상담하기 <span>↗</span></a>
           </div>
         </section>

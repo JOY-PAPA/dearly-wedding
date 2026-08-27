@@ -262,8 +262,6 @@ try {
 
           renderReviews();
 
-          const available = document.querySelector(".availability-pill b");
-          if (available) available.textContent = Math.floor(Math.random() * 12 + 1) + "일 남음";
         })();
       </script></body>`,
     );
