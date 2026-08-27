@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import { blogReviews } from "./blog-reviews.generated";
 
 const navItems = [
   { label: "플래너 소개", href: "#about" },
@@ -23,30 +24,6 @@ const process = [
   { step: "04", title: "본식 케어", copy: "마지막 순간까지 현장을 세심하게 확인해 두 분은 설렘에만 집중할 수 있게 합니다." },
 ];
 
-const blogReviews = [
-  {
-    category: "REAL WEDDING",
-    title: "한남 리버뷰 웨딩, 두 사람의 취향을 담은 하루",
-    date: "2026.05",
-    excerpt: "예산의 우선순위부터 드레스 투어와 본식 동행까지, 차분한 아이보리 무드로 완성한 결혼 준비 이야기를 소개합니다.",
-    image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=900&q=88",
-  },
-  {
-    category: "GARDEN WEDDING",
-    title: "초여름의 빛을 살린 분당 가든 웨딩",
-    date: "2026.04",
-    excerpt: "서로 다른 의견에서 공통의 취향을 찾아가는 과정과 야외 예식 일정, 비용을 안정적으로 정리한 실제 사례입니다.",
-    image: "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=900&q=88",
-  },
-  {
-    category: "CLASSIC WEDDING",
-    title: "스튜디오부터 드레스까지 이어진 클래식 웨딩",
-    date: "2026.03",
-    excerpt: "말로 설명하기 어려웠던 차분한 무드를 발견하고 스튜디오, 드레스, 본식 스타일링을 하나의 결로 연결한 기록입니다.",
-    image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=88",
-  },
-];
-
 const instagramPosts = [
   { image: "/instagram/daae-gi-01.jpg", href: "https://www.instagram.com/daae_gi/reel/DcLmbn0I7x_/", alt: "김다애 플래너 인스타그램 릴스 썸네일", tag: "REELS" },
   { image: "/instagram/daae-gi-02.jpg", href: "https://www.instagram.com/daae_gi/p/DcJUDGen-Sn/", alt: "김다애 플래너 인스타그램 게시물 썸네일", tag: "INSTAGRAM" },
@@ -67,15 +44,28 @@ const faqs = [
 export default function Home() {
   const [submitted, setSubmitted] = useState(false);
   const [availableDays, setAvailableDays] = useState<number | null>(null);
+  const [reviewPage, setReviewPage] = useState(1);
+  const reviewsPerPage = 3;
+  const totalReviewPages = Math.ceil(blogReviews.length / reviewsPerPage);
+  const reviewPageStart = Math.min(Math.max(reviewPage - 2, 1), Math.max(totalReviewPages - 4, 1));
+  const visibleReviewPages = Array.from({ length: Math.min(5, totalReviewPages) }, (_, index) => reviewPageStart + index);
+  const visibleReviews = blogReviews.slice((reviewPage - 1) * reviewsPerPage, reviewPage * reviewsPerPage);
 
   useEffect(() => {
-    const randomValue = crypto.getRandomValues(new Uint32Array(1))[0];
-    setAvailableDays((randomValue % 12) + 1);
+    const timer = window.setTimeout(() => {
+      const randomValue = crypto.getRandomValues(new Uint32Array(1))[0];
+      setAvailableDays((randomValue % 12) + 1);
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   function submitConsultation(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSubmitted(true);
+  }
+
+  function changeReviewPage(page: number) {
+    setReviewPage(Math.min(Math.max(page, 1), totalReviewPages));
   }
 
   return (
@@ -155,22 +145,36 @@ export default function Home() {
             <div className="naver-blog-lockup"><b>N</b><span>NAVER BLOG<small>실제 후기 사례 모음</small></span></div>
           </div>
           <div className="review-list">
-            {blogReviews.map((review) => (
-              <article key={review.title}>
+            {visibleReviews.map((review) => (
+              <a className="review-card" href={review.href} target="_blank" rel="noreferrer" key={review.href}>
                 <img src={review.image} alt={review.title} />
                 <div className="blog-card-copy">
                   <p className="blog-meta"><span>{review.category}</span>{review.date}</p>
                   <h3>{review.title}</h3>
                   <p>{review.excerpt}</p>
-                  <div className="blog-card-footer"><b>베리굿 웨딩 김다애 플래너</b><span>블로그 링크 연결 예정</span></div>
+                  <div className="blog-card-footer"><b>베리굿 웨딩 김다애 플래너</b><span>네이버 블로그에서 보기 ↗</span></div>
                 </div>
-              </article>
+              </a>
             ))}
           </div>
           <nav className="review-pagination" aria-label="실제 진행 후기 페이지">
-            <a href="#reviews" aria-current="page">1</a>
-            {[2, 3, 4, 5].map((page) => <span className="page-number" key={page}>{page}</span>)}
-            <span className="page-ellipsis" aria-hidden="true">…</span>
+            <button className="page-arrow" type="button" onClick={() => changeReviewPage(reviewPage - 1)} disabled={reviewPage === 1} aria-label="이전 후기 페이지">‹</button>
+            {reviewPageStart > 1 && (
+              <>
+                <button type="button" onClick={() => changeReviewPage(1)}>1</button>
+                <span className="page-ellipsis" aria-hidden="true">…</span>
+              </>
+            )}
+            {visibleReviewPages.map((page) => (
+              <button type="button" className={reviewPage === page ? "active" : ""} onClick={() => changeReviewPage(page)} aria-current={reviewPage === page ? "page" : undefined} key={page}>{page}</button>
+            ))}
+            {reviewPageStart + visibleReviewPages.length - 1 < totalReviewPages && (
+              <>
+                <span className="page-ellipsis" aria-hidden="true">…</span>
+                <button type="button" onClick={() => changeReviewPage(totalReviewPages)}>{totalReviewPages}</button>
+              </>
+            )}
+            <button className="page-arrow" type="button" onClick={() => changeReviewPage(reviewPage + 1)} disabled={reviewPage === totalReviewPages} aria-label="다음 후기 페이지">›</button>
           </nav>
         </section>
 
