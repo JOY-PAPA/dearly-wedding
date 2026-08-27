@@ -132,7 +132,7 @@ export default function Home() {
 
       <section className="app-frame">
         <header className="topbar">
-          <a className="wordmark" href="#home" aria-label="디어리 웨딩 홈">DEARLY</a>
+          <a className="wordmark" href="#home" aria-label="다애플랜 홈">D A A E P L A N</a>
           <nav aria-label="주요 메뉴">
             {navItems.map((item) => <a key={item.label} href={item.href}>{item.label}</a>)}
           </nav>
@@ -289,7 +289,7 @@ export default function Home() {
         </section>
 
         <footer>
-          <a className="footer-brand" href="#home">DEARLY</a><p>김다애 플래너와 시작하는 1:1 퍼스널 웨딩 플래닝</p>
+          <a className="footer-brand" href="#home">D A A E P L A N</a><p>김다애 플래너와 시작하는 1:1 퍼스널 웨딩 플래닝</p>
           <div><a href="#about">플래너 소개</a><a href="#reviews">실제 진행 후기</a><a href="#instagram">인스타그램</a><a href="#consult">상담 문의</a></div>
           <small>© 2026 DEARLY WEDDING. ALL RIGHTS RESERVED.</small>
         </footer>
