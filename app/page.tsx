@@ -65,6 +65,15 @@ export default function Home() {
     const previousOverflow = document.body.style.overflow;
     const closeWithEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") setSelectedReview(null);
+      if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        const offset = event.key === "ArrowLeft" ? -1 : 1;
+        setSelectedReview((current) => {
+          if (!current) return current;
+          const currentIndex = blogReviews.findIndex((review) => review.href === current.href);
+          const nextIndex = (currentIndex + offset + blogReviews.length) % blogReviews.length;
+          return blogReviews[nextIndex];
+        });
+      }
     };
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", closeWithEscape);
@@ -82,6 +91,17 @@ export default function Home() {
   function changeReviewPage(page: number) {
     setReviewPage(Math.min(Math.max(page, 1), totalReviewPages));
   }
+
+  function moveSelectedReview(offset: number) {
+    setSelectedReview((current) => {
+      if (!current) return current;
+      const currentIndex = blogReviews.findIndex((review) => review.href === current.href);
+      const nextIndex = (currentIndex + offset + blogReviews.length) % blogReviews.length;
+      return blogReviews[nextIndex];
+    });
+  }
+
+  const selectedReviewIndex = selectedReview ? blogReviews.findIndex((review) => review.href === selectedReview.href) : -1;
 
   return (
     <main className="site-shell">
@@ -201,10 +221,16 @@ export default function Home() {
               <div className="review-modal-copy">
                 <p className="blog-meta"><span>{selectedReview.category}</span>{selectedReview.date}</p>
                 <h2 id="review-modal-title">{selectedReview.title}</h2>
+                <p className="review-modal-story-label">후기 본문</p>
                 <p className="review-modal-excerpt">{selectedReview.excerpt}</p>
-                <p className="review-modal-note">고객님이 직접 남겨주신 실제 웨딩 준비 후기입니다. 자세한 전체 내용은 아래 원문에서 확인하실 수 있습니다.</p>
                 <div className="review-modal-planner"><span>PLANNED BY</span><b>베리굿 웨딩 김다애 플래너</b></div>
-                <a className="review-original-link" href={selectedReview.href} target="_blank" rel="noreferrer">네이버 블로그 원문 보기 <span>↗</span></a>
+                <nav className="review-modal-navigation" aria-label="후기 상세 이동">
+                  <button type="button" onClick={() => moveSelectedReview(-1)}><span>←</span> 이전 후기</button>
+                  <b>{selectedReviewIndex + 1} / {blogReviews.length}</b>
+                  <button type="button" onClick={() => moveSelectedReview(1)}>다음 후기 <span>→</span></button>
+                </nav>
+                <a className="review-original-link" href={selectedReview.href} target="_blank" rel="noreferrer">네이버에서 실제 후기 확인 <span>↗</span></a>
+                <small className="review-source-note">원문 링크는 실제 게시 여부를 확인하기 위한 용도입니다.</small>
               </div>
             </article>
           </div>

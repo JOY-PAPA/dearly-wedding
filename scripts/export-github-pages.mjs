@@ -97,7 +97,8 @@ try {
             return element;
           };
 
-          const openReviewModal = (review) => {
+          const openReviewModal = (initialIndex) => {
+            let currentIndex = initialIndex;
             const previousOverflow = document.body.style.overflow;
             const backdrop = makeElement("div", "review-modal-backdrop");
             const panel = makeElement("article", "review-modal-panel");
@@ -111,25 +112,51 @@ try {
 
             const imageWrap = makeElement("div", "review-modal-image");
             const image = makeElement("img");
-            image.src = review.image;
-            image.alt = review.title;
             imageWrap.append(image);
 
             const copy = makeElement("div", "review-modal-copy");
             const meta = makeElement("p", "blog-meta");
-            meta.append(makeElement("span", "", review.category), document.createTextNode(review.date));
-            const title = makeElement("h2", "", review.title);
+            const metaCategory = makeElement("span");
+            const metaDate = document.createTextNode("");
+            meta.append(metaCategory, metaDate);
+            const title = makeElement("h2");
             title.id = "review-modal-title";
-            const excerpt = makeElement("p", "review-modal-excerpt", review.excerpt);
-            const note = makeElement("p", "review-modal-note", "고객님이 직접 남겨주신 실제 웨딩 준비 후기입니다. 자세한 전체 내용은 아래 원문에서 확인하실 수 있습니다.");
+            const storyLabel = makeElement("p", "review-modal-story-label", "후기 본문");
+            const excerpt = makeElement("p", "review-modal-excerpt");
             const planner = makeElement("div", "review-modal-planner");
             planner.append(makeElement("span", "", "PLANNED BY"), makeElement("b", "", "베리굿 웨딩 김다애 플래너"));
+
+            const navigation = makeElement("nav", "review-modal-navigation");
+            navigation.setAttribute("aria-label", "후기 상세 이동");
+            const previousButton = makeElement("button", "", "← 이전 후기");
+            previousButton.type = "button";
+            const reviewCount = makeElement("b");
+            const nextButton = makeElement("button", "", "다음 후기 →");
+            nextButton.type = "button";
+            navigation.append(previousButton, reviewCount, nextButton);
+
             const originalLink = makeElement("a", "review-original-link");
-            originalLink.href = review.href;
             originalLink.target = "_blank";
             originalLink.rel = "noreferrer";
-            originalLink.append(document.createTextNode("네이버 블로그 원문 보기"), makeElement("span", "", "↗"));
-            copy.append(meta, title, excerpt, note, planner, originalLink);
+            originalLink.append(document.createTextNode("네이버에서 실제 후기 확인"), makeElement("span", "", "↗"));
+            const sourceNote = makeElement("small", "review-source-note", "원문 링크는 실제 게시 여부를 확인하기 위한 용도입니다.");
+            copy.append(meta, title, storyLabel, excerpt, planner, navigation, originalLink, sourceNote);
+
+            const updateContent = () => {
+              const review = reviews[currentIndex];
+              image.src = review.image;
+              image.alt = review.title;
+              metaCategory.textContent = review.category;
+              metaDate.nodeValue = review.date;
+              title.textContent = review.title;
+              excerpt.textContent = review.excerpt;
+              reviewCount.textContent = (currentIndex + 1) + " / " + reviews.length;
+              originalLink.href = review.href;
+            };
+            const moveReview = (offset) => {
+              currentIndex = (currentIndex + offset + reviews.length) % reviews.length;
+              updateContent();
+            };
 
             const close = () => {
               window.removeEventListener("keydown", closeWithEscape);
@@ -138,8 +165,12 @@ try {
             };
             const closeWithEscape = (event) => {
               if (event.key === "Escape") close();
+              if (event.key === "ArrowLeft") moveReview(-1);
+              if (event.key === "ArrowRight") moveReview(1);
             };
             closeButton.addEventListener("click", close);
+            previousButton.addEventListener("click", () => moveReview(-1));
+            nextButton.addEventListener("click", () => moveReview(1));
             backdrop.addEventListener("mousedown", (event) => {
               if (event.target === backdrop) close();
             });
@@ -148,14 +179,15 @@ try {
             backdrop.append(panel);
             document.body.append(backdrop);
             document.body.style.overflow = "hidden";
+            updateContent();
             closeButton.focus();
           };
 
-          const makeReviewCard = (review) => {
+          const makeReviewCard = (review, reviewIndex) => {
             const card = makeElement("button", "review-card");
             card.type = "button";
             card.setAttribute("aria-haspopup", "dialog");
-            card.addEventListener("click", () => openReviewModal(review));
+            card.addEventListener("click", () => openReviewModal(reviewIndex));
 
             const image = makeElement("img");
             image.src = review.image;
@@ -212,7 +244,7 @@ try {
           function renderReviews() {
             if (!reviewList) return;
             const start = (reviewPage - 1) * reviewsPerPage;
-            reviewList.replaceChildren(...reviews.slice(start, start + reviewsPerPage).map(makeReviewCard));
+            reviewList.replaceChildren(...reviews.slice(start, start + reviewsPerPage).map((review, index) => makeReviewCard(review, start + index)));
             renderPagination();
           }
 
