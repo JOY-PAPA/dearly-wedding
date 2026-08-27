@@ -41,6 +41,17 @@ const faqs = [
   { question: "준비 중간부터 플래닝을 받을 수도 있나요?", answer: "가능합니다. 현재 계약과 진행 상황을 먼저 점검한 뒤 남은 항목에 맞춰 필요한 범위로 플래닝을 안내해 드립니다." },
 ];
 
+function getNaverEmbedUrl(href: string) {
+  try {
+    const url = new URL(href);
+    const [blogId, logNo] = url.pathname.split("/").filter(Boolean);
+    if (!blogId || !logNo) return href;
+    return `https://m.blog.naver.com/PostView.naver?blogId=${encodeURIComponent(blogId)}&logNo=${encodeURIComponent(logNo)}`;
+  } catch {
+    return href;
+  }
+}
+
 export default function Home() {
   const [submitted, setSubmitted] = useState(false);
   const [availableDays, setAvailableDays] = useState<number | null>(null);
@@ -217,21 +228,21 @@ export default function Home() {
           <div className="review-modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && setSelectedReview(null)}>
             <article className="review-modal-panel" role="dialog" aria-modal="true" aria-labelledby="review-modal-title">
               <button className="review-modal-close" type="button" onClick={() => setSelectedReview(null)} aria-label="후기 상세 닫기">×</button>
-              <div className="review-modal-image"><img src={selectedReview.image} alt={selectedReview.title} /></div>
-              <div className="review-modal-copy">
+              <header className="review-modal-header">
                 <p className="blog-meta"><span>{selectedReview.category}</span>{selectedReview.date}</p>
                 <h2 id="review-modal-title">{selectedReview.title}</h2>
-                <p className="review-modal-story-label">후기 본문</p>
-                <p className="review-modal-excerpt">{selectedReview.excerpt}</p>
-                <div className="review-modal-planner"><span>PLANNED BY</span><b>베리굿 웨딩 김다애 플래너</b></div>
+              </header>
+              <div className="review-modal-frame-wrap">
+                <iframe className="review-modal-frame" src={getNaverEmbedUrl(selectedReview.href)} title={`${selectedReview.title} 후기 본문`} loading="lazy" />
+              </div>
+              <footer className="review-modal-footer">
                 <nav className="review-modal-navigation" aria-label="후기 상세 이동">
                   <button type="button" onClick={() => moveSelectedReview(-1)}><span>←</span> 이전 후기</button>
                   <b>{selectedReviewIndex + 1} / {blogReviews.length}</b>
                   <button type="button" onClick={() => moveSelectedReview(1)}>다음 후기 <span>→</span></button>
                 </nav>
-                <a className="review-original-link" href={selectedReview.href} target="_blank" rel="noreferrer">네이버에서 실제 후기 확인 <span>↗</span></a>
-                <small className="review-source-note">원문 링크는 실제 게시 여부를 확인하기 위한 용도입니다.</small>
-              </div>
+                <div className="review-modal-source"><small>팝업 안에서 본문을 스크롤해 읽을 수 있습니다.</small><a className="review-original-link" href={selectedReview.href} target="_blank" rel="noreferrer">원문 확인 <span>↗</span></a></div>
+              </footer>
             </article>
           </div>
         )}

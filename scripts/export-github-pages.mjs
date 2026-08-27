@@ -97,6 +97,17 @@ try {
             return element;
           };
 
+          const getNaverEmbedUrl = (href) => {
+            try {
+              const url = new URL(href);
+              const parts = url.pathname.split("/").filter(Boolean);
+              if (parts.length < 2) return href;
+              return "https://m.blog.naver.com/PostView.naver?blogId=" + encodeURIComponent(parts[0]) + "&logNo=" + encodeURIComponent(parts[1]);
+            } catch {
+              return href;
+            }
+          };
+
           const openReviewModal = (initialIndex) => {
             let currentIndex = initialIndex;
             const previousOverflow = document.body.style.overflow;
@@ -110,21 +121,21 @@ try {
             closeButton.type = "button";
             closeButton.setAttribute("aria-label", "후기 상세 닫기");
 
-            const imageWrap = makeElement("div", "review-modal-image");
-            const image = makeElement("img");
-            imageWrap.append(image);
-
-            const copy = makeElement("div", "review-modal-copy");
+            const header = makeElement("header", "review-modal-header");
             const meta = makeElement("p", "blog-meta");
             const metaCategory = makeElement("span");
             const metaDate = document.createTextNode("");
             meta.append(metaCategory, metaDate);
             const title = makeElement("h2");
             title.id = "review-modal-title";
-            const storyLabel = makeElement("p", "review-modal-story-label", "후기 본문");
-            const excerpt = makeElement("p", "review-modal-excerpt");
-            const planner = makeElement("div", "review-modal-planner");
-            planner.append(makeElement("span", "", "PLANNED BY"), makeElement("b", "", "베리굿 웨딩 김다애 플래너"));
+            header.append(meta, title);
+
+            const frameWrap = makeElement("div", "review-modal-frame-wrap");
+            const frame = makeElement("iframe", "review-modal-frame");
+            frame.loading = "lazy";
+            frameWrap.append(frame);
+
+            const footer = makeElement("footer", "review-modal-footer");
 
             const navigation = makeElement("nav", "review-modal-navigation");
             navigation.setAttribute("aria-label", "후기 상세 이동");
@@ -135,21 +146,22 @@ try {
             nextButton.type = "button";
             navigation.append(previousButton, reviewCount, nextButton);
 
+            const source = makeElement("div", "review-modal-source");
+            const sourceNote = makeElement("small", "", "팝업 안에서 본문을 스크롤해 읽을 수 있습니다.");
             const originalLink = makeElement("a", "review-original-link");
             originalLink.target = "_blank";
             originalLink.rel = "noreferrer";
-            originalLink.append(document.createTextNode("네이버에서 실제 후기 확인"), makeElement("span", "", "↗"));
-            const sourceNote = makeElement("small", "review-source-note", "원문 링크는 실제 게시 여부를 확인하기 위한 용도입니다.");
-            copy.append(meta, title, storyLabel, excerpt, planner, navigation, originalLink, sourceNote);
+            originalLink.append(document.createTextNode("원문 확인"), makeElement("span", "", "↗"));
+            source.append(sourceNote, originalLink);
+            footer.append(navigation, source);
 
             const updateContent = () => {
               const review = reviews[currentIndex];
-              image.src = review.image;
-              image.alt = review.title;
               metaCategory.textContent = review.category;
               metaDate.nodeValue = review.date;
               title.textContent = review.title;
-              excerpt.textContent = review.excerpt;
+              frame.src = getNaverEmbedUrl(review.href);
+              frame.title = review.title + " 후기 본문";
               reviewCount.textContent = (currentIndex + 1) + " / " + reviews.length;
               originalLink.href = review.href;
             };
@@ -175,7 +187,7 @@ try {
               if (event.target === backdrop) close();
             });
             window.addEventListener("keydown", closeWithEscape);
-            panel.append(closeButton, imageWrap, copy);
+            panel.append(closeButton, header, frameWrap, footer);
             backdrop.append(panel);
             document.body.append(backdrop);
             document.body.style.overflow = "hidden";
