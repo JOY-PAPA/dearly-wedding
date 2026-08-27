@@ -97,11 +97,65 @@ try {
             return element;
           };
 
+          const openReviewModal = (review) => {
+            const previousOverflow = document.body.style.overflow;
+            const backdrop = makeElement("div", "review-modal-backdrop");
+            const panel = makeElement("article", "review-modal-panel");
+            panel.setAttribute("role", "dialog");
+            panel.setAttribute("aria-modal", "true");
+            panel.setAttribute("aria-labelledby", "review-modal-title");
+
+            const closeButton = makeElement("button", "review-modal-close", "×");
+            closeButton.type = "button";
+            closeButton.setAttribute("aria-label", "후기 상세 닫기");
+
+            const imageWrap = makeElement("div", "review-modal-image");
+            const image = makeElement("img");
+            image.src = review.image;
+            image.alt = review.title;
+            imageWrap.append(image);
+
+            const copy = makeElement("div", "review-modal-copy");
+            const meta = makeElement("p", "blog-meta");
+            meta.append(makeElement("span", "", review.category), document.createTextNode(review.date));
+            const title = makeElement("h2", "", review.title);
+            title.id = "review-modal-title";
+            const excerpt = makeElement("p", "review-modal-excerpt", review.excerpt);
+            const note = makeElement("p", "review-modal-note", "고객님이 직접 남겨주신 실제 웨딩 준비 후기입니다. 자세한 전체 내용은 아래 원문에서 확인하실 수 있습니다.");
+            const planner = makeElement("div", "review-modal-planner");
+            planner.append(makeElement("span", "", "PLANNED BY"), makeElement("b", "", "베리굿 웨딩 김다애 플래너"));
+            const originalLink = makeElement("a", "review-original-link");
+            originalLink.href = review.href;
+            originalLink.target = "_blank";
+            originalLink.rel = "noreferrer";
+            originalLink.append(document.createTextNode("네이버 블로그 원문 보기"), makeElement("span", "", "↗"));
+            copy.append(meta, title, excerpt, note, planner, originalLink);
+
+            const close = () => {
+              window.removeEventListener("keydown", closeWithEscape);
+              document.body.style.overflow = previousOverflow;
+              backdrop.remove();
+            };
+            const closeWithEscape = (event) => {
+              if (event.key === "Escape") close();
+            };
+            closeButton.addEventListener("click", close);
+            backdrop.addEventListener("mousedown", (event) => {
+              if (event.target === backdrop) close();
+            });
+            window.addEventListener("keydown", closeWithEscape);
+            panel.append(closeButton, imageWrap, copy);
+            backdrop.append(panel);
+            document.body.append(backdrop);
+            document.body.style.overflow = "hidden";
+            closeButton.focus();
+          };
+
           const makeReviewCard = (review) => {
-            const card = makeElement("a", "review-card");
-            card.href = review.href;
-            card.target = "_blank";
-            card.rel = "noreferrer";
+            const card = makeElement("button", "review-card");
+            card.type = "button";
+            card.setAttribute("aria-haspopup", "dialog");
+            card.addEventListener("click", () => openReviewModal(review));
 
             const image = makeElement("img");
             image.src = review.image;
@@ -113,7 +167,7 @@ try {
             copy.append(meta, makeElement("h3", "", review.title), makeElement("p", "", review.excerpt));
 
             const footer = makeElement("div", "blog-card-footer");
-            footer.append(makeElement("b", "", "베리굿 웨딩 김다애 플래너"), makeElement("span", "", "네이버 블로그에서 보기 ↗"));
+            footer.append(makeElement("b", "", "베리굿 웨딩 김다애 플래너"), makeElement("span", "", "후기 상세 보기 →"));
             copy.append(footer);
             card.append(image, copy);
             return card;

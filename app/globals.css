@@ -101,8 +101,9 @@ img { display: block; max-width: 100%; }
 .naver-blog-lockup > span { color: white; font-size: 8px; font-weight: 700; letter-spacing: .09em; }
 .naver-blog-lockup small { display: block; margin-top: 5px; color: #cbbdd1; font-size: 7px; font-weight: 400; letter-spacing: 0; }
 .review-list { margin-top: 42px; display: grid; gap: 12px; }
-.review-card { min-height: 178px; display: grid; grid-template-columns: 175px 1fr; overflow: hidden; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); color: inherit; transition: border-color .25s ease, background .25s ease, transform .25s ease; }
+.review-card { width: 100%; min-height: 178px; padding: 0; display: grid; grid-template-columns: 175px 1fr; overflow: hidden; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); color: inherit; font-family: inherit; text-align: left; cursor: pointer; transition: border-color .25s ease, background .25s ease, transform .25s ease; }
 .review-card:hover { border-color: rgba(255,255,255,.42); background: rgba(255,255,255,.12); transform: translateY(-2px); }
+.review-card:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
 .review-card > img { width: 100%; height: 100%; object-fit: cover; }
 .blog-card-copy { padding: 22px 24px 19px; display: flex; flex-direction: column; }
 .blog-meta { margin: 0 0 9px; display: flex; align-items: center; gap: 9px; color: #bcaec3; font-size: 7px; letter-spacing: .08em; }
@@ -119,6 +120,25 @@ img { display: block; max-width: 100%; }
 .review-pagination button.page-arrow { font-size: 16px; }
 .review-pagination button:disabled { opacity: .28; cursor: default; }
 .review-pagination .page-ellipsis { width: 26px; color: #a99caf; text-align: center; font-size: 12px; letter-spacing: .1em; }
+
+.review-modal-backdrop { position: fixed; z-index: 120; inset: 0; padding: 24px; display: grid; place-items: center; background: rgba(20,10,29,.74); backdrop-filter: blur(8px); }
+.review-modal-panel { position: relative; width: min(920px, calc(100vw - 48px)); max-height: calc(100vh - 48px); display: grid; grid-template-columns: minmax(280px, .9fr) minmax(350px, 1.1fr); overflow: hidden; background: var(--paper); box-shadow: 0 30px 90px rgba(16,7,22,.34); }
+.review-modal-close { position: absolute; z-index: 2; top: 18px; right: 18px; width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid rgba(50,24,71,.13); border-radius: 50%; background: rgba(255,252,251,.92); color: var(--violet); font-size: 25px; line-height: 1; cursor: pointer; }
+.review-modal-close:hover { border-color: var(--red); color: var(--red); }
+.review-modal-image { min-height: 520px; background: var(--lavender); }
+.review-modal-image img { width: 100%; height: 100%; object-fit: cover; }
+.review-modal-copy { padding: 64px 52px 46px; overflow-y: auto; color: var(--ink); }
+.review-modal-copy .blog-meta { margin-bottom: 16px; color: #9c8ca5; font-size: 9px; }
+.review-modal-copy .blog-meta span { color: var(--red); }
+.review-modal-copy h2 { margin: 0; color: var(--violet); font-size: clamp(26px, 3vw, 38px); line-height: 1.35; letter-spacing: -.045em; }
+.review-modal-excerpt { margin: 28px 0 0; color: #554b59; font-size: 14px; line-height: 1.95; }
+.review-modal-note { margin: 22px 0 0; padding: 20px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--muted); font-size: 11px; line-height: 1.8; }
+.review-modal-planner { margin: 24px 0 26px; display: flex; flex-direction: column; gap: 6px; }
+.review-modal-planner span { color: var(--red); font-size: 8px; font-weight: 700; letter-spacing: .14em; }
+.review-modal-planner b { color: var(--violet); font-size: 12px; }
+.review-original-link { width: 100%; min-height: 52px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; background: var(--red); color: white; font-size: 12px; font-weight: 700; }
+.review-original-link:hover { background: var(--violet); }
+.review-original-link span { font-size: 16px; }
 
 .instagram-section { padding: 88px 38px 90px; background: var(--paper); }
 .instagram-handle { flex: 0 0 auto; padding-bottom: 7px; border-bottom: 1px solid var(--red); color: var(--red); font-size: 10px; font-weight: 700; }
@@ -216,6 +236,12 @@ footer > small { color: #6e6175; font-size: 8px; letter-spacing: .08em; }
   .review-card { grid-template-columns: 1fr; }
   .review-card > img { height: 210px; }
   .blog-card-copy { min-height: 205px; }
+  .review-modal-backdrop { padding: 14px; align-items: end; }
+  .review-modal-panel { width: 100%; max-height: calc(100svh - 28px); grid-template-columns: 1fr; overflow-y: auto; }
+  .review-modal-image { min-height: 0; height: 230px; }
+  .review-modal-copy { padding: 36px 26px 30px; overflow: visible; }
+  .review-modal-copy h2 { padding-right: 24px; font-size: 26px; }
+  .review-modal-close { top: 12px; right: 12px; }
   .instagram-grid { gap: 3px; }
   .instagram-grid span { display: none; }
   .faq-list summary { font-size: 11px; }

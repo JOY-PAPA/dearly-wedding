@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
-import { blogReviews } from "./blog-reviews.generated";
+import { blogReviews, type BlogReview } from "./blog-reviews.generated";
 
 const navItems = [
   { label: "플래너 소개", href: "#about" },
@@ -45,6 +45,7 @@ export default function Home() {
   const [submitted, setSubmitted] = useState(false);
   const [availableDays, setAvailableDays] = useState<number | null>(null);
   const [reviewPage, setReviewPage] = useState(1);
+  const [selectedReview, setSelectedReview] = useState<BlogReview | null>(null);
   const reviewsPerPage = 3;
   const totalReviewPages = Math.ceil(blogReviews.length / reviewsPerPage);
   const reviewPageStart = Math.min(Math.max(reviewPage - 2, 1), Math.max(totalReviewPages - 4, 1));
@@ -58,6 +59,20 @@ export default function Home() {
     }, 0);
     return () => window.clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!selectedReview) return;
+    const previousOverflow = document.body.style.overflow;
+    const closeWithEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSelectedReview(null);
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", closeWithEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeWithEscape);
+    };
+  }, [selectedReview]);
 
   function submitConsultation(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -146,15 +161,15 @@ export default function Home() {
           </div>
           <div className="review-list">
             {visibleReviews.map((review) => (
-              <a className="review-card" href={review.href} target="_blank" rel="noreferrer" key={review.href}>
+              <button className="review-card" type="button" onClick={() => setSelectedReview(review)} aria-haspopup="dialog" key={review.href}>
                 <img src={review.image} alt={review.title} />
                 <div className="blog-card-copy">
                   <p className="blog-meta"><span>{review.category}</span>{review.date}</p>
                   <h3>{review.title}</h3>
                   <p>{review.excerpt}</p>
-                  <div className="blog-card-footer"><b>베리굿 웨딩 김다애 플래너</b><span>네이버 블로그에서 보기 ↗</span></div>
+                  <div className="blog-card-footer"><b>베리굿 웨딩 김다애 플래너</b><span>후기 상세 보기 →</span></div>
                 </div>
-              </a>
+              </button>
             ))}
           </div>
           <nav className="review-pagination" aria-label="실제 진행 후기 페이지">
@@ -177,6 +192,23 @@ export default function Home() {
             <button className="page-arrow" type="button" onClick={() => changeReviewPage(reviewPage + 1)} disabled={reviewPage === totalReviewPages} aria-label="다음 후기 페이지">›</button>
           </nav>
         </section>
+
+        {selectedReview && (
+          <div className="review-modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && setSelectedReview(null)}>
+            <article className="review-modal-panel" role="dialog" aria-modal="true" aria-labelledby="review-modal-title">
+              <button className="review-modal-close" type="button" onClick={() => setSelectedReview(null)} aria-label="후기 상세 닫기">×</button>
+              <div className="review-modal-image"><img src={selectedReview.image} alt={selectedReview.title} /></div>
+              <div className="review-modal-copy">
+                <p className="blog-meta"><span>{selectedReview.category}</span>{selectedReview.date}</p>
+                <h2 id="review-modal-title">{selectedReview.title}</h2>
+                <p className="review-modal-excerpt">{selectedReview.excerpt}</p>
+                <p className="review-modal-note">고객님이 직접 남겨주신 실제 웨딩 준비 후기입니다. 자세한 전체 내용은 아래 원문에서 확인하실 수 있습니다.</p>
+                <div className="review-modal-planner"><span>PLANNED BY</span><b>베리굿 웨딩 김다애 플래너</b></div>
+                <a className="review-original-link" href={selectedReview.href} target="_blank" rel="noreferrer">네이버 블로그 원문 보기 <span>↗</span></a>
+              </div>
+            </article>
+          </div>
+        )}
 
         <section className="instagram-section" id="instagram">
           <div className="section-title split">
