@@ -269,7 +269,6 @@ export default function Home() {
             <p>KAKAO OPEN CHAT</p><h2>두 분의 이야기를<br />카카오톡으로 들려주세요</h2><span>복잡한 양식 없이 오픈채팅에서 편하게 상담을 시작할 수 있습니다.</span>
           </div>
           <div className="kakao-consult-card">
-            <div className="kakao-chat-mark" aria-hidden="true"><span>•••</span></div>
             <div className="kakao-consult-copy">
               <span>1:1 WEDDING CONSULTATION</span>
               <h3>궁금한 점을 바로 남겨주세요</h3>
@@ -287,7 +286,7 @@ export default function Home() {
           <small>© 2026 DEARLY WEDDING. ALL RIGHTS RESERVED.</small>
         </footer>
 
-        <a className="chat-button" href={kakaoChatUrl} target="_blank" rel="noreferrer" aria-label="카카오톡 오픈채팅 상담">•••<span>톡상담</span></a>
+        <a className="chat-button" href={kakaoChatUrl} target="_blank" rel="noreferrer" aria-label="카카오톡 오픈채팅 상담">1:1<span>톡상담</span></a>
         <nav className="bottom-nav" aria-label="모바일 하단 메뉴">
           {[{ label: "홈", href: "#home", icon: "⌂" }, { label: "소개", href: "#about", icon: "D" }, { label: "후기", href: "#reviews", icon: "♡" }, { label: "상담", href: "#consult", icon: "✦" }].map((item, index) => (
             <a key={item.label} href={item.href} className={index === 0 ? "active" : ""}><span>{item.icon}</span>{item.label}</a>

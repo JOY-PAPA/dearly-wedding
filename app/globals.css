@@ -171,20 +171,15 @@ img { display: block; max-width: 100%; }
 .consult-intro { margin-bottom: 36px; }
 .consult-intro h2 { margin: 0 0 15px; font-size: 36px; line-height: 1.35; letter-spacing: -.05em; font-weight: 400; }
 .consult-intro > span { color: var(--muted); font-size: 10px; }
-.kakao-consult-card { position: relative; padding: 34px; display: grid; grid-template-columns: 58px 1fr; gap: 0 22px; overflow: hidden; background: #fee500; color: #261f21; box-shadow: 0 20px 52px rgba(50,24,71,.12); }
-.kakao-consult-card::after { content: "KAKAO"; position: absolute; right: -10px; top: -17px; color: rgba(38,31,33,.055); font-size: 76px; line-height: 1; font-weight: 900; letter-spacing: -.06em; }
-.kakao-chat-mark { position: relative; z-index: 1; width: 58px; height: 52px; display: grid; place-items: center; border-radius: 50%; background: #261f21; color: #fee500; font-size: 15px; letter-spacing: .08em; }
-.kakao-chat-mark::after { content: ""; position: absolute; left: 7px; bottom: -5px; width: 13px; height: 13px; background: #261f21; transform: rotate(28deg); }
-.kakao-chat-mark span { position: relative; z-index: 1; transform: translateY(-3px); }
-.kakao-consult-copy { position: relative; z-index: 1; }
-.kakao-consult-copy > span { font-size: 8px; font-weight: 800; letter-spacing: .14em; }
-.kakao-consult-copy h3 { margin: 8px 0 10px; font-size: 25px; line-height: 1.35; letter-spacing: -.04em; }
-.kakao-consult-copy p { margin: 0; color: rgba(38,31,33,.7); font-size: 10px; line-height: 1.8; }
+.kakao-consult-card { position: relative; padding: 36px 34px 30px; overflow: hidden; background: var(--paper); color: var(--violet); border: 1px solid rgba(50,24,71,.11); border-top: 5px solid var(--red); box-shadow: 0 20px 52px rgba(50,24,71,.11); }
+.kakao-consult-copy > span { color: var(--red); font-size: 8px; font-weight: 800; letter-spacing: .14em; }
+.kakao-consult-copy h3 { margin: 9px 0 10px; color: var(--violet); font-size: 25px; line-height: 1.35; letter-spacing: -.04em; }
+.kakao-consult-copy p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.8; }
 .kakao-consult-points { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 7px; }
-.kakao-consult-points span { padding: 7px 9px; border: 1px solid rgba(38,31,33,.18); border-radius: 999px; font-size: 8px; font-weight: 700; }
-.kakao-consult-button { position: relative; z-index: 1; grid-column: 1 / -1; min-height: 54px; margin-top: 28px; padding: 0 19px; display: flex; align-items: center; justify-content: space-between; background: #261f21; color: white; font-size: 12px; font-weight: 700; transition: transform .2s, background .2s; }
+.kakao-consult-points span { padding: 7px 9px; border: 1px solid var(--line); border-radius: 999px; background: var(--lavender); color: var(--violet); font-size: 8px; font-weight: 700; }
+.kakao-consult-button { min-height: 54px; margin-top: 28px; padding: 0 19px; display: flex; align-items: center; justify-content: space-between; background: var(--red); color: white; font-size: 12px; font-weight: 700; transition: transform .2s, background .2s; }
 .kakao-consult-button:hover { background: var(--violet); transform: translateY(-2px); }
-.kakao-consult-card > small { position: relative; z-index: 1; grid-column: 1 / -1; margin-top: 10px; color: rgba(38,31,33,.56); font-size: 8px; text-align: center; }
+.kakao-consult-card > small { margin-top: 10px; display: block; color: #9a8f9d; font-size: 8px; text-align: center; }
 
 footer { padding: 54px 38px 118px; background: #251130; color: #d2c6d8; }
 .footer-brand { color: white; font-size: 18px; line-height: 1; font-weight: 700; letter-spacing: .28em; }
@@ -192,7 +187,7 @@ footer > p { margin: 15px 0 28px; color: #91859a; font-size: 10px; }
 footer > div { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 22px; font-size: 9px; }
 footer > small { color: #6e6175; font-size: 8px; letter-spacing: .08em; }
 
-.chat-button { position: fixed; z-index: 25; right: calc(17vw + 20px); bottom: 28px; width: 58px; height: 58px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 50%; background: #fee500; color: #261f21; box-shadow: 0 8px 26px rgba(50,24,71,.28); font-size: 15px; font-weight: 800; letter-spacing: .06em; }
+.chat-button { position: fixed; z-index: 25; right: calc(17vw + 20px); bottom: 28px; width: 58px; height: 58px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 50%; background: var(--red); color: white; box-shadow: 0 8px 26px rgba(50,24,71,.28); font-size: 12px; font-weight: 800; letter-spacing: .04em; }
 .chat-button span { margin-top: 1px; font-size: 8px; }
 .bottom-nav { display: none; }
 
@@ -259,12 +254,10 @@ footer > small { color: #6e6175; font-size: 8px; letter-spacing: .08em; }
   .instagram-grid span { display: none; }
   .faq-list summary { font-size: 11px; }
   .consult-section { padding: 72px 26px 88px; }
-  .kakao-consult-card { padding: 26px 20px; grid-template-columns: 48px 1fr; gap: 0 15px; }
-  .kakao-consult-card::after { font-size: 57px; }
-  .kakao-chat-mark { width: 48px; height: 44px; font-size: 12px; }
+  .kakao-consult-card { padding: 28px 20px 24px; }
   .kakao-consult-copy h3 { margin-top: 6px; font-size: 20px; }
   .kakao-consult-copy p br { display: none; }
-  .kakao-consult-points { grid-column: 1 / -1; gap: 5px; }
+  .kakao-consult-points { gap: 5px; }
   .kakao-consult-points span { padding: 6px 7px; }
   .kakao-consult-button { margin-top: 22px; font-size: 11px; }
   footer { padding-inline: 26px; }
