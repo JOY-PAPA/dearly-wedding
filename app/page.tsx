@@ -159,7 +159,7 @@ export default function Home() {
           <h1><span className="planner-company">베리굿 웨딩</span><em className="planner-name">김다애 플래너</em></h1>
           <p className="intro-copy">처음 만나는 날부터 예식이 끝나는 순간까지<br />김다애 플래너가 두 분 곁에서 함께합니다.</p>
           <a className="rail-cta" href={kakaoChatUrl} target="_blank" rel="noreferrer">무료 상담 시작하기 <span>↗</span></a>
-          <div className="rail-foot"><span>DEARLY WEDDING</span><span>SEOUL · KOREA</span></div>
+          <div className="rail-foot"><span>DAAEPLAN</span><span>SEOUL · KOREA</span></div>
         </div>
       </aside>
 
@@ -361,7 +361,7 @@ export default function Home() {
         <footer>
           <a className="footer-brand" href="#home">D A A E P L A N</a><p>김다애 플래너와 시작하는 1:1 퍼스널 웨딩 플래닝</p>
           <div><a href="#about">플래너 소개</a><a href="#reviews">실제 진행 후기</a><a href="#bouquet">다애플 부케</a><a href="#instagram">인스타그램</a><a href="#consult">상담 문의</a></div>
-          <small>© 2026 DEARLY WEDDING. ALL RIGHTS RESERVED.</small>
+          <small>© 2026 DAAEPLAN. ALL RIGHTS RESERVED.</small>
         </footer>
 
         <a className="chat-button" href={kakaoChatUrl} target="_blank" rel="noreferrer" aria-label="카카오톡 오픈채팅 상담">1:1<span>톡상담</span></a>
