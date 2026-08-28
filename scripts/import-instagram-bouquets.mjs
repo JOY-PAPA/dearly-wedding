@@ -25,13 +25,17 @@ function decodeHtml(value) {
     .replace(/&#(\d+);/g, (_, decimal) => String.fromCodePoint(Number.parseInt(decimal, 10)));
 }
 
-function getMetaContent(html, name) {
-  for (const match of html.matchAll(/<meta\b[^>]*>/gi)) {
+function getTagAttribute(tag, name) {
+  const match = tag.match(new RegExp(`\\b${name}=["']([^"']*)["']`, "i"));
+  return match?.[1] ? decodeHtml(match[1]) : "";
+}
+
+function getEmbeddedMediaImage(html) {
+  for (const match of html.matchAll(/<img\b[^>]*>/gi)) {
     const tag = match[0];
-    const property = tag.match(/(?:property|name)=["']([^"']+)["']/i)?.[1];
-    if (property !== name) continue;
-    const content = tag.match(/content=["']([^"']*)["']/i)?.[1];
-    if (content) return decodeHtml(content);
+    const classes = getTagAttribute(tag, "class").split(/\s+/);
+    if (!classes.includes("EmbeddedMediaImage")) continue;
+    return getTagAttribute(tag, "src");
   }
   return "";
 }
@@ -81,6 +85,7 @@ let completed = 0;
 
 async function importOne(index) {
   const href = urls[index];
+  const embedUrl = `${href}embed/`;
   const { stdout: html } = await runCurl([
     "--fail",
     "--location",
@@ -89,10 +94,10 @@ async function importOne(index) {
     "--compressed",
     "--max-time",
     "30",
-    href,
+    embedUrl,
   ]);
-  const imageUrl = getMetaContent(html, "og:image");
-  if (!imageUrl) throw new Error("Missing og:image");
+  const imageUrl = getEmbeddedMediaImage(html);
+  if (!imageUrl) throw new Error("Missing uncropped EmbeddedMediaImage");
 
   const filename = `bouquet-${String(index + 1).padStart(3, "0")}.jpg`;
   const imagePath = path.join(outputDir, filename);
@@ -139,10 +144,13 @@ async function worker() {
   }
 }
 
-await Promise.all(Array.from({ length: Math.min(5, urls.length) }, () => worker()));
+await Promise.all(Array.from({ length: Math.min(3, urls.length) }, () => worker()));
 
 const imported = results.filter(Boolean);
 if (imported.length === 0) throw new Error("No Instagram thumbnails could be imported.");
+if (imported.length !== urls.length) {
+  throw new Error(`Imported ${imported.length}/${urls.length}; generated data was left unchanged.`);
+}
 
 const source = `export type BouquetPost = {\n  image: string;\n  href: string;\n  alt: string;\n  tag: string;\n};\n\nexport const bouquetPosts: BouquetPost[] = ${JSON.stringify(imported, null, 2)};\n`;
 await writeFile(generatedFile, source, "utf8");
