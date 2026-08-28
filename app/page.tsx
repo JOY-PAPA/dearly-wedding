@@ -277,44 +277,6 @@ export default function Home() {
           </div>
         )}
 
-        <section className="instagram-section" id="instagram">
-          <div className="section-title split">
-            <div><p>PLANNER&apos;S INSTAGRAM</p><h2>준비의 순간을<br />가장 가까이에서</h2></div>
-            <a className="instagram-handle" href={instagramUrl} target="_blank" rel="noreferrer">@daae_gi <span>↗</span></a>
-          </div>
-          <div className="instagram-grid">
-            {instagramPosts.map((post) => (
-              <a href={post.href} target="_blank" rel="noreferrer" key={post.href} aria-label={`${post.alt} 인스타그램에서 보기`}>
-                <img src={post.image} alt={post.alt} /><span>{post.tag}</span>
-              </a>
-            ))}
-          </div>
-          <p className="instagram-note">드레스 투어, 현장 셋업, 본식 케어까지 매주 새로운 이야기를 기록합니다.</p>
-        </section>
-
-        <section className="faq-section" id="faq">
-          <div className="section-title"><p>BEFORE WE MEET</p><h2>상담 전 자주 묻는 질문</h2></div>
-          <div className="faq-list">
-            {faqs.map((faq) => <details key={faq.question}><summary>{faq.question}<span>＋</span></summary><p>{faq.answer}</p></details>)}
-          </div>
-        </section>
-
-        <section className="consult-section" id="consult">
-          <div className="consult-intro">
-            <p>KAKAO OPEN CHAT</p><h2>두 분의 이야기를<br />카카오톡으로 들려주세요</h2><span>복잡한 양식 없이 오픈채팅에서 편하게 상담을 시작할 수 있습니다.</span>
-          </div>
-          <div className="kakao-consult-card">
-            <div className="kakao-consult-copy">
-              <span>1:1 WEDDING CONSULTATION</span>
-              <h3>궁금한 점을 바로 남겨주세요</h3>
-              <p>예식 예정 시기, 준비 단계, 원하는 분위기를 간단히 알려주시면<br />김다애 플래너가 확인 후 차근차근 안내해 드립니다.</p>
-              <div className="kakao-consult-points"><span>✓ 부담 없는 첫 상담</span><span>✓ 1:1 맞춤 답변</span><span>✓ 모바일로 간편하게</span></div>
-            </div>
-            <a className="kakao-consult-button" href={kakaoChatUrl} target="_blank" rel="noreferrer">카카오톡 오픈채팅 상담 시작하기 <span>↗</span></a>
-            <small>버튼을 누르면 카카오톡 오픈채팅으로 이동합니다.</small>
-          </div>
-        </section>
-
         <section className="bouquet-section" id="bouquet">
           <div className="section-title split">
             <div><p>DAAEPL BOUQUET ARCHIVE</p><h2>신부님의 취향을 담은<br />다애플 부케</h2></div>
@@ -357,6 +319,44 @@ export default function Home() {
             </article>
           </div>
         )}
+
+        <section className="instagram-section" id="instagram">
+          <div className="section-title split">
+            <div><p>PLANNER&apos;S INSTAGRAM</p><h2>준비의 순간을<br />가장 가까이에서</h2></div>
+            <a className="instagram-handle" href={instagramUrl} target="_blank" rel="noreferrer">@daae_gi <span>↗</span></a>
+          </div>
+          <div className="instagram-grid">
+            {instagramPosts.map((post) => (
+              <a href={post.href} target="_blank" rel="noreferrer" key={post.href} aria-label={`${post.alt} 인스타그램에서 보기`}>
+                <img src={post.image} alt={post.alt} /><span>{post.tag}</span>
+              </a>
+            ))}
+          </div>
+          <p className="instagram-note">드레스 투어, 현장 셋업, 본식 케어까지 매주 새로운 이야기를 기록합니다.</p>
+        </section>
+
+        <section className="faq-section" id="faq">
+          <div className="section-title"><p>BEFORE WE MEET</p><h2>상담 전 자주 묻는 질문</h2></div>
+          <div className="faq-list">
+            {faqs.map((faq) => <details key={faq.question}><summary>{faq.question}<span>＋</span></summary><p>{faq.answer}</p></details>)}
+          </div>
+        </section>
+
+        <section className="consult-section" id="consult">
+          <div className="consult-intro">
+            <p>KAKAO OPEN CHAT</p><h2>두 분의 이야기를<br />카카오톡으로 들려주세요</h2><span>복잡한 양식 없이 오픈채팅에서 편하게 상담을 시작할 수 있습니다.</span>
+          </div>
+          <div className="kakao-consult-card">
+            <div className="kakao-consult-copy">
+              <span>1:1 WEDDING CONSULTATION</span>
+              <h3>궁금한 점을 바로 남겨주세요</h3>
+              <p>예식 예정 시기, 준비 단계, 원하는 분위기를 간단히 알려주시면<br />김다애 플래너가 확인 후 차근차근 안내해 드립니다.</p>
+              <div className="kakao-consult-points"><span>✓ 부담 없는 첫 상담</span><span>✓ 1:1 맞춤 답변</span><span>✓ 모바일로 간편하게</span></div>
+            </div>
+            <a className="kakao-consult-button" href={kakaoChatUrl} target="_blank" rel="noreferrer">카카오톡 오픈채팅 상담 시작하기 <span>↗</span></a>
+            <small>버튼을 누르면 카카오톡 오픈채팅으로 이동합니다.</small>
+          </div>
+        </section>
 
         <footer>
           <a className="footer-brand" href="#home">D A A E P L A N</a><p>김다애 플래너와 시작하는 1:1 퍼스널 웨딩 플래닝</p>
