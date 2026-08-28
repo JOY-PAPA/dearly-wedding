@@ -108,6 +108,16 @@ try {
             }
           };
 
+          const getInstagramEmbedUrl = (href) => {
+            try {
+              const url = new URL(href);
+              const pathname = url.pathname.endsWith("/") ? url.pathname : url.pathname + "/";
+              return url.origin + pathname + "embed/";
+            } catch {
+              return href;
+            }
+          };
+
           const openReviewModal = (initialIndex) => {
             let currentIndex = initialIndex;
             const previousOverflow = document.body.style.overflow;
@@ -293,8 +303,11 @@ try {
             header.append(kicker, headerRow);
 
             const imageWrap = makeElement("div", "bouquet-modal-image-wrap");
-            const image = makeElement("img");
-            imageWrap.append(image);
+            const frame = makeElement("iframe", "bouquet-modal-frame");
+            frame.loading = "lazy";
+            frame.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+            frame.allowFullscreen = true;
+            imageWrap.append(frame);
 
             const footer = makeElement("div", "bouquet-modal-footer");
             const navigation = makeElement("nav", "bouquet-modal-navigation");
@@ -317,13 +330,13 @@ try {
 
             const updateContent = () => {
               const card = bouquetCards[currentIndex];
-              const sourceImage = card.querySelector("img");
-              image.src = sourceImage?.getAttribute("src") || "";
-              image.alt = card.getAttribute("aria-label")?.replace(" 크게 보기", "") || "다애플 부케";
+              const originalUrl = card.dataset.instagramUrl || "https://www.instagram.com/daae_gi/";
+              frame.src = getInstagramEmbedUrl(originalUrl);
+              frame.title = (card.getAttribute("aria-label")?.replace(" 크게 보기", "") || "다애플 부케") + " 원본 게시물";
               const countText = (currentIndex + 1) + " / " + bouquetCards.length;
               headerCount.textContent = countText;
               navigationCount.textContent = countText;
-              originalLink.href = card.dataset.instagramUrl || "https://www.instagram.com/daae_gi/";
+              originalLink.href = originalUrl;
             };
 
             const moveBouquet = (offset) => {

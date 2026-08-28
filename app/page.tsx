@@ -55,6 +55,16 @@ function getNaverEmbedUrl(href: string) {
   }
 }
 
+function getInstagramEmbedUrl(href: string) {
+  try {
+    const url = new URL(href);
+    const pathname = url.pathname.endsWith("/") ? url.pathname : `${url.pathname}/`;
+    return `${url.origin}${pathname}embed/`;
+  } catch {
+    return href;
+  }
+}
+
 export default function Home() {
   const [reviewPage, setReviewPage] = useState(1);
   const [selectedReview, setSelectedReview] = useState<BlogReview | null>(null);
@@ -334,7 +344,7 @@ export default function Home() {
                 <div><h2 id="bouquet-modal-title">#다애플부케</h2><b aria-live="polite">{selectedBouquetIndex + 1} / {bouquetPosts.length}</b></div>
               </header>
               <div className="bouquet-modal-image-wrap">
-                <img src={selectedBouquet.image} alt={selectedBouquet.alt} />
+                <iframe className="bouquet-modal-frame" src={getInstagramEmbedUrl(selectedBouquet.href)} title={`${selectedBouquet.alt} 원본 게시물`} loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen />
               </div>
               <div className="bouquet-modal-footer">
                 <nav className="bouquet-modal-navigation" aria-label="부케 사진 이동">
