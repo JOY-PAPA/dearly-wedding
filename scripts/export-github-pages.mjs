@@ -262,6 +262,23 @@ try {
 
           renderReviews();
 
+          const bouquetCards = Array.from(document.querySelectorAll(".bouquet-card"));
+          const bouquetMore = document.querySelector(".bouquet-more");
+          const bouquetCount = document.querySelector(".bouquet-count");
+          let visibleBouquets = Math.min(12, bouquetCards.length);
+
+          const renderBouquets = () => {
+            bouquetCards.forEach((card, index) => { card.hidden = index >= visibleBouquets; });
+            if (bouquetCount) bouquetCount.textContent = visibleBouquets + " / " + bouquetCards.length;
+            if (bouquetMore) bouquetMore.hidden = visibleBouquets >= bouquetCards.length;
+          };
+
+          bouquetMore?.addEventListener("click", () => {
+            visibleBouquets = Math.min(visibleBouquets + 12, bouquetCards.length);
+            renderBouquets();
+          });
+          renderBouquets();
+
         })();
       </script></body>`,
     );

@@ -38,8 +38,8 @@ img { display: block; max-width: 100%; }
 .app-frame { position: relative; min-width: 0; min-height: 100vh; background: var(--paper); box-shadow: 0 0 40px rgba(43,34,31,.06); overflow: clip; }
 .topbar { position: sticky; top: 0; z-index: 30; height: 112px; padding: 28px 26px 0; background: rgba(255,252,251,.95); border-bottom: 1px solid rgba(50,24,71,.08); backdrop-filter: blur(14px); }
 .wordmark { display: block; text-align: center; color: var(--red); font-size: 18px; line-height: 1; font-weight: 700; letter-spacing: .32em; padding-left: .32em; }
-.topbar nav { height: 66px; display: grid; grid-template-columns: repeat(4, 1fr); align-items: end; }
-.topbar nav a { position: relative; padding: 0 2px 18px; text-align: center; font-size: 11px; font-weight: 700; color: #514a53; white-space: nowrap; }
+.topbar nav { height: 66px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: end; }
+.topbar nav a { position: relative; padding: 0 2px 18px; text-align: center; font-size: 10px; font-weight: 700; color: #514a53; white-space: nowrap; }
 .topbar nav a::after { content: ""; position: absolute; left: 50%; right: 50%; bottom: 0; height: 2px; background: var(--red); transition: left .2s, right .2s; }
 .topbar nav a:hover { color: var(--red); }
 .topbar nav a:hover::after { left: 26%; right: 26%; }
@@ -177,6 +177,25 @@ img { display: block; max-width: 100%; }
 .kakao-consult-button:hover { background: var(--violet); transform: translateY(-2px); }
 .kakao-consult-card > small { margin-top: 10px; display: block; color: #9a8f9d; font-size: 8px; text-align: center; }
 
+.bouquet-section { scroll-margin-top: 112px; padding: 88px 38px 94px; background: var(--cream); }
+.bouquet-section .section-title h2 { color: var(--violet); }
+.bouquet-hashtag { flex: 0 0 auto; padding-bottom: 7px; border-bottom: 1px solid var(--red); color: var(--red); font-size: 10px; font-weight: 700; }
+.bouquet-hashtag span { margin-left: 12px; }
+.bouquet-grid { margin-top: 39px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.bouquet-card { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #e5d9e5; }
+.bouquet-card[hidden] { display: none !important; }
+.bouquet-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s ease, filter .45s ease; }
+.bouquet-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 58%, rgba(35,15,44,.62)); opacity: 0; transition: opacity .3s; }
+.bouquet-card:hover img { transform: scale(1.04); filter: saturate(.82); }
+.bouquet-card:hover::after { opacity: 1; }
+.bouquet-card > span { position: absolute; z-index: 1; left: 12px; bottom: 11px; color: white; font-size: 7px; font-weight: 700; letter-spacing: .12em; opacity: 0; transition: opacity .3s; }
+.bouquet-card:hover > span { opacity: 1; }
+.bouquet-more { width: 100%; min-height: 52px; margin-top: 25px; padding: 0 18px; display: flex; align-items: center; justify-content: center; gap: 16px; border: 1px solid var(--violet); background: transparent; color: var(--violet); font-size: 11px; font-weight: 700; cursor: pointer; transition: background .2s, color .2s; }
+.bouquet-more:hover { background: var(--violet); color: white; }
+.bouquet-more[hidden] { display: none; }
+.bouquet-count { color: var(--red); font-size: 8px; font-weight: 700; letter-spacing: .08em; }
+.bouquet-more:hover .bouquet-count { color: #ffb9ba; }
+
 footer { padding: 54px 38px 118px; background: #251130; color: #d2c6d8; }
 .footer-brand { color: white; font-size: 18px; line-height: 1; font-weight: 700; letter-spacing: .28em; }
 footer > p { margin: 15px 0 28px; color: #91859a; font-size: 10px; }
@@ -208,7 +227,7 @@ footer > small { color: #6e6175; font-size: 8px; letter-spacing: .08em; }
 @media (max-width: 640px) {
   .topbar { height: 98px; padding: 23px 8px 0; }
   .topbar nav { height: 59px; }
-  .topbar nav a { padding-bottom: 15px; font-size: 10px; }
+  .topbar nav a { padding-bottom: 15px; font-size: 8.5px; letter-spacing: -.02em; }
   .hero { height: calc(100svh - 98px); min-height: 540px; }
   .hero-content { left: 26px; right: 26px; bottom: 96px; }
   .hero-content h2 { font-size: 37px; }
@@ -222,7 +241,7 @@ footer > small { color: #6e6175; font-size: 8px; letter-spacing: .08em; }
   .about-photo-wrap > span { right: -20px; }
   .about-copy h2, .section-title h2 { font-size: 30px; }
   .about-copy blockquote br { display: none; }
-  .process-section, .instagram-section, .faq-section { padding: 70px 26px 76px; }
+  .process-section, .instagram-section, .faq-section, .bouquet-section { padding: 70px 26px 76px; }
   .review-section { padding: 70px 16px 76px; }
   .process-list article { grid-template-columns: 46px 1fr; }
   .section-title.split { align-items: flex-start; flex-direction: column; }
@@ -248,6 +267,10 @@ footer > small { color: #6e6175; font-size: 8px; letter-spacing: .08em; }
   .review-modal-close { top: 12px; right: 12px; }
   .instagram-grid { gap: 3px; }
   .instagram-grid span { display: none; }
+  .bouquet-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
+  .bouquet-section { scroll-margin-top: 98px; }
+  .bouquet-card > span { display: none; }
+  .bouquet-more { margin-top: 18px; }
   .faq-list summary { font-size: 11px; }
   .consult-section { padding: 72px 26px 88px; }
   .kakao-consult-card { padding: 28px 20px 24px; }

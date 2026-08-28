@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { blogReviews, type BlogReview } from "./blog-reviews.generated";
+import { bouquetPosts } from "./bouquet-posts.generated";
 
 const navItems = [
   { label: "플래너 소개", href: "#about" },
   { label: "실제 진행 후기", href: "#reviews" },
   { label: "인스타그램", href: "#instagram" },
   { label: "상담 문의", href: "#consult" },
+  { label: "다애플 부케", href: "#bouquet" },
 ];
 
 const facts = [
@@ -56,6 +58,7 @@ function getNaverEmbedUrl(href: string) {
 export default function Home() {
   const [reviewPage, setReviewPage] = useState(1);
   const [selectedReview, setSelectedReview] = useState<BlogReview | null>(null);
+  const [visibleBouquetCount, setVisibleBouquetCount] = useState(12);
   const reviewsPerPage = 3;
   const totalReviewPages = Math.ceil(blogReviews.length / reviewsPerPage);
   const reviewPageStart = Math.min(Math.max(reviewPage - 2, 1), Math.max(totalReviewPages - 4, 1));
@@ -268,9 +271,29 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="bouquet-section" id="bouquet">
+          <div className="section-title split">
+            <div><p>DAAEPL BOUQUET ARCHIVE</p><h2>신부님의 취향을 담은<br />다애플 부케</h2></div>
+            <a className="bouquet-hashtag" href="https://www.instagram.com/explore/tags/%EB%8B%A4%EC%95%A0%ED%94%8C%EB%B6%80%EC%BC%80/" target="_blank" rel="noreferrer">#다애플부케 <span>↗</span></a>
+          </div>
+          <div className="bouquet-grid">
+            {bouquetPosts.map((post, index) => (
+              <a className="bouquet-card" href={post.href} target="_blank" rel="noreferrer" hidden={index >= visibleBouquetCount} key={post.href} aria-label={`${post.alt} 원문 보기`}>
+                <img src={post.image} alt={post.alt} loading="lazy" decoding="async" />
+                <span>{post.tag}</span>
+              </a>
+            ))}
+          </div>
+          {visibleBouquetCount < bouquetPosts.length && (
+            <button className="bouquet-more" type="button" onClick={() => setVisibleBouquetCount((count) => Math.min(count + 12, bouquetPosts.length))}>
+              더 많은 부케 보기 <span className="bouquet-count">{visibleBouquetCount} / {bouquetPosts.length}</span>
+            </button>
+          )}
+        </section>
+
         <footer>
           <a className="footer-brand" href="#home">D A A E P L A N</a><p>김다애 플래너와 시작하는 1:1 퍼스널 웨딩 플래닝</p>
-          <div><a href="#about">플래너 소개</a><a href="#reviews">실제 진행 후기</a><a href="#instagram">인스타그램</a><a href="#consult">상담 문의</a></div>
+          <div><a href="#about">플래너 소개</a><a href="#reviews">실제 진행 후기</a><a href="#instagram">인스타그램</a><a href="#consult">상담 문의</a><a href="#bouquet">다애플 부케</a></div>
           <small>© 2026 DEARLY WEDDING. ALL RIGHTS RESERVED.</small>
         </footer>
 
