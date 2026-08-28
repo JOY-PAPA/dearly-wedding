@@ -182,12 +182,13 @@ img { display: block; max-width: 100%; }
 .bouquet-hashtag { flex: 0 0 auto; padding-bottom: 7px; border-bottom: 1px solid var(--red); color: var(--red); font-size: 10px; font-weight: 700; }
 .bouquet-hashtag span { margin-left: 12px; }
 .bouquet-grid { margin-top: 39px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-.bouquet-card { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #e5d9e5; }
+.bouquet-card { position: relative; width: 100%; aspect-ratio: 1; display: block; overflow: hidden; padding: 0; border: 0; background: #e5d9e5; color: inherit; font: inherit; text-align: left; cursor: zoom-in; }
 .bouquet-card[hidden] { display: none !important; }
-.bouquet-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s ease, filter .45s ease; }
+.bouquet-card img { width: 100%; height: 100%; object-fit: cover; object-position: center 66%; transform: scale(1.16); transform-origin: center 66%; transition: transform .45s ease, filter .45s ease; }
 .bouquet-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 58%, rgba(35,15,44,.62)); opacity: 0; transition: opacity .3s; }
-.bouquet-card:hover img { transform: scale(1.04); filter: saturate(.82); }
+.bouquet-card:hover img { transform: scale(1.22); filter: saturate(.82); }
 .bouquet-card:hover::after { opacity: 1; }
+.bouquet-card:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; z-index: 2; }
 .bouquet-card > span { position: absolute; z-index: 1; left: 12px; bottom: 11px; color: white; font-size: 7px; font-weight: 700; letter-spacing: .12em; opacity: 0; transition: opacity .3s; }
 .bouquet-card:hover > span { opacity: 1; }
 .bouquet-more { width: 100%; min-height: 52px; margin-top: 25px; padding: 0 18px; display: flex; align-items: center; justify-content: center; gap: 16px; border: 1px solid var(--violet); background: transparent; color: var(--violet); font-size: 11px; font-weight: 700; cursor: pointer; transition: background .2s, color .2s; }
@@ -195,6 +196,32 @@ img { display: block; max-width: 100%; }
 .bouquet-more[hidden] { display: none; }
 .bouquet-count { color: var(--red); font-size: 8px; font-weight: 700; letter-spacing: .08em; }
 .bouquet-more:hover .bouquet-count { color: #ffb9ba; }
+
+.bouquet-modal-backdrop { position: fixed; z-index: 125; inset: 0; padding: 24px; display: grid; place-items: center; background: rgba(20,10,29,.78); backdrop-filter: blur(8px); }
+.bouquet-modal-panel { position: relative; width: min(720px, calc(100vw - 48px)); height: min(900px, calc(100vh - 48px)); display: flex; flex-direction: column; overflow: hidden; background: var(--paper); box-shadow: 0 30px 90px rgba(16,7,22,.38); }
+.bouquet-modal-close { position: absolute; z-index: 2; top: 16px; right: 18px; width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid rgba(50,24,71,.13); border-radius: 50%; background: rgba(255,252,251,.94); color: var(--violet); font-size: 25px; line-height: 1; cursor: pointer; }
+.bouquet-modal-close:hover { border-color: var(--red); color: var(--red); }
+.bouquet-modal-header { flex: 0 0 auto; padding: 22px 72px 17px 26px; border-bottom: 1px solid var(--line); background: var(--paper); }
+.bouquet-modal-header > p { margin: 0 0 7px; color: var(--red); font-size: 8px; font-weight: 800; letter-spacing: .15em; }
+.bouquet-modal-header > div { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.bouquet-modal-header h2 { margin: 0; color: var(--violet); font-size: 18px; letter-spacing: -.03em; }
+.bouquet-modal-header b { color: #9b8ea0; font-size: 9px; font-weight: 500; }
+.bouquet-modal-image-wrap { flex: 1 1 auto; min-height: 0; padding: 22px; display: grid; place-items: center; overflow: hidden; background: #eee7ed; }
+.bouquet-modal-image-wrap img { width: 100%; height: 100%; object-fit: contain; }
+.bouquet-modal-footer { flex: 0 0 auto; padding: 0 24px 14px; border-top: 1px solid var(--line); background: var(--paper); }
+.bouquet-modal-navigation { min-height: 52px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; border-top: 1px solid var(--violet); border-bottom: 1px solid var(--violet); }
+.bouquet-modal-navigation button { padding: 0; border: 0; background: transparent; color: var(--violet); font-size: 10px; font-weight: 700; cursor: pointer; }
+.bouquet-modal-navigation button:first-child { text-align: left; }
+.bouquet-modal-navigation button:last-child { text-align: right; }
+.bouquet-modal-navigation button:hover { color: var(--red); }
+.bouquet-modal-navigation button span { margin: 0 5px; }
+.bouquet-modal-navigation b { color: #9b8ea0; font-size: 9px; font-weight: 500; }
+.bouquet-modal-source { padding-top: 11px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.bouquet-modal-source small { color: #9c919f; font-size: 8px; line-height: 1.5; }
+.bouquet-modal-source a { flex: 0 0 auto; padding-bottom: 3px; border-bottom: 1px solid var(--line); color: #8b7e90; font-size: 9px; font-weight: 600; }
+.bouquet-modal-source a:hover { border-color: var(--red); color: var(--red); }
+.bouquet-modal-source a span { margin-left: 5px; }
+.bouquet-modal-close:focus-visible, .bouquet-modal-navigation button:focus-visible, .bouquet-modal-source a:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
 
 footer { padding: 54px 38px 118px; background: #251130; color: #d2c6d8; }
 .footer-brand { color: white; font-size: 18px; line-height: 1; font-weight: 700; letter-spacing: .28em; }
@@ -271,6 +298,13 @@ footer > small { color: #6e6175; font-size: 8px; letter-spacing: .08em; }
   .bouquet-section { scroll-margin-top: 98px; }
   .bouquet-card > span { display: none; }
   .bouquet-more { margin-top: 18px; }
+  .bouquet-modal-backdrop { padding: 0; }
+  .bouquet-modal-panel { width: 100%; height: 100svh; }
+  .bouquet-modal-header { padding: 19px 62px 14px 18px; }
+  .bouquet-modal-image-wrap { padding: 10px; }
+  .bouquet-modal-footer { padding-inline: 18px; padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+  .bouquet-modal-source small { max-width: 205px; }
+  .bouquet-modal-close { top: 11px; right: 12px; }
   .faq-list summary { font-size: 11px; }
   .consult-section { padding: 72px 26px 88px; }
   .kakao-consult-card { padding: 28px 20px 24px; }

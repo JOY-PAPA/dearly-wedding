@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { blogReviews, type BlogReview } from "./blog-reviews.generated";
-import { bouquetPosts } from "./bouquet-posts.generated";
+import { bouquetPosts, type BouquetPost } from "./bouquet-posts.generated";
 
 const navItems = [
   { label: "플래너 소개", href: "#about" },
@@ -59,6 +59,7 @@ export default function Home() {
   const [reviewPage, setReviewPage] = useState(1);
   const [selectedReview, setSelectedReview] = useState<BlogReview | null>(null);
   const [visibleBouquetCount, setVisibleBouquetCount] = useState(12);
+  const [selectedBouquet, setSelectedBouquet] = useState<BouquetPost | null>(null);
   const reviewsPerPage = 3;
   const totalReviewPages = Math.ceil(blogReviews.length / reviewsPerPage);
   const reviewPageStart = Math.min(Math.max(reviewPage - 2, 1), Math.max(totalReviewPages - 4, 1));
@@ -88,6 +89,29 @@ export default function Home() {
     };
   }, [selectedReview]);
 
+  useEffect(() => {
+    if (!selectedBouquet) return;
+    const previousOverflow = document.body.style.overflow;
+    const closeWithKeyboard = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSelectedBouquet(null);
+      if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        const offset = event.key === "ArrowLeft" ? -1 : 1;
+        setSelectedBouquet((current) => {
+          if (!current) return current;
+          const currentIndex = bouquetPosts.findIndex((post) => post.href === current.href);
+          const nextIndex = (currentIndex + offset + bouquetPosts.length) % bouquetPosts.length;
+          return bouquetPosts[nextIndex];
+        });
+      }
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", closeWithKeyboard);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeWithKeyboard);
+    };
+  }, [selectedBouquet]);
+
   function changeReviewPage(page: number) {
     setReviewPage(Math.min(Math.max(page, 1), totalReviewPages));
   }
@@ -101,7 +125,17 @@ export default function Home() {
     });
   }
 
+  function moveSelectedBouquet(offset: number) {
+    setSelectedBouquet((current) => {
+      if (!current) return current;
+      const currentIndex = bouquetPosts.findIndex((post) => post.href === current.href);
+      const nextIndex = (currentIndex + offset + bouquetPosts.length) % bouquetPosts.length;
+      return bouquetPosts[nextIndex];
+    });
+  }
+
   const selectedReviewIndex = selectedReview ? blogReviews.findIndex((review) => review.href === selectedReview.href) : -1;
+  const selectedBouquetIndex = selectedBouquet ? bouquetPosts.findIndex((post) => post.href === selectedBouquet.href) : -1;
 
   return (
     <main className="site-shell">
@@ -278,10 +312,10 @@ export default function Home() {
           </div>
           <div className="bouquet-grid">
             {bouquetPosts.map((post, index) => (
-              <a className="bouquet-card" href={post.href} target="_blank" rel="noreferrer" hidden={index >= visibleBouquetCount} key={post.href} aria-label={`${post.alt} 원문 보기`}>
-                <img src={post.image} alt={post.alt} loading="lazy" decoding="async" />
+              <button className="bouquet-card" type="button" onClick={() => setSelectedBouquet(post)} data-instagram-url={post.href} hidden={index >= visibleBouquetCount} key={post.href} aria-haspopup="dialog" aria-label={`${post.alt} 크게 보기`}>
+                <img src={post.image} alt="" loading="lazy" decoding="async" />
                 <span>{post.tag}</span>
-              </a>
+              </button>
             ))}
           </div>
           {visibleBouquetCount < bouquetPosts.length && (
@@ -290,6 +324,29 @@ export default function Home() {
             </button>
           )}
         </section>
+
+        {selectedBouquet && (
+          <div className="bouquet-modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && setSelectedBouquet(null)}>
+            <article className="bouquet-modal-panel" role="dialog" aria-modal="true" aria-labelledby="bouquet-modal-title">
+              <button className="bouquet-modal-close" type="button" onClick={() => setSelectedBouquet(null)} aria-label="부케 사진 닫기" autoFocus>×</button>
+              <header className="bouquet-modal-header">
+                <p>DAAEPL BOUQUET ARCHIVE</p>
+                <div><h2 id="bouquet-modal-title">#다애플부케</h2><b aria-live="polite">{selectedBouquetIndex + 1} / {bouquetPosts.length}</b></div>
+              </header>
+              <div className="bouquet-modal-image-wrap">
+                <img src={selectedBouquet.image} alt={selectedBouquet.alt} />
+              </div>
+              <div className="bouquet-modal-footer">
+                <nav className="bouquet-modal-navigation" aria-label="부케 사진 이동">
+                  <button type="button" onClick={() => moveSelectedBouquet(-1)}><span>←</span> 이전 부케</button>
+                  <b aria-live="polite">{selectedBouquetIndex + 1} / {bouquetPosts.length}</b>
+                  <button type="button" onClick={() => moveSelectedBouquet(1)}>다음 부케 <span>→</span></button>
+                </nav>
+                <div className="bouquet-modal-source"><small>좌우 버튼이나 키보드 방향키로 다음 사진을 볼 수 있습니다.</small><a href={selectedBouquet.href} target="_blank" rel="noreferrer">인스타그램 원문 확인 <span>↗</span></a></div>
+              </div>
+            </article>
+          </div>
+        )}
 
         <footer>
           <a className="footer-brand" href="#home">D A A E P L A N</a><p>김다애 플래너와 시작하는 1:1 퍼스널 웨딩 플래닝</p>

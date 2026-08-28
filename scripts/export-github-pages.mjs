@@ -267,6 +267,117 @@ try {
           const bouquetCount = document.querySelector(".bouquet-count");
           let visibleBouquets = Math.min(12, bouquetCards.length);
 
+          const openBouquetModal = (initialIndex) => {
+            if (!bouquetCards.length) return;
+            let currentIndex = initialIndex;
+            const trigger = bouquetCards[initialIndex];
+            const previousOverflow = document.body.style.overflow;
+            const backdrop = makeElement("div", "bouquet-modal-backdrop");
+            const panel = makeElement("article", "bouquet-modal-panel");
+            panel.setAttribute("role", "dialog");
+            panel.setAttribute("aria-modal", "true");
+            panel.setAttribute("aria-labelledby", "bouquet-modal-title");
+
+            const closeButton = makeElement("button", "bouquet-modal-close", "×");
+            closeButton.type = "button";
+            closeButton.setAttribute("aria-label", "부케 사진 닫기");
+
+            const header = makeElement("header", "bouquet-modal-header");
+            const kicker = makeElement("p", "", "DAAEPL BOUQUET ARCHIVE");
+            const headerRow = makeElement("div");
+            const title = makeElement("h2", "", "#다애플부케");
+            title.id = "bouquet-modal-title";
+            const headerCount = makeElement("b");
+            headerCount.setAttribute("aria-live", "polite");
+            headerRow.append(title, headerCount);
+            header.append(kicker, headerRow);
+
+            const imageWrap = makeElement("div", "bouquet-modal-image-wrap");
+            const image = makeElement("img");
+            imageWrap.append(image);
+
+            const footer = makeElement("div", "bouquet-modal-footer");
+            const navigation = makeElement("nav", "bouquet-modal-navigation");
+            navigation.setAttribute("aria-label", "부케 사진 이동");
+            const previousButton = makeElement("button", "", "← 이전 부케");
+            previousButton.type = "button";
+            const navigationCount = makeElement("b");
+            navigationCount.setAttribute("aria-live", "polite");
+            const nextButton = makeElement("button", "", "다음 부케 →");
+            nextButton.type = "button";
+            navigation.append(previousButton, navigationCount, nextButton);
+
+            const source = makeElement("div", "bouquet-modal-source");
+            const sourceNote = makeElement("small", "", "좌우 버튼이나 키보드 방향키로 다음 사진을 볼 수 있습니다.");
+            const originalLink = makeElement("a", "", "인스타그램 원문 확인 ↗");
+            originalLink.target = "_blank";
+            originalLink.rel = "noreferrer";
+            source.append(sourceNote, originalLink);
+            footer.append(navigation, source);
+
+            const updateContent = () => {
+              const card = bouquetCards[currentIndex];
+              const sourceImage = card.querySelector("img");
+              image.src = sourceImage?.getAttribute("src") || "";
+              image.alt = card.getAttribute("aria-label")?.replace(" 크게 보기", "") || "다애플 부케";
+              const countText = (currentIndex + 1) + " / " + bouquetCards.length;
+              headerCount.textContent = countText;
+              navigationCount.textContent = countText;
+              originalLink.href = card.dataset.instagramUrl || "https://www.instagram.com/daae_gi/";
+            };
+
+            const moveBouquet = (offset) => {
+              currentIndex = (currentIndex + offset + bouquetCards.length) % bouquetCards.length;
+              updateContent();
+            };
+
+            const close = () => {
+              window.removeEventListener("keydown", handleKeyboard);
+              document.body.style.overflow = previousOverflow;
+              backdrop.remove();
+              trigger.focus();
+            };
+
+            const handleKeyboard = (event) => {
+              if (event.key === "Escape") close();
+              if (event.key === "ArrowLeft") {
+                event.preventDefault();
+                moveBouquet(-1);
+              }
+              if (event.key === "ArrowRight") {
+                event.preventDefault();
+                moveBouquet(1);
+              }
+              if (event.key === "Tab") {
+                const focusable = Array.from(panel.querySelectorAll("button, a[href]"));
+                if (!focusable.length) return;
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
+                if (event.shiftKey && document.activeElement === first) {
+                  event.preventDefault();
+                  last.focus();
+                } else if (!event.shiftKey && document.activeElement === last) {
+                  event.preventDefault();
+                  first.focus();
+                }
+              }
+            };
+
+            closeButton.addEventListener("click", close);
+            previousButton.addEventListener("click", () => moveBouquet(-1));
+            nextButton.addEventListener("click", () => moveBouquet(1));
+            backdrop.addEventListener("mousedown", (event) => {
+              if (event.target === backdrop) close();
+            });
+            window.addEventListener("keydown", handleKeyboard);
+            panel.append(closeButton, header, imageWrap, footer);
+            backdrop.append(panel);
+            document.body.append(backdrop);
+            document.body.style.overflow = "hidden";
+            updateContent();
+            closeButton.focus();
+          };
+
           const renderBouquets = () => {
             bouquetCards.forEach((card, index) => { card.hidden = index >= visibleBouquets; });
             if (bouquetCount) bouquetCount.textContent = visibleBouquets + " / " + bouquetCards.length;
@@ -276,6 +387,9 @@ try {
           bouquetMore?.addEventListener("click", () => {
             visibleBouquets = Math.min(visibleBouquets + 12, bouquetCards.length);
             renderBouquets();
+          });
+          bouquetCards.forEach((card, index) => {
+            card.addEventListener("click", () => openBouquetModal(index));
           });
           renderBouquets();
 
