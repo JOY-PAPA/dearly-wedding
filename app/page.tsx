@@ -7,9 +7,9 @@ import { bouquetPosts, type BouquetPost } from "./bouquet-posts.generated";
 const navItems = [
   { label: "플래너 소개", href: "#about" },
   { label: "실제 진행 후기", href: "#reviews" },
+  { label: "다애플 부케", href: "#bouquet" },
   { label: "인스타그램", href: "#instagram" },
   { label: "상담 문의", href: "#consult" },
-  { label: "다애플 부케", href: "#bouquet" },
 ];
 
 const facts = [
@@ -360,7 +360,7 @@ export default function Home() {
 
         <footer>
           <a className="footer-brand" href="#home">D A A E P L A N</a><p>김다애 플래너와 시작하는 1:1 퍼스널 웨딩 플래닝</p>
-          <div><a href="#about">플래너 소개</a><a href="#reviews">실제 진행 후기</a><a href="#instagram">인스타그램</a><a href="#consult">상담 문의</a><a href="#bouquet">다애플 부케</a></div>
+          <div><a href="#about">플래너 소개</a><a href="#reviews">실제 진행 후기</a><a href="#bouquet">다애플 부케</a><a href="#instagram">인스타그램</a><a href="#consult">상담 문의</a></div>
           <small>© 2026 DEARLY WEDDING. ALL RIGHTS RESERVED.</small>
         </footer>
 
