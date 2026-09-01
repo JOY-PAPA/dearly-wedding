@@ -406,6 +406,119 @@ try {
           });
           renderBouquets();
 
+          const sketchCards = Array.from(document.querySelectorAll(".sketch-card"));
+
+          const openSketchModal = (initialIndex) => {
+            if (!sketchCards.length) return;
+            let currentIndex = initialIndex;
+            const trigger = sketchCards[initialIndex];
+            const previousOverflow = document.body.style.overflow;
+            const backdrop = makeElement("div", "sketch-modal-backdrop");
+            const panel = makeElement("article", "sketch-modal-panel");
+            panel.setAttribute("role", "dialog");
+            panel.setAttribute("aria-modal", "true");
+            panel.setAttribute("aria-labelledby", "sketch-modal-title");
+            panel.setAttribute("aria-describedby", "sketch-modal-help");
+
+            const closeButton = makeElement("button", "sketch-modal-close", "×");
+            closeButton.type = "button";
+            closeButton.setAttribute("aria-label", "다애플 스케치 닫기");
+
+            const header = makeElement("header", "sketch-modal-header");
+            const kicker = makeElement("p", "", "DAAEPLAN WEDDING SKETCH");
+            const headerRow = makeElement("div");
+            const title = makeElement("h2", "", "다애플 스케치");
+            title.id = "sketch-modal-title";
+            const headerCount = makeElement("b");
+            headerCount.setAttribute("aria-live", "polite");
+            headerRow.append(title, headerCount);
+            header.append(kicker, headerRow);
+
+            const imageWrap = makeElement("div", "sketch-modal-image-wrap");
+            const image = makeElement("img", "sketch-modal-image");
+            imageWrap.append(image);
+
+            const footer = makeElement("div", "sketch-modal-footer");
+            const navigation = makeElement("nav", "sketch-modal-navigation");
+            navigation.setAttribute("aria-label", "다애플 스케치 이동");
+            const previousButton = makeElement("button", "", "← 이전 스케치");
+            previousButton.type = "button";
+            const navigationCount = makeElement("b", "sketch-modal-count");
+            navigationCount.setAttribute("aria-live", "polite");
+            const nextButton = makeElement("button", "", "다음 스케치 →");
+            nextButton.type = "button";
+            navigation.append(previousButton, navigationCount, nextButton);
+
+            const help = makeElement("p", "sketch-modal-help", "좌우 버튼이나 키보드 방향키로 다음 스케치를 볼 수 있습니다.");
+            help.id = "sketch-modal-help";
+            footer.append(navigation, help);
+
+            const updateContent = () => {
+              const card = sketchCards[currentIndex];
+              const thumbnail = card.querySelector("img");
+              image.src = thumbnail?.currentSrc || thumbnail?.src || "";
+              image.alt = card.dataset.sketchAlt || "다애플 스케치 드레스 투어 기록";
+              const countText = (currentIndex + 1) + " / " + sketchCards.length;
+              headerCount.textContent = countText;
+              navigationCount.textContent = countText;
+            };
+
+            const moveSketch = (offset) => {
+              currentIndex = (currentIndex + offset + sketchCards.length) % sketchCards.length;
+              updateContent();
+            };
+
+            const close = () => {
+              window.removeEventListener("keydown", handleKeyboard);
+              document.body.style.overflow = previousOverflow;
+              backdrop.remove();
+              trigger.focus();
+            };
+
+            const handleKeyboard = (event) => {
+              if (event.key === "Escape") close();
+              if (event.key === "ArrowLeft") {
+                event.preventDefault();
+                moveSketch(-1);
+              }
+              if (event.key === "ArrowRight") {
+                event.preventDefault();
+                moveSketch(1);
+              }
+              if (event.key === "Tab") {
+                const focusable = Array.from(panel.querySelectorAll("button, a[href]"));
+                if (!focusable.length) return;
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
+                if (event.shiftKey && document.activeElement === first) {
+                  event.preventDefault();
+                  last.focus();
+                } else if (!event.shiftKey && document.activeElement === last) {
+                  event.preventDefault();
+                  first.focus();
+                }
+              }
+            };
+
+            closeButton.addEventListener("click", close);
+            previousButton.addEventListener("click", () => moveSketch(-1));
+            nextButton.addEventListener("click", () => moveSketch(1));
+            backdrop.addEventListener("mousedown", (event) => {
+              if (event.target === backdrop) close();
+            });
+            window.addEventListener("keydown", handleKeyboard);
+            panel.append(closeButton, header, imageWrap, footer);
+            backdrop.append(panel);
+            document.body.append(backdrop);
+            document.body.style.overflow = "hidden";
+            updateContent();
+            closeButton.focus();
+          };
+
+          sketchCards.forEach((card, index) => {
+            card.addEventListener("click", () => openSketchModal(index));
+          });
+
         })();
       </script></body>`,
     );

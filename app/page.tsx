@@ -1,16 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { blogReviews, type BlogReview } from "./blog-reviews.generated";
 import { bouquetPosts, type BouquetPost } from "./bouquet-posts.generated";
 
 const navItems = [
-  { label: "플래너 소개", href: "#about" },
   { label: "실제 진행 후기", href: "#reviews" },
   { label: "다애플 부케", href: "#bouquet" },
+  { label: "다애플 스케치", href: "#sketch" },
+  { label: "플래너 소개", href: "#about" },
   { label: "인스타그램", href: "#instagram" },
   { label: "상담 문의", href: "#consult" },
 ];
+
+const sketchPosts = Array.from({ length: 14 }, (_, index) => ({
+  image: `/sketches/daaepl-sketch-${String(index + 1).padStart(2, "0")}.jpg`,
+  alt: `다애플 스케치 드레스 투어 기록 ${index + 1}`,
+}));
 
 const facts = [
   { value: "2,300+", unit: "건", label: "누적 웨딩 진행" },
@@ -70,6 +76,12 @@ export default function Home() {
   const [selectedReview, setSelectedReview] = useState<BlogReview | null>(null);
   const [visibleBouquetCount, setVisibleBouquetCount] = useState(12);
   const [selectedBouquet, setSelectedBouquet] = useState<BouquetPost | null>(null);
+  const bouquetDialogRef = useRef<HTMLElement | null>(null);
+  const [selectedSketchIndex, setSelectedSketchIndex] = useState<number | null>(null);
+  const sketchDialogRef = useRef<HTMLElement | null>(null);
+  const lastSketchTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const bouquetModalOpen = selectedBouquet !== null;
+  const sketchModalOpen = selectedSketchIndex !== null;
   const reviewsPerPage = 3;
   const totalReviewPages = Math.ceil(blogReviews.length / reviewsPerPage);
   const reviewPageStart = Math.min(Math.max(reviewPage - 2, 1), Math.max(totalReviewPages - 4, 1));
@@ -100,7 +112,7 @@ export default function Home() {
   }, [selectedReview]);
 
   useEffect(() => {
-    if (!selectedBouquet) return;
+    if (!bouquetModalOpen) return;
     const previousOverflow = document.body.style.overflow;
     const closeWithKeyboard = (event: KeyboardEvent) => {
       if (event.key === "Escape") setSelectedBouquet(null);
@@ -116,11 +128,50 @@ export default function Home() {
     };
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", closeWithKeyboard);
+    bouquetDialogRef.current?.querySelector<HTMLButtonElement>(".bouquet-modal-close")?.focus();
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", closeWithKeyboard);
     };
-  }, [selectedBouquet]);
+  }, [bouquetModalOpen]);
+
+  useEffect(() => {
+    if (!sketchModalOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    const panel = sketchDialogRef.current;
+
+    const closeSketch = () => setSelectedSketchIndex(null);
+    const handleKeyboard = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeSketch();
+      if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        event.preventDefault();
+        const offset = event.key === "ArrowLeft" ? -1 : 1;
+        setSelectedSketchIndex((current) => current === null ? current : (current + offset + sketchPosts.length) % sketchPosts.length);
+      }
+      if (event.key === "Tab" && panel) {
+        const focusable = Array.from(panel.querySelectorAll<HTMLElement>("button, a[href], [tabindex]:not([tabindex='-1'])"));
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyboard);
+    panel?.querySelector<HTMLButtonElement>(".sketch-modal-close")?.focus();
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyboard);
+      lastSketchTriggerRef.current?.focus();
+    };
+  }, [sketchModalOpen]);
 
   function changeReviewPage(page: number) {
     setReviewPage(Math.min(Math.max(page, 1), totalReviewPages));
@@ -144,8 +195,13 @@ export default function Home() {
     });
   }
 
+  function moveSelectedSketch(offset: number) {
+    setSelectedSketchIndex((current) => current === null ? current : (current + offset + sketchPosts.length) % sketchPosts.length);
+  }
+
   const selectedReviewIndex = selectedReview ? blogReviews.findIndex((review) => review.href === selectedReview.href) : -1;
   const selectedBouquetIndex = selectedBouquet ? bouquetPosts.findIndex((post) => post.href === selectedBouquet.href) : -1;
+  const selectedSketch = selectedSketchIndex === null ? null : sketchPosts[selectedSketchIndex];
 
   return (
     <main className="site-shell">
@@ -180,39 +236,6 @@ export default function Home() {
             <a href="#about">플래너 만나보기 <span>→</span></a>
           </div>
           <div className="hero-index"><b>DAAE KIM</b><span /><small>WEDDING PLANNER</small></div>
-        </section>
-
-        <section className="fact-grid" aria-label="플래너 주요 경력">
-          {facts.map((fact) => (
-            <div key={fact.label}><p><b>{fact.value}</b><span>{fact.unit}</span></p><small>{fact.label}</small></div>
-          ))}
-        </section>
-
-        <section className="about-section" id="about">
-          <div className="about-photo-wrap">
-            <img src="/kim-daae-planner.jpg" alt="김다애 웨딩플래너 프로필" />
-            <span>11 YEARS<br />WITH COUPLES</span>
-          </div>
-          <div className="about-copy">
-            <p className="section-kicker">ABOUT THE PLANNER</p>
-            <h2>안녕하세요,<br />김다애 플래너입니다.</h2>
-            <blockquote>“좋은 결혼 준비는 더 많은 선택이 아니라,<br />두 사람에게 꼭 맞는 선택을 남기는 일이라고 믿어요.”</blockquote>
-            <p>정해진 패키지보다 두 분의 생활 방식과 취향을 먼저 듣습니다. 예산과 일정은 현실적으로, 중요한 장면은 두 분답게 지켜낼 수 있도록 처음부터 본식까지 한 사람이 책임지고 동행합니다.</p>
-            <div className="about-tags"><span>#1:1전담</span><span>#예산설계</span><span>#취향큐레이션</span><span>#본식동행</span></div>
-            <a className="line-link" href="#consult">김다애 플래너와 상담하기 <span>↗</span></a>
-          </div>
-        </section>
-
-        <section className="process-section" id="process">
-          <div className="section-title center">
-            <p>HOW WE WORK TOGETHER</p>
-            <h2>둘만의 기준을 찾는<br />네 번의 동행</h2>
-          </div>
-          <div className="process-list">
-            {process.map((item) => (
-              <article key={item.step}><span>{item.step}</span><div><h3>{item.title}</h3><p>{item.copy}</p></div></article>
-            ))}
-          </div>
         </section>
 
         <section className="review-section" id="reviews">
@@ -299,8 +322,8 @@ export default function Home() {
 
         {selectedBouquet && (
           <div className="bouquet-modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && setSelectedBouquet(null)}>
-            <article className="bouquet-modal-panel" role="dialog" aria-modal="true" aria-labelledby="bouquet-modal-title">
-              <button className="bouquet-modal-close" type="button" onClick={() => setSelectedBouquet(null)} aria-label="부케 사진 닫기" autoFocus>×</button>
+            <article ref={bouquetDialogRef} className="bouquet-modal-panel" role="dialog" aria-modal="true" aria-labelledby="bouquet-modal-title">
+              <button className="bouquet-modal-close" type="button" onClick={() => setSelectedBouquet(null)} aria-label="부케 사진 닫기">×</button>
               <header className="bouquet-modal-header">
                 <p>DAAEPL BOUQUET ARCHIVE</p>
                 <div><h2 id="bouquet-modal-title">#다애플부케</h2><b aria-live="polite">{selectedBouquetIndex + 1} / {bouquetPosts.length}</b></div>
@@ -320,6 +343,90 @@ export default function Home() {
           </div>
         )}
 
+        <section className="sketch-section" id="sketch">
+          <div className="section-title split">
+            <div><p>DAAEPLAN WEDDING SKETCH</p><h2>취향을 한 장에 담은<br />다애플 스케치</h2></div>
+            <span>드레스 투어의 선택과 이유를<br />한눈에 볼 수 있는 기록입니다.</span>
+          </div>
+          <div className="sketch-grid">
+            {sketchPosts.map((post, index) => (
+              <button
+                className="sketch-card"
+                type="button"
+                onClick={(event) => {
+                  lastSketchTriggerRef.current = event.currentTarget;
+                  setSelectedSketchIndex(index);
+                }}
+                data-sketch-alt={post.alt}
+                key={post.image}
+                aria-haspopup="dialog"
+                aria-label={`${post.alt} 크게 보기`}
+              >
+                <img src={post.image} alt="" loading="lazy" decoding="async" />
+                <span>DRESS TOUR SKETCH</span>
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {selectedSketch && selectedSketchIndex !== null && (
+          <div className="sketch-modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && setSelectedSketchIndex(null)}>
+            <article ref={sketchDialogRef} className="sketch-modal-panel" role="dialog" aria-modal="true" aria-labelledby="sketch-modal-title" aria-describedby="sketch-modal-help">
+              <button className="sketch-modal-close" type="button" onClick={() => setSelectedSketchIndex(null)} aria-label="다애플 스케치 닫기">×</button>
+              <header className="sketch-modal-header">
+                <p>DAAEPLAN WEDDING SKETCH</p>
+                <div><h2 id="sketch-modal-title">다애플 스케치</h2><b aria-live="polite">{selectedSketchIndex + 1} / {sketchPosts.length}</b></div>
+              </header>
+              <div className="sketch-modal-image-wrap">
+                <img className="sketch-modal-image" src={selectedSketch.image} alt={selectedSketch.alt} />
+              </div>
+              <div className="sketch-modal-footer">
+                <nav className="sketch-modal-navigation" aria-label="다애플 스케치 이동">
+                  <button type="button" onClick={() => moveSelectedSketch(-1)}><span>←</span> 이전 스케치</button>
+                  <b className="sketch-modal-count" aria-live="polite">{selectedSketchIndex + 1} / {sketchPosts.length}</b>
+                  <button type="button" onClick={() => moveSelectedSketch(1)}>다음 스케치 <span>→</span></button>
+                </nav>
+                <p className="sketch-modal-help" id="sketch-modal-help">좌우 버튼이나 키보드 방향키로 다음 스케치를 볼 수 있습니다.</p>
+              </div>
+            </article>
+          </div>
+        )}
+
+        <div className="planner-section-group" id="about">
+          <section className="fact-grid" aria-label="플래너 주요 경력">
+            {facts.map((fact) => (
+              <div key={fact.label}><p><b>{fact.value}</b><span>{fact.unit}</span></p><small>{fact.label}</small></div>
+            ))}
+          </section>
+
+          <section className="about-section">
+            <div className="about-photo-wrap">
+              <img src="/kim-daae-planner.jpg" alt="김다애 웨딩플래너 프로필" />
+              <span>11 YEARS<br />WITH COUPLES</span>
+            </div>
+            <div className="about-copy">
+              <p className="section-kicker">ABOUT THE PLANNER</p>
+              <h2>안녕하세요,<br />김다애 플래너입니다.</h2>
+              <blockquote>“좋은 결혼 준비는 더 많은 선택이 아니라,<br />두 사람에게 꼭 맞는 선택을 남기는 일이라고 믿어요.”</blockquote>
+              <p>정해진 패키지보다 두 분의 생활 방식과 취향을 먼저 듣습니다. 예산과 일정은 현실적으로, 중요한 장면은 두 분답게 지켜낼 수 있도록 처음부터 본식까지 한 사람이 책임지고 동행합니다.</p>
+              <div className="about-tags"><span>#1:1전담</span><span>#예산설계</span><span>#취향큐레이션</span><span>#본식동행</span></div>
+              <a className="line-link" href="#consult">김다애 플래너와 상담하기 <span>↗</span></a>
+            </div>
+          </section>
+
+          <section className="process-section" id="process">
+            <div className="section-title center">
+              <p>HOW WE WORK TOGETHER</p>
+              <h2>둘만의 기준을 찾는<br />네 번의 동행</h2>
+            </div>
+            <div className="process-list">
+              {process.map((item) => (
+                <article key={item.step}><span>{item.step}</span><div><h3>{item.title}</h3><p>{item.copy}</p></div></article>
+              ))}
+            </div>
+          </section>
+        </div>
+
         <section className="instagram-section" id="instagram">
           <div className="section-title split">
             <div><p>PLANNER&apos;S INSTAGRAM</p><h2>준비의 순간을<br />가장 가까이에서</h2></div>
@@ -335,32 +442,34 @@ export default function Home() {
           <p className="instagram-note">드레스 투어, 현장 셋업, 본식 케어까지 매주 새로운 이야기를 기록합니다.</p>
         </section>
 
-        <section className="faq-section" id="faq">
-          <div className="section-title"><p>BEFORE WE MEET</p><h2>상담 전 자주 묻는 질문</h2></div>
-          <div className="faq-list">
-            {faqs.map((faq) => <details key={faq.question}><summary>{faq.question}<span>＋</span></summary><p>{faq.answer}</p></details>)}
-          </div>
-        </section>
-
-        <section className="consult-section" id="consult">
-          <div className="consult-intro">
-            <p>KAKAO OPEN CHAT</p><h2>두 분의 이야기를<br />카카오톡으로 들려주세요</h2><span>복잡한 양식 없이 오픈채팅에서 편하게 상담을 시작할 수 있습니다.</span>
-          </div>
-          <div className="kakao-consult-card">
-            <div className="kakao-consult-copy">
-              <span>1:1 WEDDING CONSULTATION</span>
-              <h3>궁금한 점을 바로 남겨주세요</h3>
-              <p>예식 예정 시기, 준비 단계, 원하는 분위기를 간단히 알려주시면<br />김다애 플래너가 확인 후 차근차근 안내해 드립니다.</p>
-              <div className="kakao-consult-points"><span>✓ 부담 없는 첫 상담</span><span>✓ 1:1 맞춤 답변</span><span>✓ 모바일로 간편하게</span></div>
+        <div className="consult-section-group" id="consult">
+          <section className="faq-section" id="faq">
+            <div className="section-title"><p>BEFORE WE MEET</p><h2>상담 전 자주 묻는 질문</h2></div>
+            <div className="faq-list">
+              {faqs.map((faq) => <details key={faq.question}><summary>{faq.question}<span>＋</span></summary><p>{faq.answer}</p></details>)}
             </div>
-            <a className="kakao-consult-button" href={kakaoChatUrl} target="_blank" rel="noreferrer">카카오톡 오픈채팅 상담 시작하기 <span>↗</span></a>
-            <small>버튼을 누르면 카카오톡 오픈채팅으로 이동합니다.</small>
-          </div>
-        </section>
+          </section>
+
+          <section className="consult-section">
+            <div className="consult-intro">
+              <p>KAKAO OPEN CHAT</p><h2>두 분의 이야기를<br />카카오톡으로 들려주세요</h2><span>복잡한 양식 없이 오픈채팅에서 편하게 상담을 시작할 수 있습니다.</span>
+            </div>
+            <div className="kakao-consult-card">
+              <div className="kakao-consult-copy">
+                <span>1:1 WEDDING CONSULTATION</span>
+                <h3>궁금한 점을 바로 남겨주세요</h3>
+                <p>예식 예정 시기, 준비 단계, 원하는 분위기를 간단히 알려주시면<br />김다애 플래너가 확인 후 차근차근 안내해 드립니다.</p>
+                <div className="kakao-consult-points"><span>✓ 부담 없는 첫 상담</span><span>✓ 1:1 맞춤 답변</span><span>✓ 모바일로 간편하게</span></div>
+              </div>
+              <a className="kakao-consult-button" href={kakaoChatUrl} target="_blank" rel="noreferrer">카카오톡 오픈채팅 상담 시작하기 <span>↗</span></a>
+              <small>버튼을 누르면 카카오톡 오픈채팅으로 이동합니다.</small>
+            </div>
+          </section>
+        </div>
 
         <footer>
           <a className="footer-brand" href="#home">D A A E P L A N</a><p>김다애 플래너와 시작하는 1:1 퍼스널 웨딩 플래닝</p>
-          <div><a href="#about">플래너 소개</a><a href="#reviews">실제 진행 후기</a><a href="#bouquet">다애플 부케</a><a href="#instagram">인스타그램</a><a href="#consult">상담 문의</a></div>
+          <div>{navItems.map((item) => <a key={item.label} href={item.href}>{item.label}</a>)}</div>
           <small>© 2026 DAAEPLAN. ALL RIGHTS RESERVED.</small>
         </footer>
 
