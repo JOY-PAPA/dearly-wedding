@@ -18,6 +18,7 @@ button, input, select, textarea { font: inherit; }
 button, a, summary { -webkit-tap-highlight-color: transparent; }
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
 .site-shell { min-height: 100vh; display: grid; grid-template-columns: minmax(440px, 1fr) minmax(560px, 700px) minmax(40px, .35fr); align-items: stretch; }
 .intro-rail { min-height: 100vh; display: flex; justify-content: flex-end; background: var(--cream); }
@@ -57,11 +58,11 @@ img { display: block; max-width: 100%; }
 .hero-index span { height: 1px; background: rgba(255,255,255,.45); flex: 1; }
 .hero-index small { opacity: .72; }
 
-.fact-grid { display: grid; grid-template-columns: repeat(4, 1fr); padding: 0 24px; background: var(--paper); border-bottom: 1px solid var(--line); }
+.fact-grid { display: grid; grid-template-columns: repeat(4, 1fr); padding: 0 24px; background: var(--paper); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .fact-grid div { min-height: 128px; padding: 29px 11px 22px; text-align: center; border-right: 1px solid var(--line); }
 .fact-grid div:last-child { border: 0; }
 .fact-grid p { margin: 0 0 10px; color: var(--violet); line-height: 1; }
-.fact-grid b { font-size: 28px; letter-spacing: -.04em; }
+.fact-grid b { display: inline-block; font-size: 28px; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
 .fact-grid p span { margin-left: 3px; color: var(--red); font-size: 10px; font-weight: 700; }
 .fact-grid small { color: var(--muted); font-size: 9px; }
 

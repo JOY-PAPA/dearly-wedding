@@ -19,10 +19,10 @@ const sketchPosts = Array.from({ length: 14 }, (_, index) => ({
 }));
 
 const facts = [
-  { value: "2,300+", unit: "건", label: "누적 웨딩 진행" },
-  { value: "11", unit: "년", label: "웨딩 플래닝 경력" },
-  { value: "89", unit: "%", label: "지인 소개율" },
-  { value: "1:1", unit: "", label: "처음부터 끝까지 전담" },
+  { value: "2,300+", target: 2300, suffix: "+", unit: "건", label: "누적 웨딩 진행" },
+  { value: "11", target: 11, suffix: "", unit: "년", label: "웨딩 플래닝 경력" },
+  { value: "89", target: 89, suffix: "", unit: "%", label: "지인 소개율" },
+  { value: "1:1", target: 1, suffix: "", format: "ratio", unit: "", label: "처음부터 끝까지 전담" },
 ];
 
 const process = [
@@ -172,6 +172,77 @@ export default function Home() {
       lastSketchTriggerRef.current?.focus();
     };
   }, [sketchModalOpen]);
+
+  useEffect(() => {
+    const factGrid = document.querySelector<HTMLElement>(".fact-grid");
+    const counters = Array.from(document.querySelectorAll<HTMLElement>(".fact-counter[data-count-target]"));
+    if (!factGrid || !counters.length) return;
+
+    const numberFormatter = new Intl.NumberFormat("ko-KR");
+    const formatCounter = (counter: HTMLElement, value: number) => {
+      if (counter.dataset.countFormat === "ratio") return `${value}:${value}`;
+      return `${numberFormatter.format(value)}${counter.dataset.countSuffix ?? ""}`;
+    };
+    const showFinalValues = () => {
+      counters.forEach((counter) => {
+        counter.textContent = formatCounter(counter, Number(counter.dataset.countTarget));
+      });
+    };
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+      showFinalValues();
+      return;
+    }
+
+    counters.forEach((counter) => {
+      counter.textContent = formatCounter(counter, 0);
+    });
+
+    const timers: number[] = [];
+    const animationFrames = new Map<HTMLElement, number>();
+    let hasStarted = false;
+
+    const startCounting = () => {
+      if (hasStarted) return;
+      hasStarted = true;
+
+      counters.forEach((counter, index) => {
+        const target = Number(counter.dataset.countTarget);
+        const delay = index * 110;
+        const timer = window.setTimeout(() => {
+          const startedAt = performance.now();
+          const duration = 1350;
+          const update = (now: number) => {
+            const progress = Math.min((now - startedAt) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            counter.textContent = formatCounter(counter, Math.round(target * eased));
+            if (progress < 1) {
+              animationFrames.set(counter, window.requestAnimationFrame(update));
+            } else {
+              counter.textContent = formatCounter(counter, target);
+              animationFrames.delete(counter);
+            }
+          };
+          animationFrames.set(counter, window.requestAnimationFrame(update));
+        }, delay);
+        timers.push(timer);
+      });
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        startCounting();
+        observer.disconnect();
+      }
+    }, { threshold: 0.35 });
+
+    observer.observe(factGrid);
+    return () => {
+      observer.disconnect();
+      timers.forEach((timer) => window.clearTimeout(timer));
+      animationFrames.forEach((frame) => window.cancelAnimationFrame(frame));
+    };
+  }, []);
 
   function changeReviewPage(page: number) {
     setReviewPage(Math.min(Math.max(page, 1), totalReviewPages));
@@ -393,12 +464,6 @@ export default function Home() {
         )}
 
         <div className="planner-section-group" id="about">
-          <section className="fact-grid" aria-label="플래너 주요 경력">
-            {facts.map((fact) => (
-              <div key={fact.label}><p><b>{fact.value}</b><span>{fact.unit}</span></p><small>{fact.label}</small></div>
-            ))}
-          </section>
-
           <section className="about-section">
             <div className="about-photo-wrap">
               <img src="/kim-daae-planner.jpg" alt="김다애 웨딩플래너 프로필" />
@@ -412,6 +477,25 @@ export default function Home() {
               <div className="about-tags"><span>#1:1전담</span><span>#예산설계</span><span>#취향큐레이션</span><span>#본식동행</span></div>
               <a className="line-link" href="#consult">김다애 플래너와 상담하기 <span>↗</span></a>
             </div>
+          </section>
+
+          <section className="fact-grid" aria-label="플래너 주요 경력">
+            {facts.map((fact) => (
+              <div key={fact.label}>
+                <p>
+                  <b
+                    className="fact-counter"
+                    data-count-target={fact.target}
+                    data-count-suffix={fact.suffix}
+                    data-count-format={fact.format}
+                    aria-hidden="true"
+                  >{fact.value}</b>
+                  <span aria-hidden="true">{fact.unit}</span>
+                  <span className="sr-only">{fact.value}{fact.unit}</span>
+                </p>
+                <small>{fact.label}</small>
+              </div>
+            ))}
           </section>
 
           <section className="process-section" id="process">

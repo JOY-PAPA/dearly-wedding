@@ -97,6 +97,64 @@ try {
             return element;
           };
 
+          const setupFactCounters = () => {
+            const factGrid = document.querySelector(".fact-grid");
+            const counters = Array.from(document.querySelectorAll(".fact-counter[data-count-target]"));
+            if (!factGrid || !counters.length) return;
+
+            const numberFormatter = new Intl.NumberFormat("ko-KR");
+            const formatCounter = (counter, value) => {
+              if (counter.dataset.countFormat === "ratio") return value + ":" + value;
+              return numberFormatter.format(value) + (counter.dataset.countSuffix || "");
+            };
+            const showFinalValues = () => {
+              counters.forEach((counter) => {
+                counter.textContent = formatCounter(counter, Number(counter.dataset.countTarget));
+              });
+            };
+
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+              showFinalValues();
+              return;
+            }
+
+            counters.forEach((counter) => {
+              counter.textContent = formatCounter(counter, 0);
+            });
+
+            let hasStarted = false;
+            const startCounting = () => {
+              if (hasStarted) return;
+              hasStarted = true;
+
+              counters.forEach((counter, index) => {
+                const target = Number(counter.dataset.countTarget);
+                window.setTimeout(() => {
+                  const startedAt = performance.now();
+                  const duration = 1350;
+                  const update = (now) => {
+                    const progress = Math.min((now - startedAt) / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    counter.textContent = formatCounter(counter, Math.round(target * eased));
+                    if (progress < 1) window.requestAnimationFrame(update);
+                    else counter.textContent = formatCounter(counter, target);
+                  };
+                  window.requestAnimationFrame(update);
+                }, index * 110);
+              });
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+              if (entries.some((entry) => entry.isIntersecting)) {
+                startCounting();
+                observer.disconnect();
+              }
+            }, { threshold: 0.35 });
+            observer.observe(factGrid);
+          };
+
+          setupFactCounters();
+
           const getNaverEmbedUrl = (href) => {
             try {
               const url = new URL(href);
