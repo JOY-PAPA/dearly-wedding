@@ -11,6 +11,24 @@ export type BlogReview = {
 export const blogReviews: BlogReview[] = [
   {
     "category": "REAL WEDDING",
+    "title": "[04] 플래너 계약 후기 (베리굿 김다애 부장님)",
+    "date": "2026.08",
+    "excerpt": "플래너 상담 후기 사실 처음에는 플래너 없이 전부 워크인으로 진행할지 고민했다. 그런데 어느 순간 플래너와 함께 준비해야겠다고 깨달았다…",
+    "image": "/reviews/review-128.jpg",
+    "href": "https://blog.naver.com/rumii__7/224393662870",
+    "sourceImage": "https://blogthumb.pstatic.net/MjAyNjA4MjhfMjgw/MDAxNzg3OTI1NTYxNDYx.HvO1cL_cJxyp0-wPdC49dfUeAW1wABemFueLcn6bzawg.9EVd2vSgIi0C0jsglse7hfpgtcB96Or9y5rk7eb_ircg.JPEG/900_1787925560918.jpg?type=w2"
+  },
+  {
+    "category": "REAL WEDDING",
+    "title": "1. 베리굿웨딩 청담점, 플래너계약 스드메계약(무이한남점, 레아레브, 에브뉴준오) 헤어변형(수작)",
+    "date": "2026.08",
+    "excerpt": "결혼 준비를 시작하며 베리굿웨딩과 블랑드봄을 고민한 끝에 김다애 플래너님과 플래너·스드메 계약을 진행한 실제 후기입니다…",
+    "image": "/reviews/review-129.jpg",
+    "href": "https://blog.naver.com/tnwls1274/224392589806",
+    "sourceImage": "https://blogthumb.pstatic.net/MjAyNjA4MjhfMTQy/MDAxNzg3ODQzMjU5MDcy.nGmf5G6OxYsZQArgc_xHz0FTGiOGUkjrzIHfwzGYRVcg.wDabn6w8JxW5U0znpBgqol_RtLC8MygKHEFMaHsMCuwg.JPEG/IMG%A3%DF4990.jpg?type=w2"
+  },
+  {
+    "category": "REAL WEDDING",
     "title": "W11. 베리굿웨딩 김다애 플래너 솔직 후기🤍 ㅣ 선택장애 신부가 직접 고른 이유",
     "date": "REAL REVIEW",
     "excerpt": "🏛️웨딩홀: 더링크호텔 가든홀 👩플래너: 베리굿 김다애부장님 💍웨딩밴드: 타사키 📷스튜디오: ...",
