@@ -89,10 +89,12 @@ img { display: block; max-width: 100%; }
 
 .process-section { padding: 86px 38px; background: var(--paper); }
 .process-list { margin-top: 47px; border-top: 1px solid var(--line); }
-.process-list article { min-height: 126px; padding: 25px 6px; display: grid; grid-template-columns: 60px 1fr; gap: 18px; border-bottom: 1px solid var(--line); }
+.process-list article { min-height: 112px; padding: 25px 6px; display: grid; grid-template-columns: 60px 1fr; gap: 18px; border-bottom: 1px solid var(--line); }
 .process-list article > span { color: var(--red); font-size: 10px; font-weight: 700; letter-spacing: .14em; }
-.process-list h3 { margin: 0 0 9px; color: var(--violet); font-size: 19px; letter-spacing: -.03em; }
-.process-list p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.8; }
+.process-list h3 { margin: 0; color: var(--violet); font-size: 19px; letter-spacing: -.03em; }
+.benefit-details { margin: 12px 0 0; padding: 0; display: grid; gap: 5px; list-style: none; }
+.benefit-details li { position: relative; padding-left: 12px; color: var(--muted); font-size: 11px; line-height: 1.7; }
+.benefit-details li::before { content: ""; position: absolute; left: 0; top: .75em; width: 3px; height: 3px; border-radius: 50%; background: var(--red); }
 
 .review-section { padding: 88px 38px 94px; background: var(--violet); color: white; }
 .section-title.light h2 { color: white; }
@@ -158,15 +160,6 @@ img { display: block; max-width: 100%; }
 .instagram-grid span { position: absolute; z-index: 1; left: 11px; bottom: 10px; color: white; font-size: 7px; letter-spacing: .12em; opacity: 0; transition: opacity .3s; }
 .instagram-grid a:hover span { opacity: 1; }
 .instagram-note { margin: 18px 0 0; color: var(--muted); text-align: center; font-size: 9px; line-height: 1.7; }
-
-.faq-section { padding: 84px 38px; background: var(--cream); }
-.faq-list { margin-top: 35px; border-top: 1px solid #d7c9c6; }
-.faq-list details { border-bottom: 1px solid #d7c9c6; }
-.faq-list summary { padding: 21px 3px; display: flex; justify-content: space-between; gap: 18px; list-style: none; cursor: pointer; color: var(--violet); font-size: 12px; font-weight: 700; }
-.faq-list summary::-webkit-details-marker { display: none; }
-.faq-list summary span { color: var(--red); font-size: 17px; line-height: .8; transition: transform .2s; }
-.faq-list details[open] summary span { transform: rotate(45deg); }
-.faq-list details > p { margin: 0; padding: 0 26px 22px 3px; color: var(--muted); font-size: 10px; line-height: 1.9; }
 
 .consult-section { padding: 86px 42px 90px; background: var(--lavender); }
 .consult-intro { margin-bottom: 36px; }
@@ -307,7 +300,7 @@ footer > small { color: #6e6175; font-size: 8px; letter-spacing: .08em; }
   .about-photo-wrap > span { right: -20px; }
   .about-copy h2, .section-title h2 { font-size: 30px; }
   .about-copy blockquote br { display: none; }
-  .process-section, .instagram-section, .faq-section, .bouquet-section, .sketch-section { padding: 70px 26px 76px; }
+  .process-section, .instagram-section, .bouquet-section, .sketch-section { padding: 70px 26px 76px; }
   #reviews, #bouquet, #sketch, #about, #instagram, #consult { scroll-margin-top: 98px; }
   .review-section { padding: 70px 16px 76px; }
   .process-list article { grid-template-columns: 46px 1fr; }
@@ -353,7 +346,6 @@ footer > small { color: #6e6175; font-size: 8px; letter-spacing: .08em; }
   .sketch-modal-image-wrap { padding: 10px; }
   .sketch-modal-footer { padding-inline: 18px; padding-bottom: max(12px, env(safe-area-inset-bottom)); }
   .sketch-modal-close { top: 11px; right: 12px; }
-  .faq-list summary { font-size: 11px; }
   .consult-section { padding: 72px 26px 88px; }
   .kakao-consult-card { padding: 28px 20px 24px; }
   .kakao-consult-copy h3 { margin-top: 6px; font-size: 20px; }

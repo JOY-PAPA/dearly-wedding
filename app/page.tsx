@@ -25,11 +25,17 @@ const facts = [
   { value: "1:1", target: 1, suffix: "", format: "ratio", unit: "", label: "처음부터 끝까지 전담" },
 ];
 
-const process = [
-  { step: "01", title: "취향 발견", copy: "두 분의 이야기와 우선순위를 충분히 듣고 원하는 결혼의 방향을 함께 찾습니다." },
-  { step: "02", title: "맞춤 큐레이션", copy: "예산 안에서 웨딩홀, 스드메, 본식 스타일링을 꼭 맞는 선택지로 정리합니다." },
-  { step: "03", title: "일정 동행", copy: "계약부터 투어, 촬영, 본식까지 놓치기 쉬운 일정을 한 걸음 먼저 챙깁니다." },
-  { step: "04", title: "본식 케어", copy: "마지막 순간까지 현장을 세심하게 확인해 두 분은 설렘에만 집중할 수 있게 합니다." },
+const benefits = [
+  { step: "01", title: "웨딩홀 섭외 서비스" },
+  {
+    step: "02",
+    title: "풀동행 서비스 총 5회",
+    details: ["드레스 투어", "촬영 드레스 일정", "웨딩 촬영장", "본식 드레스 일정", "본식 메이크업샵 아웃"],
+  },
+  { step: "03", title: "커스텀 생화 부케 서비스", details: ["촬영 부케, 본식부케"] },
+  { step: "04", title: "아이폰 스냅, 영상 촬영 서비스" },
+  { step: "05", title: "디렉팅비 22만원 무료 서비스" },
+  { step: "06", title: "드레스 투어시 스케치 서비스" },
 ];
 
 const instagramPosts = [
@@ -43,12 +49,6 @@ const instagramPosts = [
 
 const instagramUrl = "https://www.instagram.com/daae_gi?igsi=djN6ZDVycWMxeTh2";
 const kakaoChatUrl = "https://open.kakao.com/o/srQ6Fdah";
-
-const faqs = [
-  { question: "상담은 어떤 방식으로 진행되나요?", answer: "간단한 사전 질문지를 받은 뒤 40분 내외의 1:1 상담으로 진행합니다. 두 분의 예산, 일정, 취향을 듣고 준비 순서와 우선순위를 함께 정리해 드려요." },
-  { question: "예식 날짜가 아직 없어도 괜찮나요?", answer: "네. 시기와 지역만 대략 정해져 있어도 충분합니다. 원하는 계절과 하객 규모를 바탕으로 웨딩홀 탐색부터 차근차근 도와드려요." },
-  { question: "준비 중간부터 플래닝을 받을 수도 있나요?", answer: "가능합니다. 현재 계약과 진행 상황을 먼저 점검한 뒤 남은 항목에 맞춰 필요한 범위로 플래닝을 안내해 드립니다." },
-];
 
 function getNaverEmbedUrl(href: string) {
   try {
@@ -417,7 +417,7 @@ export default function Home() {
 
         <section className="sketch-section" id="sketch">
           <div className="section-title split">
-            <div><p>DAAEPLAN WEDDING SKETCH</p><h2>취향을 한 장에 담은<br />다애플 스케치</h2></div>
+            <div><p>DAAEPLAN WEDDING SKETCH</p><h2>현장에서 직접 추억을<br />그려드리는 다애플 스케치</h2></div>
             <span>드레스 투어의 선택과 이유를<br />한눈에 볼 수 있는 기록입니다.</span>
           </div>
           <div className="sketch-grid">
@@ -501,12 +501,18 @@ export default function Home() {
 
           <section className="process-section" id="process">
             <div className="section-title center">
-              <p>HOW WE WORK TOGETHER</p>
-              <h2>둘만의 기준을 찾는<br />네 번의 동행</h2>
+              <p>DAAEPLAN SPECIAL BENEFITS</p>
+              <h2>다애플래너만의<br />특별한 혜택</h2>
             </div>
             <div className="process-list">
-              {process.map((item) => (
-                <article key={item.step}><span>{item.step}</span><div><h3>{item.title}</h3><p>{item.copy}</p></div></article>
+              {benefits.map((item) => (
+                <article key={item.step}>
+                  <span>{item.step}</span>
+                  <div>
+                    <h3>{item.title}</h3>
+                    {item.details && <ul className="benefit-details">{item.details.map((detail) => <li key={detail}>{detail}</li>)}</ul>}
+                  </div>
+                </article>
               ))}
             </div>
           </section>
@@ -527,15 +533,7 @@ export default function Home() {
           <p className="instagram-note">드레스 투어, 현장 셋업, 본식 케어까지 매주 새로운 이야기를 기록합니다.</p>
         </section>
 
-        <div className="consult-section-group" id="consult">
-          <section className="faq-section" id="faq">
-            <div className="section-title"><p>BEFORE WE MEET</p><h2>상담 전 자주 묻는 질문</h2></div>
-            <div className="faq-list">
-              {faqs.map((faq) => <details key={faq.question}><summary>{faq.question}<span>＋</span></summary><p>{faq.answer}</p></details>)}
-            </div>
-          </section>
-
-          <section className="consult-section">
+        <section className="consult-section" id="consult">
             <div className="consult-intro">
               <p>KAKAO OPEN CHAT</p><h2>두 분의 이야기를<br />카카오톡으로 들려주세요</h2><span>복잡한 양식 없이 오픈채팅에서 편하게 상담을 시작할 수 있습니다.</span>
             </div>
@@ -549,8 +547,7 @@ export default function Home() {
               <a className="kakao-consult-button" href={kakaoChatUrl} target="_blank" rel="noreferrer">카카오톡 오픈채팅 상담 시작하기 <span>↗</span></a>
               <small>버튼을 누르면 카카오톡 오픈채팅으로 이동합니다.</small>
             </div>
-          </section>
-        </div>
+        </section>
 
         <footer>
           <a className="footer-brand" href="#home">D A A E P L A N</a><p>김다애 플래너와 시작하는 1:1 퍼스널 웨딩 플래닝</p>
