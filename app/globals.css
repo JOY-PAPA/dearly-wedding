@@ -39,7 +39,7 @@ img { display: block; max-width: 100%; }
 .app-frame { position: relative; min-width: 0; min-height: 100vh; background: var(--paper); box-shadow: 0 0 40px rgba(43,34,31,.06); overflow: clip; }
 .topbar { position: sticky; top: 0; z-index: 30; height: 112px; padding: 28px 26px 0; background: rgba(255,252,251,.95); border-bottom: 1px solid rgba(50,24,71,.08); backdrop-filter: blur(14px); }
 .wordmark { display: block; text-align: center; color: var(--red); font-size: 18px; line-height: 1; font-weight: 700; letter-spacing: .32em; padding-left: .32em; }
-.topbar nav { height: 66px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); align-items: stretch; }
+.topbar nav { height: 66px; padding-top: 4px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); align-items: stretch; }
 .topbar nav a { position: relative; padding: 0 2px; display: grid; place-items: center; text-align: center; font-size: 10px; font-weight: 700; color: #514a53; white-space: nowrap; }
 .topbar nav a:nth-child(-n+3) { border-bottom: 1px solid rgba(50,24,71,.07); }
 .topbar nav a::after { content: ""; position: absolute; left: 50%; right: 50%; bottom: 0; height: 2px; background: var(--red); transition: left .2s, right .2s; }
