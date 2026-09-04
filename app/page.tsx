@@ -374,7 +374,7 @@ export default function Home() {
 
         <section className="bouquet-section" id="bouquet">
           <div className="section-title split">
-            <div><p>DAAEPL BOUQUET ARCHIVE</p><h2>신부님의 취향을 담은<br />다애플 부케</h2></div>
+            <div><p>DAAEPL BOUQUET ARCHIVE</p><h2>인스타 부케 맛집,<br />부케보고 찾아오는 웨딩 플래너 다애플부케</h2></div>
             <a className="bouquet-hashtag" href="https://www.instagram.com/explore/tags/%EB%8B%A4%EC%95%A0%ED%94%8C%EB%B6%80%EC%BC%80/" target="_blank" rel="noreferrer">#다애플부케 <span>↗</span></a>
           </div>
           <div className="bouquet-grid">
