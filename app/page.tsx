@@ -304,6 +304,7 @@ export default function Home() {
           <div className="hero-content">
             <p>YOUR PERSONAL WEDDING PLANNER</p>
             <h2>둘의 취향을 듣고<br />한 편의 결혼을 만듭니다</h2>
+            <p className="hero-planner-name">베리굿 김다애 플래너</p>
             <a href="#about">플래너 만나보기 <span>→</span></a>
           </div>
           <div className="hero-index"><b>DAAE KIM</b><span /><small>WEDDING PLANNER</small></div>
